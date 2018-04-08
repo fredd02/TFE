@@ -20,7 +20,7 @@
 <br>
 <ul>
 	<c:forEach items = "${eleves}" var = "eleve" >
-		<li><c:out value="${eleve.nom}" /> <c:out value="${eleve.prenom}" /></li>
+		<li><a href="../eleve/${eleve.id}"><c:out value="${eleve.nom}" /> <c:out value="${eleve.prenom}" /></a></li>
 	
 	</c:forEach>
 
