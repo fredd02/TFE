@@ -8,6 +8,7 @@ import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -16,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.tfe.exceptions.NoAccessException;
+import com.tfe.exceptions.NotFoundException;
 import com.tfe.model.Enseignant;
 import com.tfe.repository.IEnseignantRepository;
 
@@ -76,8 +79,7 @@ public class EnseignantController {
 		}
 	}
 	
-	//methode pour désinscrire un enseignant
-	@RequestMapping(value="/delete")
+	
 	
 	
 	
@@ -108,6 +110,43 @@ public class EnseignantController {
 		return "enseignant/enseignant";
 		
 	}
+	
+	//methode pour supprimer un enseignant
+		@RequestMapping(value="/{id}/delete", method = RequestMethod.POST)
+		public String enseignantDelete(@PathVariable Long id) {
+			log.info("methode POST pour supprimer un enseignant");
+			
+			//vérifie si l'enseignant existe
+			if(!enseignantDAO.exists(id))
+				throw new NotFoundException("enseignant non trouvé", id);
+			try {
+				enseignantDAO.delete(id);
+			} catch (DataIntegrityViolationException e) {
+				log.error("SQL", e);
+				throw new NoAccessException("suppression impossible: cet enseignant possède des dépendances");
+			}
+			log.info("suppression de l'enseignant: " + id);
+			return "redirect:/enseignant/list";
+		}
+		
+		//methode pour modifier un enseignant
+		@RequestMapping(value="/{id}/update", method = RequestMethod.GET)
+		public String enseignantUpdateGet(@PathVariable Long id, Model model) {
+			log.info("methode GET pour updater un enseignant");
+			
+			//verifie si l'enseignant existe
+			if(!enseignantDAO.exists(id))
+				throw new NotFoundException("enseignant non trouvé pour modification", id);
+			
+			Enseignant enseignant = enseignantDAO.getOne(id);
+			model.addAttribute("enseignant", enseignant);
+			
+			return "enseignant/enseignantUpdate";
+		}
+		
+		
+			
+		
 
 	
 

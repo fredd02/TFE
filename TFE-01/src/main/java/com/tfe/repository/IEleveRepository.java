@@ -10,7 +10,7 @@ import com.tfe.model.Eleve;
 public interface IEleveRepository extends JpaRepository<Eleve, Long>{
 	
 	//liste des élèves inscrits dans une classe
-	@Query(value="SELECT * FROM TELEVE e JOIN INSCRIPTION i on e.nrn = i.fkeleve WHERE i.date_sortie is null and i.fkclasse = ?1",nativeQuery=true)
+	@Query(value="SELECT * FROM TELEVE e JOIN INSCRIPTION i on e.id = i.fkeleve WHERE i.date_sortie is null and i.fkclasse = ?1",nativeQuery=true)
 	List<Eleve> elevesFromClasse(String code);
 	
 	//classe actuelle de l'eleve
@@ -18,11 +18,11 @@ public interface IEleveRepository extends JpaRepository<Eleve, Long>{
 	String classeFromEleve(Long id);
 	
 	//eleve avec ses inscription
-	@Query(value="SELECT * FROM TELEVE e JOIN INSCRIPTION i on e.nrn=i.fkeleve WHERE e.nrn=?1", nativeQuery=true)
+	@Query(value="SELECT * FROM TELEVE e JOIN INSCRIPTION i on e.id=i.fkeleve WHERE e.id=?1", nativeQuery=true)
 	Eleve eleveWithInscriptions(Long id);
 	
 	//liste des eleves d'un responsable
-	@Query(value="SELECT * FROM TELEVE e JOIN RELATION r on e.nrn = r.fkeleve WHERE r.fkresponsable=?1",nativeQuery=true)
+	@Query(value="SELECT * FROM TELEVE e JOIN RELATION r on e.id = r.fkeleve WHERE r.fkresponsable=?1",nativeQuery=true)
 	List<Eleve> getElevesFromResponsable(Long id);
 
 }

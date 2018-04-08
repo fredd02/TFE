@@ -45,8 +45,15 @@
 </ul>
 
 <div class="btn-group text-center">
-	<button class="btn btn-primary" onclick="location.href='./update'">modifier les informations</button>
-	<button class="btn btn-danger" onclick="location.href='./delete'">désinscrire l'enseignant</button>
+	<button class="btn btn-primary" onclick="location.href='./${enseignant.id}/update'">modifier les informations</button>
+	<s:url value="/enseignant/${enseignant.id}/delete" var="deleteUrl" />
+			<button class="btn btn-danger"
+				onclick="
+				if (confirm('Suppression de l'enseignant ?')) {
+				 this.disabled=true;
+                 post('${deleteUrl}',{'${_csrf.parameterName}': '${_csrf.token}'})}                             
+                                              ">supprimer l'enseignant</button>
+	
 </div>
 
 

@@ -7,4 +7,10 @@
 			(ISFCE)</p>
 	</footer>
 </div>
+
+
+<s:url value="/resources/js/post.js" var="postJs" />
+
+<script src="${postJs}"></script>
+
 </body>

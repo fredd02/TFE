@@ -91,7 +91,11 @@
 			<div class="col-md-4 inputGroupContainer">
 				<div class="input-group">
 					<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-					<sf:input path="sexe" id="sexe" class="form-control" placeholder="sexe" />
+					<sf:select path="sexe" id="sexe" class="form-control" placeholder="sexe" >
+					<option value="1">féminin</option>
+					<option value="0">masculin</option>
+					
+					</sf:select>
 					<sf:errors path="sexe" class="control-label" />
 				</div>
 			</div>

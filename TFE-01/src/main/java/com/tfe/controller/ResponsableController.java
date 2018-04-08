@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.tfe.model.Eleve;
+import com.tfe.model.Inscription;
 import com.tfe.model.Relation;
 import com.tfe.model.Responsable;
 import com.tfe.repository.IEleveRepository;
@@ -80,9 +81,70 @@ public class ResponsableController {
 		rModel.addFlashAttribute(responsableSaved);
 		
 		
-		return "redirect:/responsable/"+ responsableSaved.getNrn();
+		return "redirect:/responsable/"+ responsableSaved.getId();
 		
 		
+	}
+	
+	
+	//methode GET pour rechercher un responsable existant
+	@RequestMapping(value="/search/{id}", method=RequestMethod.GET)
+	public String responsableExistantAdd(@PathVariable Long id, Model model) {
+		
+		log.info("methode GET pour rechercher un responsable");
+		
+		Eleve eleve = eleveDAO.getOne(id);
+		model.addAttribute("eleve", eleve);
+		
+		
+		return "responsable/responsableExistantAdd";
+		
+	}
+	
+	//methode POST pour rechercher un responsable existant
+	@RequestMapping(value="/search/{id}", method=RequestMethod.POST)
+	public String responsableExistantAddPost(@PathVariable Long id,@RequestParam("nom") String nom, Model model) {
+		log.info("methode POST pour rechercher un responsable");
+		
+		List<Responsable> responsables = responsableDAO.readByNomIgnoringCase(nom);
+		model.addAttribute("responsables", responsables);
+		
+		Eleve eleve = eleveDAO.getOne(id);
+		model.addAttribute("eleve", eleve);
+		
+		return "responsable/responsableExistantAdd";
+		
+		
+	
+	}
+	
+	
+	//methode POST pour ajouter les responsables recherchés
+	@RequestMapping(value="addSelect/{id}", method=RequestMethod.POST)
+	public String responsablesFoundAdd(@PathVariable Long id, @RequestParam(value="responsable[]") String[] responsablesId,
+					@RequestParam(value="lien[]") String[] liens) {
+		
+		
+		if(responsablesId.length !=0) {
+			log.info("nb de responsables selectionnés: " + responsablesId.length);
+			Eleve eleve = eleveDAO.getOne(id);
+			
+			
+			for(String responsableId : responsablesId) {
+				int i=0;
+				log.info(responsableId.toString());
+				Responsable responsable = responsableDAO.getOne(Long.parseLong(responsableId));
+				String lien = liens[i];
+				Relation relation = new Relation(eleve, responsable, lien);
+				relationDAO.save(relation);
+				
+								
+			}
+			
+			
+		}
+		
+		return "redirect:/eleve/{id}";
 	}
 	
 	/**

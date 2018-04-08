@@ -14,7 +14,7 @@
 
 
 <div class="container">
-<h1>Informations sur l'élève <c:out value="${eleve.nom} ${eleve.prenom}" /></h1>
+<h4>Informations sur l'élève <c:out value="${eleve.nom} ${eleve.prenom}" /></h4>
 
  <ul class="list-group">
   <li class="list-group-item">Nom: <c:out value="${eleve.nom}" /></li>
@@ -41,23 +41,25 @@
    					<c:out value="${inscription.classe.code}" /></li>
    			
    			</c:forEach>
-   			<li><a href="${eleve.nrn}/sup">changer de classe</a></li>
+   			<li><a href="${eleve.id}/sup">changer de classe</a></li>
    		</ul>
    	</li>
    	
    	<li class="list-group-item">Responsables
    		<ul>
    			<c:forEach items = "${eleve.relations}" var = "relation">
-   				<li><a href="../responsable/${relation.responsable.nrn}"><c:out value="${relation.responsable.nom}" /> <c:out value="${relation.responsable.prenom}" /></a></li>
+   				<li><a href="../responsable/${relation.responsable.id}"><c:out value="${relation.responsable.nom}" /> <c:out value="${relation.responsable.prenom}" /></a>
+   					(${relation.lienParent})</li>
    			</c:forEach>
    		</ul>
    	</li>
 </ul> 
 
-<s:url value="/responsable/add/${eleve.nrn}" var ="addResponsableURL" />
+<s:url value="/responsable/add/${eleve.id}" var ="addResponsableURL" />
+<s:url value="/responsable/search/${eleve.id}" var ="searchResponsableURL" />
 <div class="btn-group">
 	<button class="btn btn-primary" onclick="location.href='${addResponsableURL}'">ajouter un nouveau responsable</button>
-	<button class="btn btn-primary" onclick="location.href='${addResponsableURL}'">ajouter un responsable existant</button>
+	<button class="btn btn-primary" onclick="location.href='${searchResponsableURL}'">ajouter un responsable existant</button>
 </div>
 
 

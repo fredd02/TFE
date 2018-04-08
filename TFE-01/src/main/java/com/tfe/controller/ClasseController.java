@@ -64,6 +64,7 @@ public class ClasseController {
 		log.info("methode pour afficher les infos de la classe");
 		
 		Classe classe = classeDAO.findOne(code);
+		log.info("classe trouvée");
 		List<Eleve> listEleves = eleveDAO.elevesFromClasse(code);
 		log.info("nb d'eleves:" + listEleves.size() ); 
 		
