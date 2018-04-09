@@ -33,7 +33,7 @@ public class UtilsController {
 		
 		String pwEncrypted = bCryptPasswordEncoder.encode(password);
 		
-		User user = new User(login,pwEncrypted);
+		User user = new User(login,password);
 		userDAO.save(user);
 		
 		

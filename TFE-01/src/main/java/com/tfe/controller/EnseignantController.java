@@ -2,6 +2,7 @@ package com.tfe.controller;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import javax.validation.Valid;
 
@@ -20,7 +21,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.tfe.exceptions.NoAccessException;
 import com.tfe.exceptions.NotFoundException;
 import com.tfe.model.Enseignant;
+import com.tfe.model.Role;
 import com.tfe.repository.IEnseignantRepository;
+import com.tfe.repository.IRoleRepository;
 
 @Controller
 @RequestMapping("/enseignant")
@@ -31,6 +34,9 @@ public class EnseignantController {
 		
 	@Autowired
 	IEnseignantRepository enseignantDAO;
+	
+	@Autowired
+	IRoleRepository roleDAO;
 	
 	
 	/**
@@ -69,7 +75,17 @@ public class EnseignantController {
 			Date dateNow = new Date();
 			enseignant.setDateInscription(dateNow);
 			
+			
+			Role role = roleDAO.findRoleByName("ENSEIGNANT");
+			log.info(role.toString());
+			enseignant.getRoles().add(role);
+			
+			log.info("test2");
+			
+			
+						
 			Enseignant enseignantSaved = enseignantDAO.save(enseignant);
+			
 			
 			rModel.addAttribute(enseignantSaved);
 			

@@ -66,6 +66,38 @@
 		</div>
 	</s:bind>
 	
+	<s:bind path="username">
+		<div class="form-group ${status.error ? 'has-error' : ''}">
+			<sf:label path="username" class="col-md-4 control-label">
+				username
+			</sf:label>
+			<div class="col-md-4 inputGroupContainer">
+				<div class="input-group">
+					<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+					<sf:input path="username" id="username" class="form-control" placeholder="username" />
+					<sf:errors path="username" class="control-label" />
+				</div>
+			</div>
+				 
+		</div>
+	</s:bind>
+	
+	<s:bind path="password">
+		<div class="form-group ${status.error ? 'has-error' : ''}">
+			<sf:label path="password" class="col-md-4 control-label">
+				mot de passe
+			</sf:label>
+			<div class="col-md-4 inputGroupContainer">
+				<div class="input-group">
+					<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+					<sf:password path="password" id="password" class="form-control" placeholder="password" />
+					<sf:errors path="password" class="control-label" />
+				</div>
+			</div>
+				 
+		</div>
+	</s:bind>
+	
 	<s:bind path="dateNaissance">
 		<div class="form-group ${status.error ? 'has-error' : ''}">
 			<sf:label path="dateNaissance" class="col-md-4 control-label">
