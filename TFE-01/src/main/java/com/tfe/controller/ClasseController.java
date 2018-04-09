@@ -20,7 +20,7 @@ import com.tfe.repository.IEleveRepository;
 import com.tfe.repository.IEnseignantRepository;
 
 @Controller
-@RequestMapping("/classe")
+@RequestMapping("classe")
 public class ClasseController {
 	
 	//logger
@@ -41,7 +41,7 @@ public class ClasseController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value="/list", method=RequestMethod.GET)
+	@RequestMapping(value="list", method=RequestMethod.GET)
 	public String classeList(Model model) {
 		log.info("methode pour afficher la liste des classes");
 		
@@ -49,7 +49,7 @@ public class ClasseController {
 		
 		model.addAttribute("classesList", classesList);
 		
-		return "/classe/classeList";
+		return "classe/classeList";
 		
 	}
 	
