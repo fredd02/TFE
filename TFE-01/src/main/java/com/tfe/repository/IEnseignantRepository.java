@@ -4,6 +4,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.tfe.model.Enseignant;
 
-public interface IEnseignantRepository extends JpaRepository<Enseignant, Long>{
+public interface IEnseignantRepository extends IUserRepository<Enseignant>{
 
 }

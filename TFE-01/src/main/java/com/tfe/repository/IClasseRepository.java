@@ -9,7 +9,7 @@ import com.tfe.model.Classe;
 
 public interface IClasseRepository extends JpaRepository<Classe, String>{
 	
-	@Query(value="SELECT * FROM TCLASSE c LEFT JOIN TENSEIGNANT e ON c.titulaire = e.id ORDER BY c.code", nativeQuery=true)
+	@Query(value="SELECT * FROM TCLASSE c LEFT JOIN TENSEIGNANT e ON c.titulaire = e.username ORDER BY c.code", nativeQuery=true)
 	List<Classe> getClassesWithTitulaire();
 
 }

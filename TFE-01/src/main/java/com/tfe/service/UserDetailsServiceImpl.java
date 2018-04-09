@@ -24,19 +24,24 @@ public class UserDetailsServiceImpl implements UserDetailsService{
 	private final Logger log = LoggerFactory.getLogger(this.getClass());
 
 	@Autowired
-	private IUserRepository userDAO;
+	private IUserRepository<User> userDAO;
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		
 		log.info("userDetails");
-		User user = userDAO.findByUsernameWithRoles(username);
-		log.info(user.getUsername());
+		User user = userDAO.findByUsername(username);
+		//User user = userDAO.findByUsernameWithRoles(username);
+		log.info("user ok");
+		log.info(user.getUsername()+"|");
+		log.info(user.getPassword()+"|");
 		log.info("nb de roles");
 		log.info("roles: " + String.valueOf(user.getRoles().size()));
 		
+		
 		Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
 		for(Role role : user.getRoles()) {
+			log.info(role.getName());
 			grantedAuthorities.add(new SimpleGrantedAuthority(role.getName()));
 		}
 		

@@ -86,7 +86,7 @@
 
 </sec:authorize>
 
- <sec:authorize access="hasAnyAuthority('PARENT')">
+ <sec:authorize access="isAuthenticated()">
  	<nav class="navbar navbar-default">
  		<div class="container-fluid">
  			<div class="navbar-header">

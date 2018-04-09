@@ -17,13 +17,15 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 @Data
-@EqualsAndHashCode(exclude= {"relations"})
+@EqualsAndHashCode(callSuper=true,exclude= {"relations"})
 @Entity(name="TRESPONSABLE")
-public class Responsable {
+public class Responsable extends User{
 	
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
+	private static final long serialVersionUID = 1L;
+	
+//	@Id
+//	@GeneratedValue(strategy = GenerationType.AUTO)
+//	private Long id;
 	
 	
 	@Pattern(regexp = "[0-9]{2}.[0-9]{2}.[0-9]{2}-[0-9]{3}.[0-9]{2}")

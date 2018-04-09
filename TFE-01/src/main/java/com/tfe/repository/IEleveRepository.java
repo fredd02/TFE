@@ -23,6 +23,6 @@ public interface IEleveRepository extends JpaRepository<Eleve, Long>{
 	
 	//liste des eleves d'un responsable
 	@Query(value="SELECT * FROM TELEVE e JOIN RELATION r on e.id = r.fkeleve WHERE r.fkresponsable=?1",nativeQuery=true)
-	List<Eleve> getElevesFromResponsable(Long id);
+	List<Eleve> getElevesFromResponsable(String username);
 
 }

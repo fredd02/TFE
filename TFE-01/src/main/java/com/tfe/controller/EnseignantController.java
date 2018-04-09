@@ -99,10 +99,10 @@ public class EnseignantController {
 	}
 	
 	
-	@RequestMapping(value="/{id}", method=RequestMethod.GET)
-	public String enseignantInfos(@PathVariable Long id, Enseignant enseignant, Model model) {
+	@RequestMapping(value="/{username}", method=RequestMethod.GET)
+	public String enseignantInfos(@PathVariable String username, Enseignant enseignant, Model model) {
 		
-		enseignant = enseignantDAO.getOne(id);
+		enseignant = enseignantDAO.getOne(username);
 		model.addAttribute("enseignant", enseignant);
 		
 		
@@ -112,33 +112,33 @@ public class EnseignantController {
 	}
 	
 	//methode pour supprimer un enseignant
-		@RequestMapping(value="/{id}/delete", method = RequestMethod.POST)
-		public String enseignantDelete(@PathVariable Long id) {
+		@RequestMapping(value="/{username}/delete", method = RequestMethod.POST)
+		public String enseignantDelete(@PathVariable String username) {
 			log.info("methode POST pour supprimer un enseignant");
 			
 			//vérifie si l'enseignant existe
-			if(!enseignantDAO.exists(id))
-				throw new NotFoundException("enseignant non trouvé", id);
+			if(!enseignantDAO.exists(username))
+				throw new NotFoundException("enseignant non trouvé", username);
 			try {
-				enseignantDAO.delete(id);
+				enseignantDAO.delete(username);
 			} catch (DataIntegrityViolationException e) {
 				log.error("SQL", e);
 				throw new NoAccessException("suppression impossible: cet enseignant possède des dépendances");
 			}
-			log.info("suppression de l'enseignant: " + id);
+			log.info("suppression de l'enseignant: " + username);
 			return "redirect:/enseignant/list";
 		}
 		
 		//methode pour modifier un enseignant
-		@RequestMapping(value="/{id}/update", method = RequestMethod.GET)
-		public String enseignantUpdateGet(@PathVariable Long id, Model model) {
+		@RequestMapping(value="/{username}/update", method = RequestMethod.GET)
+		public String enseignantUpdateGet(@PathVariable String username, Model model) {
 			log.info("methode GET pour updater un enseignant");
 			
 			//verifie si l'enseignant existe
-			if(!enseignantDAO.exists(id))
-				throw new NotFoundException("enseignant non trouvé pour modification", id);
+			if(!enseignantDAO.exists(username))
+				throw new NotFoundException("enseignant non trouvé pour modification", username);
 			
-			Enseignant enseignant = enseignantDAO.getOne(id);
+			Enseignant enseignant = enseignantDAO.getOne(username);
 			model.addAttribute("enseignant", enseignant);
 			
 			return "enseignant/enseignantUpdate";

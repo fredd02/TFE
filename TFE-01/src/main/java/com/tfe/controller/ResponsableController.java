@@ -65,7 +65,7 @@ public class ResponsableController {
 	String ResponsableAddPost(@RequestParam("eleve_id") Long eleve_id,@RequestParam("lienParent") String lienParent,Responsable responsable, Model model,
 			RedirectAttributes rModel) {
 		log.info("methode POST pour ajouter un responsable");
-		log.info("id du responsable:" + responsable.getId());
+		log.info("id du responsable:" + responsable.getUsername());
 		log.info("eleve_id: " + eleve_id);
 		
 		Responsable responsableSaved = responsableDAO.save(responsable);
@@ -81,7 +81,7 @@ public class ResponsableController {
 		rModel.addFlashAttribute(responsableSaved);
 		
 		
-		return "redirect:/responsable/"+ responsableSaved.getId();
+		return "redirect:/responsable/"+ responsableSaved.getUsername();
 		
 		
 	}
@@ -133,7 +133,7 @@ public class ResponsableController {
 			for(String responsableId : responsablesId) {
 				int i=0;
 				log.info(responsableId.toString());
-				Responsable responsable = responsableDAO.getOne(Long.parseLong(responsableId));
+				Responsable responsable = responsableDAO.getOne(responsableId);
 				String lien = liens[i];
 				Relation relation = new Relation(eleve, responsable, lien);
 				relationDAO.save(relation);
@@ -152,17 +152,17 @@ public class ResponsableController {
 	 */
 	
 	
-	@RequestMapping(value="/{id}", method=RequestMethod.GET)
-	String responsableInfos(@PathVariable("id") Long id, Model model) {
+	@RequestMapping(value="/{username}", method=RequestMethod.GET)
+	String responsableInfos(@PathVariable("username") String username, Model model) {
 		
 		log.info("methode pour afficher les infos d'un responsable");
 		
 		if(!model.containsAttribute("responsable")) {
-			Responsable responsable = responsableDAO.findOne(id);
+			Responsable responsable = responsableDAO.getOne(username);
 			model.addAttribute("responsable", responsable);
 		}
 		
-		List<Relation> relations = relationDAO.relationsFromResponsable(id);
+		List<Relation> relations = relationDAO.relationsFromResponsable(username);
 		model.addAttribute("relations", relations);
 		
 		

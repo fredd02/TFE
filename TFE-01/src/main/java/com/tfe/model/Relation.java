@@ -22,11 +22,11 @@ public class Relation {
 		@Column(name="FKELEVE")
 		protected Long eleveId;
 		@Column(name="FKRESPONSABLE")
-		protected Long responsableId;
+		protected String responsableId;
 		
 		public Id() {}
 		
-		public Id(Long eleveId, Long responsableId) {
+		public Id(Long eleveId, String responsableId) {
 			this.eleveId = eleveId;
 			this.responsableId = responsableId;
 		}
@@ -67,7 +67,7 @@ public class Relation {
 		this.responsable = responsable;
 		this.lienParent = lien;
 		this.id.eleveId = eleve.getId();
-		this.id.responsableId = responsable.getId();
+		this.id.responsableId = responsable.getUsername();
 		eleve.getRelations().add(this);
 		responsable.getRelations().add(this);
 	}

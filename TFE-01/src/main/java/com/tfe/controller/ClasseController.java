@@ -89,14 +89,14 @@ public class ClasseController {
 	}
 	
 	@RequestMapping(value="/{code}/titulaire/add", method=RequestMethod.POST)
-	public String classeTitulaireAddPost(@PathVariable String code,@RequestParam(value="enseignant_id") Long id) {
+	public String classeTitulaireAddPost(@PathVariable String code,@RequestParam(value="enseignant_id") String username) {
 		
 		log.info("methode POST pour encoder un titulaire");
-		log.info(id.toString());
+		log.info(username);
 		
 		Classe classe = classeDAO.getOne(code);
 		
-		Enseignant titulaire = enseignantDAO.getOne(id);
+		Enseignant titulaire = enseignantDAO.getOne(username);
 		classe.setTitulaire(titulaire);
 		classeDAO.save(classe);
 		

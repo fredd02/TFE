@@ -1,5 +1,7 @@
 package com.tfe.model;
 
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -8,45 +10,92 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 
+import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
 import com.tfe.model.Role;
 
+import lombok.Getter;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.AccessLevel;
 
 @Data
+@Inheritance(strategy = InheritanceType.JOINED)
+@NoArgsConstructor(access = AccessLevel.PROTECTED,force=true)
 @EqualsAndHashCode(exclude= {"roles"})
 @Entity(name="users")
-public class User {
+public class User implements UserDetails{
+	
+	
+	
+	private static final long serialVersionUID = 1L;
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
-	
-	@Column(nullable=false, unique=true)
+	@Column(length=50,nullable=false)
+	@Getter
+	@NotEmpty
 	private String username;
 	
-	@Column(nullable=false)
+	@Column(length= 100, 	nullable=false)
 	private String password;
 	
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name="user_role", joinColumns = @JoinColumn(name="user_id"), inverseJoinColumns=@JoinColumn(name="role_id"))
 	private Set<Role> roles;
 
-	public User() {
-		
-	}
+	
 	
 	public User(String username, String password) {
+		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 		this.username = username;
-		this.password = password;
+		this.password = passwordEncoder.encode(password);
 	}
+	
+	
 	
 	public Set<Role> getRoles() {
 		return roles;
+	}
+
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		return Arrays.asList(new SimpleGrantedAuthority("ADMIN"));
+	}
+
+	@Override
+	public boolean isAccountNonExpired() {
+		
+		return true;
+	}
+
+	@Override
+	public boolean isAccountNonLocked() {
+		
+		return true;
+	}
+
+	@Override
+	public boolean isCredentialsNonExpired() {
+		
+		return true;
+	}
+
+	@Override
+	public boolean isEnabled() {
+		
+		return true;
 	}
 
 }

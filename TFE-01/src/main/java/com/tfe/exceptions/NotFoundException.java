@@ -5,15 +5,15 @@ public class NotFoundException extends RuntimeException {
 	private static final long serialVersionUID = 1L;
 	
 	//identifiant de l'objet recherché
-	private Long id;
+	private String username;
 
-	public NotFoundException(String message, Long id) {
+	public NotFoundException(String message, String username) {
 		super(message);
-		this.id = id;
+		this.username = username;
 	}
 	
-	public Long getId() {
-		return id;
+	public String getUsername() {
+		return username;
 	}
 
 }

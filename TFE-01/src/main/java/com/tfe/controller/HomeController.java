@@ -24,6 +24,8 @@ public class HomeController {
 	
 	@RequestMapping(value="/login", method=RequestMethod.GET)
 	public String login(Model model, String error, String logout) {
+		log.info("login controleur");
+		log.info("error: " + error + "|");
 		if(error !=null)
 			model.addAttribute("error", "Your username and password is invalid");
 		

@@ -23,7 +23,7 @@ public class UtilsController {
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
 	
 	@Autowired
-	IUserRepository userDAO;
+	IUserRepository<User> userDAO;
 
 	
 	@RequestMapping(value="/user", method=RequestMethod.GET)
