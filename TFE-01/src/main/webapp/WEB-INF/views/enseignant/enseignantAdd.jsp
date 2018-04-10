@@ -98,6 +98,22 @@
 		</div>
 	</s:bind>
 	
+	<s:bind path="passwordConfirm">
+		<div class="form-group ${status.error ? 'has-error' : ''}">
+			<sf:label path="passwordConfirm" class="col-md-4 control-label">
+				confirmer le mot de passe
+			</sf:label>
+			<div class="col-md-4 inputGroupContainer">
+				<div class="input-group">
+					<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+					<sf:password path="passwordConfirm" id="passwordConfirm" class="form-control" placeholder="passwordConfirm" />
+					<sf:errors path="passwordConfirm" class="control-label" />
+				</div>
+			</div>
+				 
+		</div>
+	</s:bind>
+	
 	<s:bind path="dateNaissance">
 		<div class="form-group ${status.error ? 'has-error' : ''}">
 			<sf:label path="dateNaissance" class="col-md-4 control-label">

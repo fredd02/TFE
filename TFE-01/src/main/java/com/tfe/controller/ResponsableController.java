@@ -2,11 +2,14 @@ package com.tfe.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -17,9 +20,12 @@ import com.tfe.model.Eleve;
 import com.tfe.model.Inscription;
 import com.tfe.model.Relation;
 import com.tfe.model.Responsable;
+import com.tfe.model.Role;
 import com.tfe.repository.IEleveRepository;
 import com.tfe.repository.IRelationRepository;
 import com.tfe.repository.IResponsableRepository;
+import com.tfe.repository.IRoleRepository;
+import com.tfe.service.UserValidator;
 
 @Controller
 @RequestMapping("/responsable")
@@ -36,6 +42,12 @@ public class ResponsableController {
 	
 	@Autowired
 	IRelationRepository relationDAO;
+	
+	@Autowired
+	UserValidator userValidator;
+	
+	@Autowired
+	IRoleRepository roleDAO;
 
 	
 	/**
@@ -62,11 +74,21 @@ public class ResponsableController {
 	 * 
 	 */
 	@RequestMapping(value="/add", method=RequestMethod.POST)
-	String ResponsableAddPost(@RequestParam("eleve_id") Long eleve_id,@RequestParam("lienParent") String lienParent,Responsable responsable, Model model,
-			RedirectAttributes rModel) {
+	String ResponsableAddPost(@Valid Responsable responsable, BindingResult errors, Model model, @RequestParam("eleve_id") Long eleve_id,
+				@RequestParam("lienParent") String lienParent, RedirectAttributes rModel) {
 		log.info("methode POST pour ajouter un responsable");
+		
+		//userValidator.validate(responsable, errors);
+		
+		if(errors.hasErrors()) {
+			return "responsable/responsableAdd";
+		} else {
 		log.info("id du responsable:" + responsable.getUsername());
 		log.info("eleve_id: " + eleve_id);
+		
+		//ajout du rôle PARENT au responsable
+		Role role = roleDAO.findRoleByName("PARENT");
+		responsable.getRoles().add(role);
 		
 		Responsable responsableSaved = responsableDAO.save(responsable);
 		//Eleve eleve = eleveDAO.eleveWithInscriptions(eleve_nrn);
@@ -82,7 +104,7 @@ public class ResponsableController {
 		
 		
 		return "redirect:/responsable/"+ responsableSaved.getUsername();
-		
+		}
 		
 	}
 	

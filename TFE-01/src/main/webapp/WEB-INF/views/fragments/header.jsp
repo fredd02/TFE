@@ -120,11 +120,11 @@
 			      </ul>
 			     </li>
 			     <li class="dropdown">
-			      <a class="dropdown-toggle" href="#" data-toggle="dropdown">Enfants inscrits
+			      <a class="dropdown-toggle" href="#" data-toggle="dropdown">Cantine
 			      	<span class="caret"></span></a>
 			      <ul class="dropdown-menu">
-			      	<li><a href="/TFE-01/classe/list">Liste</a>
-			      	<li><a href="/#">#</a>
+			      	<li><a href="/TFE-01/classe/list">Menu de la semaine</a>
+			      	<li><a href="/#">inscription</a>
 			      </ul>
 			     </li>
 			  </ul>

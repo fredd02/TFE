@@ -24,6 +24,7 @@ import com.tfe.model.Enseignant;
 import com.tfe.model.Role;
 import com.tfe.repository.IEnseignantRepository;
 import com.tfe.repository.IRoleRepository;
+import com.tfe.service.UserValidator;
 
 @Controller
 @RequestMapping("/enseignant")
@@ -37,6 +38,9 @@ public class EnseignantController {
 	
 	@Autowired
 	IRoleRepository roleDAO;
+	
+	@Autowired
+	UserValidator userValidator;
 	
 	
 	/**
@@ -67,6 +71,8 @@ public class EnseignantController {
 	public String enseignantAddPost(@Valid Enseignant enseignant, BindingResult errors, Model model,  RedirectAttributes rModel) {
 		log.info("methode POST pour inscrire un enseignant");
 		
+		//userValidator.validate(enseignant, errors);
+		
 		if(errors.hasErrors()) {
 			return "enseignant/enseignantAdd";
 		} else {
@@ -79,6 +85,7 @@ public class EnseignantController {
 			Role role = roleDAO.findRoleByName("ENSEIGNANT");
 			log.info(role.toString());
 			enseignant.getRoles().add(role);
+			log.info("enseignant: " + enseignant.toString());
 			
 			log.info("test2");
 			

@@ -17,6 +17,7 @@ import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.Transient;
 
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,6 +54,9 @@ public class User implements UserDetails{
 	@Column(length= 100, 	nullable=false)
 	private String password;
 	
+	@Transient
+	private String passwordConfirm;
+	
 	@ManyToMany(cascade=CascadeType.PERSIST, fetch = FetchType.EAGER)
 	@JoinTable(name="user_role", joinColumns = @JoinColumn(name="user_id"), inverseJoinColumns=@JoinColumn(name="role_id"))
 	private Set<Role> roles = new HashSet<Role>();
@@ -62,6 +66,11 @@ public class User implements UserDetails{
 	public User(String username, String password) {
 		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 		this.username = username;
+		this.password = passwordEncoder.encode(password);
+	}
+	
+	public void setPassword(String password) {
+		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 		this.password = passwordEncoder.encode(password);
 	}
 	

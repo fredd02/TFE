@@ -20,6 +20,9 @@
     <input type="text" class="form-control" id="nom" name="nom">
   </div>
   
+  <!--             protection contre les attaques CSRF -->
+            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>	
+  
   <button type="submit" class="btn btn-default">Rechercher</button>
 
 </form>
@@ -38,7 +41,7 @@
 			<c:forEach items="${responsables}" var="responsable">
 				<li class="list-group-item">
  				<div class="checkbox">
- 					<label><input type="checkbox" name="responsable[]" value="${responsable.id}"> <c:out value="${responsable.nom} ${responsable.prenom}" /></label>
+ 					<label><input type="checkbox" name="responsable[]" value="${responsable.username}"> <c:out value="${responsable.nom} ${responsable.prenom}" /></label>
  					<label for="lien"> - Lien avec l'élève:</label>
   					<input type="text" class="form-control" id="lien" name="lien[]">
  				</div>
@@ -47,6 +50,10 @@
  	
  			</c:forEach>
  			</ul>
+ 			
+ 			<!--             protection contre les attaques CSRF -->
+            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>	
+            
 			<button type="submit" class="btn btn-primary">Ajouter les responsables selectionnés</button>
 		
 		</form>

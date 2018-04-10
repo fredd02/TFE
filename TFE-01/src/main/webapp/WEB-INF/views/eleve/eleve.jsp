@@ -48,7 +48,7 @@
    	<li class="list-group-item">Responsables
    		<ul>
    			<c:forEach items = "${eleve.relations}" var = "relation">
-   				<li><a href="../responsable/${relation.responsable.id}"><c:out value="${relation.responsable.nom}" /> <c:out value="${relation.responsable.prenom}" /></a>
+   				<li><a href="../responsable/${relation.responsable.username}"><c:out value="${relation.responsable.nom}" /> <c:out value="${relation.responsable.prenom}" /></a>
    					(${relation.lienParent})</li>
    			</c:forEach>
    		</ul>
