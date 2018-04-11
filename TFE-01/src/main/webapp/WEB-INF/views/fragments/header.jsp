@@ -87,6 +87,7 @@
 </sec:authorize>
 
  <sec:authorize access="hasAnyAuthority('PARENT')">
+ <sec:authentication property="principal.username" var="username" />
  	<nav class="navbar navbar-default">
  		<div class="container-fluid">
  			<div class="navbar-header">
@@ -124,7 +125,8 @@
 			      	<span class="caret"></span></a>
 			      <ul class="dropdown-menu">
 			      	<li><a href="/TFE-01/classe/list">Menu de la semaine</a>
-			      	<li><a href="/#">inscription</a>
+			      	<li><a href="/TFE-01/cantine/inscription/${username}">inscription pour la semaine</a>
+			      	<li><a href="/TFE-01/cantine/repas/${username}">repas facturés</a>
 			      </ul>
 			     </li>
 			  </ul>
