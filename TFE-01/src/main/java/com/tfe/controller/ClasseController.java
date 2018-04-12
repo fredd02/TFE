@@ -77,6 +77,7 @@ public class ClasseController {
 	//methode pour ajouter un titulaire à la classe
 	@RequestMapping (value="/{code}/titulaire/add", method=RequestMethod.GET)
 	public String classeTitulaireAddGet(@PathVariable String code, Model model) {
+		log.info("methode GET pour ajouter un titulaire à la classe");
 		
 		List<Enseignant> enseignants = enseignantDAO.findAll();
 		

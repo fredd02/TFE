@@ -49,7 +49,7 @@ public class User implements UserDetails{
 	@Column(length=50,nullable=false)
 	@Getter
 	@NotEmpty
-	private String username;
+	protected String username;
 	
 	@Column(length= 100, 	nullable=false)
 	private String password;

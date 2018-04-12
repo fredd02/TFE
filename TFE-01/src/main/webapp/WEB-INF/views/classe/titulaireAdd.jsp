@@ -20,7 +20,7 @@
   	<label for="sel1">Select list:</label>
   	<select class="form-control" id="sel1" name="enseignant_id">
     <c:forEach items="${enseignants}" var = "enseignant">
-    	<option value="${enseignant.id}">${enseignant.nom} ${enseignant.prenom}</option>
+    	<option value="${enseignant.username}">${enseignant.nom} ${enseignant.prenom}</option>
     
     </c:forEach>
   </select>

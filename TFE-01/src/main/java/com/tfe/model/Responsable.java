@@ -9,6 +9,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -72,8 +74,23 @@ public class Responsable extends User{
 	@OneToMany(mappedBy ="responsable")
 	private Set<Relation> relations = new HashSet<>();
 	
+	@ManyToOne
+	@JoinColumn(name="FKCOMPTE")
+	private Compte compte;
+	
 	public Set<Relation> getRelations(){
 		return relations;
+	}
+	
+	public Responsable() {
+		
+	}
+	
+	public Responsable(String username, String nom, String prenom)
+	{
+		this.username=username;
+		this.nom=nom;
+		this.prenom=prenom;
 	}
 
 }

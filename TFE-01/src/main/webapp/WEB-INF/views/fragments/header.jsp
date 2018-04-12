@@ -64,6 +64,14 @@
 			      	<li><a href="/#">#</a>
 			      </ul>
 			     </li>
+			     <li class="dropdown">
+			      <a class="dropdown-toggle" href="#" data-toggle="dropdown">Comptes
+			      	<span class="caret"></span></a>
+			      <ul class="dropdown-menu">
+			      	<li><a href="/TFE-01/compte/add">Créer un compte</a>
+			      	<li><a href="/TFE-01/compte/list">Liste des comptes</a>
+			      </ul>
+			     </li>
 			  </ul>
 			  <ul class="nav navbar-nav navbar-right">
 				<sec:authorize access="isAuthenticated()">
