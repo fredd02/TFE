@@ -17,9 +17,40 @@
 
  <ul class="list-group">
   <li class="list-group-item"><b>Nom du compte: </b> <c:out value="${compte.nom}" /></li>
-  <li class="list-group-item"><b>Titulaires: </b></li>
+  <li class="list-group-item"><b>Titulaires: </b>
+  		<ul>
+  		<c:forEach items="${titulaires}" var="titulaire">
+  			<li><c:out value="${titulaire.nom}" /> <c:out value="${titulaire.prenom}" /></li>
+  		</c:forEach>
+  		</ul></li>
   <li class="list-group-item"><b>Solde: </b><c:out value="${compte.solde}" /></li>
 </ul> 
+
+<h4>Liste des 10 dernières opérations</h4>
+
+<table class="table table-striped">
+    <thead>
+      <tr>
+        <th>date</th>
+        <th>désignation</th>
+        <th>montant</th>
+        <th>élève</th>
+        <th>remarque</th>
+      </tr>
+    </thead>
+    <tbody>
+    	<c:forEach items="${last10Lignes}" var="ligne">
+    		<tr>
+    			<td><fmt:formatDate pattern="dd/MM/YYYY" value="${ligne.date}"/></td>
+    			<td><c:out value="${ligne.designation}" /></td>
+    			<td><c:out value="${ligne.montant}" /></td>
+    			<td><c:out value="${ligne.eleve.prenom}" /></td>
+    			<td><c:out value="${ligne.remarque}" /></td>
+    		
+    		</tr>
+    	
+    	</c:forEach>
+      
 
 </div>
 <jsp:include page="../fragments/footer.jsp" />

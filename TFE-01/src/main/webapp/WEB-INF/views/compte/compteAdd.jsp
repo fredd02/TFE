@@ -44,7 +44,7 @@
 		
 		<li class="list-group-item"><input type="checkbox" name="titulaires[]" value="${responsable.username}"
 		<c:if test="${not empty responsable.compte}"> disabled="true"</c:if>> <c:out value="${responsable.nom}" /> <c:out value="${responsable.prenom}" />
-		<c:if test="${not empty responsable.compte}">   <span> - possède déjà un compte</span></c:if></li>
+		<c:if test="${not empty responsable.compte}">&emsp;<span class="bg-danger">possède déjà un compte</span></c:if></li>
 		
 		<input type="hidden" name="responsables[]" value="${responsable.username}"/>
 	</c:forEach>

@@ -1,5 +1,6 @@
 package com.tfe.repository;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -24,5 +25,9 @@ public interface IEleveRepository extends JpaRepository<Eleve, Long>{
 	//liste des eleves d'un responsable
 	@Query(value="SELECT * FROM TELEVE e JOIN RELATION r on e.id = r.fkeleve WHERE r.fkresponsable=?1",nativeQuery=true)
 	List<Eleve> getElevesFromResponsable(String username);
+	
+	//eleves inscrits à la cantine pour une date
+	@Query(value="SELECT * FROM TELEVE e JOIN INSCRIPTION_CANTINE i on e.id = i.FKELEVE WHERE i.date=?1", nativeQuery=true)
+	List<Eleve> getElevesCantineForDate(Date date);
 
 }

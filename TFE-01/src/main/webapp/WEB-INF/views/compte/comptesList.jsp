@@ -15,9 +15,13 @@
 <div class="container">
 <h4>Liste des comptes</h4>
 
+<c:if test="${empty comptes}">
+	<p>Il n'a pas de compte crée</p>
+</c:if>
+
  <ul class="list-group">
  	<c:forEach items="${comptes}" var="compte" >
- 		<li class="list-group-item"><b>Compte: </b> <c:out value="${compte.nom}" /> <b>Solde: </b><c:out value="${compte.solde}" /></li>
+ 		<li class="list-group-item"><b>Compte: </b> <a href="./${compte.id}"><c:out value="${compte.nom}" /></a> <b>Solde: </b><c:out value="${compte.solde}" /></li>
  	
  	</c:forEach>
   

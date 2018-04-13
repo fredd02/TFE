@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ page session="false" language="java"
 	contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
@@ -26,6 +27,8 @@
 
 <s:url value="/login" var="loginUrl" />
 <s:url value="/logout" var="logoutUrl" />
+<jsp:useBean id="now" class="java.util.Date" />
+<fmt:formatDate pattern="ddMMYYYY" value="${now}" var="today"/>
 
 <div>
 	<img src="/TFE-01/resources/img/bandeau.png">
@@ -69,6 +72,14 @@
 			      	<span class="caret"></span></a>
 			      <ul class="dropdown-menu">
 			      	<li><a href="/TFE-01/compte/add">Créer un compte</a>
+			      	<li><a href="/TFE-01/compte/list">Liste des comptes</a>
+			      </ul>
+			     </li>
+			      <li class="dropdown">
+			      <a class="dropdown-toggle" href="#" data-toggle="dropdown">Cantine
+			      	<span class="caret"></span></a>
+			      <ul class="dropdown-menu">
+			      	<li><a href="/TFE-01/cantine/inscriptions/${today}">Repas du jour</a>
 			      	<li><a href="/TFE-01/compte/list">Liste des comptes</a>
 			      </ul>
 			     </li>

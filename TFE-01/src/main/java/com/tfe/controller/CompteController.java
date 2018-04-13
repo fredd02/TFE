@@ -20,8 +20,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.tfe.model.Compte;
+import com.tfe.model.LigneCompte;
 import com.tfe.model.Responsable;
 import com.tfe.repository.ICompteRepository;
+import com.tfe.repository.ILigneCompteRepository;
 import com.tfe.repository.IResponsableRepository;
 
 @Controller
@@ -36,6 +38,9 @@ public class CompteController {
 	
 	@Autowired
 	ICompteRepository compteDAO;
+	
+	@Autowired
+	ILigneCompteRepository ligneCompteDAO;
 
 	
 	//methode GET pour créer un compte
@@ -81,6 +86,8 @@ public class CompteController {
 			@RequestParam(value="responsables[]") String[] responsables, Model model, RedirectAttributes rModel) {
 		
 		log.info("methode POST pour créer un compte");
+		if(titulaires == null) 
+			errors.reject("titulaires", "Vous devez selectionner un moins un titulaire");
 		
 		//validation
 		if(errors.hasErrors()) {
@@ -137,6 +144,10 @@ public class CompteController {
 			List<Responsable> titulaires = responsableDAO.getTitulairesFromCompte(id);
 			model.addAttribute("titulaires", titulaires);
 		}
+		
+		//recuperation des 10 dernieres lignes
+		List<LigneCompte> lignes = ligneCompteDAO.get10LastLignesFromCompte(id);
+		model.addAttribute("last10Lignes", lignes);
 		
 		
 		return "compte/compte";

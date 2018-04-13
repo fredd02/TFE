@@ -11,16 +11,19 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang3.time.DateUtils;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.DefaultResourceLoader;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,11 +32,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.tfe.model.Compte;
 import com.tfe.model.Eleve;
 import com.tfe.model.Inscription;
 import com.tfe.model.InscriptionCantine;
+import com.tfe.model.LigneCompte;
+import com.tfe.repository.ICompteRepository;
 import com.tfe.repository.IEleveRepository;
 import com.tfe.repository.IInscriptionCantineRepository;
+import com.tfe.repository.ILigneCompteRepository;
 
 import net.minidev.json.parser.ParseException;
 
@@ -49,6 +56,12 @@ public class CantineController {
 	
 	@Autowired
 	IInscriptionCantineRepository inscriptionCantineDAO;
+	
+	@Autowired
+	ICompteRepository compteDAO;
+	
+	@Autowired
+	ILigneCompteRepository ligneCompteDAO;
 	
 	@RequestMapping(value="/")
 	public String cantine() {
@@ -242,6 +255,84 @@ public class CantineController {
 		model.addAttribute("inscriptionsFacturees", inscriptionsFacturees);
 		
 		return "cantine/repasResponsable";
+	}
+	
+	
+	//methode GET pour afficher les eleves inscrits aux repas
+	@RequestMapping(value="/inscriptions/{date}", method=RequestMethod.GET)
+	public String getInscriptionsFromCantine(@PathVariable @DateTimeFormat(pattern="ddMMyyyy")Date date, Model model) {
+		
+		log.info("methode pour afficher les inscriptions aux repas");
+		log.info("date" + date);
+		Date nextDay = DateUtils.addDays(date, 1);
+		log.info("nexDay:" + nextDay);
+		Date previousDay = DateUtils.addDays(date, -1);
+		
+		model.addAttribute("date",date);
+		model.addAttribute("nextDay",nextDay);
+		model.addAttribute("previousDay",previousDay);
+		
+		//liste des eleves inscrits
+		List<InscriptionCantine> inscriptions = inscriptionCantineDAO.getInscriptionsFromDate(date);
+		
+		//verifie si des respas sont à facturer
+		Boolean repasAFacturer = false;
+		
+		Iterator<InscriptionCantine> iterator = inscriptions.iterator();
+		while(iterator.hasNext() && !repasAFacturer) {
+			if(!(iterator.next().isPaye()))
+				repasAFacturer = true;
+		}
+		model.addAttribute("repasAFacturer", repasAFacturer);
+		
+		log.info("nb d'eleves inscrits" + inscriptions.size());
+		model.addAttribute("inscriptions", inscriptions);
+		
+		return "cantine/cantineInscriptionsJour";
+		
+	}
+	
+	//methode GET pour facturer la cantine
+	@RequestMapping(value="/inscriptions/{date}/facturer", method=RequestMethod.GET)
+	public String inscriptionsCantineFacture(@PathVariable @DateTimeFormat(pattern="ddMMyyyy")Date date) {
+		
+		log.info("methode pour facturer la cantine");
+		log.info("date: " + date);
+		
+		//recuperation des inscriptions non payees du jour
+		List<InscriptionCantine> inscriptions = inscriptionCantineDAO.getInscriptionsNonFactureesFromDate(date);
+		log.info("nb d'inscriptions: " + inscriptions.size());
+		for(InscriptionCantine inscription : inscriptions) {
+			
+				//recuperation du compte de l'eleve
+				Compte compte = compteDAO.getCompteFromEleve(inscription.getEleve().getId());
+				Eleve eleve = inscription.getEleve();
+				log.info("id eleve: " + eleve.getId());
+				LigneCompte ligne = new LigneCompte(compte,date,"cantine",-3.80,eleve);
+				ligneCompteDAO.save(ligne);
+				log.info("ligne enregistree");
+				
+				//mise à jour de l'inscription
+				int nbmUpdates = inscriptionCantineDAO.setPayeForInscriptionsFromDate(date);
+				log.info("inscription mise à jour");
+			
+		}
+		//test mise à jour 1 seule inscription
+		log.info("test 1");
+		InscriptionCantine test1 = inscriptionCantineDAO.getOne(50L);
+		test1.setPaye(true);
+		inscriptionCantineDAO.save(test1);
+		
+		
+		//inscriptionCantineDAO.save(inscriptions);
+		
+		SimpleDateFormat format = new SimpleDateFormat("ddMMyyyy");
+		String strDate = format.format(date);
+		log.info("date formattee:" + strDate);
+		
+		
+		return "redirect:/cantine/inscriptions/"+strDate;
+		
 	}
 			
 
