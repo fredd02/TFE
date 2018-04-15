@@ -51,5 +51,12 @@ public class LigneCompte {
 		this.montant=montant;
 		this.eleve=eleve;
 	}
+	
+	public LigneCompte(Compte compte, Date date, String designation, Double montant) {
+		this.compte=compte;
+		this.date=date;
+		this.designation=designation;
+		this.montant=montant;
+	}
 
 }

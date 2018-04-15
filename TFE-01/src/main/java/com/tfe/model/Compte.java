@@ -23,7 +23,7 @@ public class Compte {
 	@Column
 	private String nom;
 	
-	@NotNull(message="Entrer une valeur pour le solde")
+	//@NotNull(message="Entrer une valeur pour le solde")
 	@Column
 	private Double solde;
 

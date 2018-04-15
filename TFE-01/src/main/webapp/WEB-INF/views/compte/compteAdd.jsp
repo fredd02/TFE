@@ -63,18 +63,18 @@
 	  	</div>
   </s:bind>
   
-  <s:bind path="solde">
+  
 		<div class="form-group ${status.error ? 'has-error' : ''}">
-	    	<sf:label path="solde" class="control-label">Solde du compte:</sf:label>
+	    	<label class="control-label">apport:</label>
 	    	<div class="col-lg-3 inputGroupContainer">
 					<div class="input-group">
 						
-						<sf:input path="solde" class="form-control" placeholder="solde" />
-						<sf:errors path="solde" class="control-label" />
+						<input type="number" step="0.01" name="apport" class="form-control" placeholder="apport" />
+						
 					</div>
 				</div>
 	  	</div>
-  </s:bind>
+  
   
   
   

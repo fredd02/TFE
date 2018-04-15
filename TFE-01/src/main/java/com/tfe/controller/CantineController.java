@@ -317,14 +317,7 @@ public class CantineController {
 				log.info("inscription mise à jour");
 			
 		}
-		//test mise à jour 1 seule inscription
-		log.info("test 1");
-		InscriptionCantine test1 = inscriptionCantineDAO.getOne(50L);
-		test1.setPaye(true);
-		inscriptionCantineDAO.save(test1);
 		
-		
-		//inscriptionCantineDAO.save(inscriptions);
 		
 		SimpleDateFormat format = new SimpleDateFormat("ddMMyyyy");
 		String strDate = format.format(date);

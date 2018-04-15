@@ -1,6 +1,7 @@
 package com.tfe.controller;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -83,7 +84,8 @@ public class CompteController {
 	//methode POST pour créer un compte
 	@RequestMapping(value="/add", method=RequestMethod.POST)
 	public String compteAddPost(@Valid Compte compte, BindingResult errors, @RequestParam(value="titulaires[]", required=false)String[] titulaires,
-			@RequestParam(value="responsables[]") String[] responsables, Model model, RedirectAttributes rModel) {
+			@RequestParam(value="responsables[]") String[] responsables, @RequestParam(value="apport", required=false) String montant,
+			Model model, RedirectAttributes rModel) {
 		
 		log.info("methode POST pour créer un compte");
 		if(titulaires == null) 
@@ -110,13 +112,21 @@ public class CompteController {
 				model.addAttribute("responsables", listResponsables);
 				return "compte/compteAdd";
 			} else {
+				//creation du compte
+				log.info(montant);
 				log.info("titulaires: " + titulaires[0].toString());
+				compte.setSolde(0.0);
 				Compte compteSaved = compteDAO.save(compte);
 				for(String titulaire : titulaires) {
 					Responsable responsable = responsableDAO.findOne(titulaire);
 					responsable.setCompte(compteSaved);
 					responsableDAO.save(responsable);
 				}
+				//ajout d'une ligne de compte
+				Date now = new Date();
+				Double montantDble = Double.parseDouble(montant);
+				LigneCompte ligneCredit = new LigneCompte(compteSaved,now,"CREDIT",montantDble);
+				ligneCompteDAO.save(ligneCredit);
 				rModel.addFlashAttribute("compte", compteSaved);
 				rModel.addFlashAttribute("titulaires", titulaires);
 				return "redirect:/compte/" + compteSaved.getId();
