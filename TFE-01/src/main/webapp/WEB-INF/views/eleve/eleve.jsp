@@ -11,10 +11,21 @@
 	<jsp:param name="titre" value="Projet TFE" />
 </jsp:include>
 
+<s:url value="/responsable/add/${eleve.id}" var ="addResponsableURL" />
+<s:url value="/responsable/search/${eleve.id}" var ="searchResponsableURL" />
+<s:url value="/eleve/${eleve.id}/update" var ="updateEleveURL" />
 
 
 <div class="container">
 <h4>Informations sur l'élève <c:out value="${eleve.nom} ${eleve.prenom}" /></h4>
+
+
+<div class="btn-group">
+	
+	<button class="btn btn-primary" onclick="location.href='${updateEleveURL}'">modifier les informations</button>
+	<button class="btn btn-primary" onclick="location.href='${searchResponsableURL}'">supprimer l'élève</button>
+</div>
+<br><br>
 
  <ul class="list-group">
   <li class="list-group-item">Nom: <c:out value="${eleve.nom}" /></li>
@@ -55,12 +66,13 @@
    	</li>
 </ul> 
 
-<s:url value="/responsable/add/${eleve.id}" var ="addResponsableURL" />
-<s:url value="/responsable/search/${eleve.id}" var ="searchResponsableURL" />
 <div class="btn-group">
 	<button class="btn btn-primary" onclick="location.href='${addResponsableURL}'">ajouter un nouveau responsable</button>
 	<button class="btn btn-primary" onclick="location.href='${searchResponsableURL}'">ajouter un responsable existant</button>
+	
 </div>
+
+
 
 
 </div>

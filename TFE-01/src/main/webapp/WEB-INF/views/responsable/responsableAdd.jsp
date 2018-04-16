@@ -13,39 +13,25 @@
 
 <div class="container">
 <h4>Ajout d'un responsable pour l'eleve <c:out value="${eleve.nom}" /> <c:out value="${eleve.prenom}" /></h4>
-nrn du responsable: <c:out value="${responsable.nrn}" /> <c:out value="${responsable.nom}" />
+<br><br>
+
 
 <sf:form method="POST" class="form-inline" modelAttribute="responsable" action="../add">
 
 	<sf:errors path="*" element="div" cssClass="alert alert-danger" />
 	
-	<s:bind path="nrn">
-		<div class="form-group ${status.error ? 'has-error' : ''}">
-			<sf:label path="nrn" class="col-lg-3 control-label">
-				numéro de registre national
-			</sf:label>
-			<div class="col-lg-3 inputGroupContainer">
-				<div class="input-group">
-					<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-					<sf:input path="nrn" id="nrn" class="form-control" placeholder="nrn" />
-					<sf:errors path="nrn" class="control-label" />
-				</div>
-			</div>
-				 
-		</div>
-	</s:bind>
-	
 	<s:bind path="nom">
 		<div class="form-group ${status.error ? 'has-error' : ''}">
-			<sf:label path="nom" class="col-lg-3 control-label">
+			<sf:label path="nom" class="col-sm-3 control-label">
 				nom
 			</sf:label>
-			<div class="col-lg-3 inputGroupContainer">
-				<div class="input-group">
+			<div class="inputGroupContainer col-sm-8">
+				<div class="input-group ">
 					<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
 					<sf:input path="nom" id="nom" class="form-control" placeholder="nom" />
-					<sf:errors path="nom" class="control-label" />
+					
 				</div>
+				<sf:errors path="nom" class="control-label" />
 			</div>
 				 
 		</div>
@@ -53,74 +39,48 @@ nrn du responsable: <c:out value="${responsable.nrn}" /> <c:out value="${respons
 	
 	<s:bind path="prenom">
 		<div class="form-group ${status.error ? 'has-error' : ''}">
-			<sf:label path="prenom" class="col-lg-3 control-label">
+			<sf:label path="prenom" class="col-sm-3 control-label">
 				prenom
 			</sf:label>
-			<div class="col-lg-3 inputGroupContainer">
+			<div class="col-sm-8 inputGroupContainer">
 				<div class="input-group">
 					<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
 					<sf:input path="prenom" id="prenom" class="form-control" placeholder="prenom" />
-					<sf:errors path="prenom" class="control-label" />
+					
 				</div>
+				<sf:errors path="prenom" class="control-label" />
 			</div>
 				 
 		</div>
 	</s:bind>
 	
-	<s:bind path="username">
+	<s:bind path="nrn">
 		<div class="form-group ${status.error ? 'has-error' : ''}">
-			<sf:label path="username" class="col-md-4 control-label">
-				username
+			<sf:label path="nrn" class="col-sm-6 control-label">
+				numéro de registre national
 			</sf:label>
-			<div class="col-md-4 inputGroupContainer">
+			<div class="col-sm-6 inputGroupContainer">
 				<div class="input-group">
 					<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-					<sf:input path="username" id="username" class="form-control" placeholder="username" />
-					<sf:errors path="username" class="control-label" />
+					<sf:input path="nrn" id="nrn" class="form-control" placeholder="nrn" />
+					
 				</div>
+				<sf:errors path="nrn" class="control-label" />
 			</div>
 				 
 		</div>
-	</s:bind>
+	</s:bind><br>
 	
-	<s:bind path="password">
-		<div class="form-group ${status.error ? 'has-error' : ''}">
-			<sf:label path="password" class="col-md-4 control-label">
-				mot de passe
-			</sf:label>
-			<div class="col-md-4 inputGroupContainer">
-				<div class="input-group">
-					<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-					<sf:password path="password" id="password" class="form-control" placeholder="password" />
-					<sf:errors path="password" class="control-label" />
-				</div>
-			</div>
-				 
-		</div>
-	</s:bind>
 	
-	<s:bind path="passwordConfirm">
-		<div class="form-group ${status.error ? 'has-error' : ''}">
-			<sf:label path="passwordConfirm" class="col-md-4 control-label">
-				confirmer le mot de passe
-			</sf:label>
-			<div class="col-md-4 inputGroupContainer">
-				<div class="input-group">
-					<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-					<sf:password path="passwordConfirm" id="passwordConfirm" class="form-control" placeholder="passwordConfirm" />
-					<sf:errors path="passwordConfirm" class="control-label" />
-				</div>
-			</div>
-				 
-		</div>
-	</s:bind>
+	
+	
 	
 	<s:bind path="dateNaissance">
 		<div class="form-group ${status.error ? 'has-error' : ''}">
-			<sf:label path="dateNaissance" class="col-lg-3 control-label">
+			<sf:label path="dateNaissance" class="col-sm-3 control-label">
 				date de naissance
 			</sf:label>
-			<div class="col-lg-3 inputGroupContainer">
+			<div class="col-sm-8 inputGroupContainer">
 				<div class="input-group">
 					<span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
 					<sf:input path="dateNaissance" id="dateNaissance" class="form-control" placeholder="dateNaissance" />
@@ -189,6 +149,56 @@ nrn du responsable: <c:out value="${responsable.nrn}" /> <c:out value="${respons
 					<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
 					<sf:input path="telephone" id="telephone" class="form-control" placeholder="telephone" />
 					<sf:errors path="telephone" class="control-label" />
+				</div>
+			</div>
+				 
+		</div>
+	</s:bind>
+	
+	<s:bind path="username">
+		<div class="form-group ${status.error ? 'has-error' : ''}">
+			<sf:label path="username" class="col-md-4 control-label">
+				username
+			</sf:label>
+			<div class="col-md-4 inputGroupContainer">
+				<div class="input-group">
+					<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+					<sf:input path="username" id="username" class="form-control" placeholder="username" />
+					
+				</div>
+				<sf:errors path="username" class="control-label" />
+			</div>
+				 
+		</div>
+	</s:bind>
+	
+	<s:bind path="password">
+		<div class="form-group ${status.error ? 'has-error' : ''}">
+			<sf:label path="password" class="col-md-4 control-label">
+				mot de passe
+			</sf:label>
+			<div class="col-md-4 inputGroupContainer">
+				<div class="input-group">
+					<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+					<sf:password path="password" id="password" class="form-control" placeholder="password" />
+					
+				</div>
+				<sf:errors path="password" class="control-label" />
+			</div>
+				 
+		</div>
+	</s:bind>
+	
+	<s:bind path="passwordConfirm">
+		<div class="form-group ${status.error ? 'has-error' : ''}">
+			<sf:label path="passwordConfirm" class="col-md-4 control-label">
+				confirmer le mot de passe
+			</sf:label>
+			<div class="col-md-4 inputGroupContainer">
+				<div class="input-group">
+					<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+					<sf:password path="passwordConfirm" id="passwordConfirm" class="form-control" placeholder="passwordConfirm" />
+					<sf:errors path="passwordConfirm" class="control-label" />
 				</div>
 			</div>
 				 

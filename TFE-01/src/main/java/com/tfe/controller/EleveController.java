@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.tfe.exceptions.NotFoundException;
+import com.tfe.exceptions.NotFoundExceptionInt;
 import com.tfe.model.Classe;
 import com.tfe.model.Eleve;
 import com.tfe.model.Inscription;
@@ -52,12 +54,32 @@ public class EleveController {
 		
 		log.info("methode GET pour ajouter un eleve");
 		
-		List<Classe> listeClasses = classeDAO.findAll();
+		List<Classe> listeClasses = classeDAO.getClassesOrderedByCode();
 		
 		model.addAttribute("eleve", eleve);
 		model.addAttribute("listeClasses",listeClasses);
 		
 		return "eleve/eleveAdd";
+	}
+	
+	
+	//methode GET pour modifier un eleve
+	@RequestMapping(value="{idEleve}/update", method=RequestMethod.GET)
+	public String updateEleveGet(@PathVariable Long idEleve, Model model) {
+		if(!eleveDAO.exists(idEleve))
+			throw new NotFoundExceptionInt("eleve invalide", idEleve);
+		Eleve eleve = eleveDAO.findOne(idEleve);
+		model.addAttribute("eleve", eleve);
+		
+		List<Classe> listeClasses = classeDAO.getClassesOrderedByCode();
+		model.addAttribute("listeClasses",listeClasses);
+		
+		//recuperation de l'inscription actuelle de l'eleve
+		Inscription inscription = inscriptionDAO.inscriptionActuelleFromEleve(idEleve);
+		model.addAttribute("inscription", inscription);
+		
+		
+		return "eleve/eleveUpdate";
 	}
 	
 	/**
@@ -67,12 +89,18 @@ public class EleveController {
 	 */
 	
 	@RequestMapping(value="/add", method=RequestMethod.POST)
-	public String eleveAddPost(@Valid Eleve eleve,  BindingResult errors, @RequestParam(value="codeClasse") String codeClasse,Model model, RedirectAttributes rModel) {
+	public String eleveAddPost(@Valid Eleve eleve,  BindingResult errors, @RequestParam(value="codeClasse") String codeClasse,
+			Model model, RedirectAttributes rModel) {
 		
 		log.info("methode POST pour inscrire un élève");
+	
 		
 		//validation
 		if(errors.hasErrors()) {
+			
+			List<Classe> listeClasses = classeDAO.getClassesOrderedByCode();
+			model.addAttribute("listeClasses",listeClasses);
+			log.info("erreurs dans les données de l'eleve");
 			return "eleve/eleveAdd";
 		}else {
 			//ajout de la date du jour pour l'inscription
@@ -88,17 +116,52 @@ public class EleveController {
 			log.info("enregistrement de l'inscription:" );
 			Inscription inscriptionSaved = inscriptionDAO.save(inscription);
 			
-			
-			
-			
-			
 			rModel.addFlashAttribute(eleveSaved);
 			
-			
-			return "redirect:/eleve/list";
+			return "redirect:/eleve/"+eleveSaved.getId();
 			
 		}
 		
+		
+	}
+	
+	//methode POST pour modifier un eleve
+	@RequestMapping(value="{idEleve}/update", method=RequestMethod.POST)
+	public String updateElevePost(@Valid Eleve eleve, BindingResult errors, @RequestParam(value="codeClasse") String codeClasse, 
+			Model model, RedirectAttributes rModel)
+					 {
+		log.info("methode POST pour modifier un eleve");
+		log.info("id de l'eleve: " + eleve.getId());
+		
+		
+		//validation
+		if(errors.hasErrors()) {
+			List<Classe> listeClasses = classeDAO.getClassesOrderedByCode();
+			model.addAttribute("listeClasses",listeClasses);
+			log.info("erreurs dans les données de l'eleve");
+			return "eleve/eleveUpdate";
+			
+		} else {
+			log.info("save eleve");
+			Eleve eleveSaved = eleveDAO.save(eleve);
+			
+			//gestion de l'inscription
+			Date dateNow = new Date();
+			Classe classe = classeDAO.findOne(codeClasse);
+			//modification de la précédente inscription
+			Inscription inscriptionActuelle = inscriptionDAO.inscriptionActuelleFromEleve(eleve.getId());
+			inscriptionActuelle.setDateSortie(dateNow);
+			log.info("date de sortie: " + inscriptionActuelle.getDateSortie());
+			inscriptionDAO.save(inscriptionActuelle);
+			log.info("inscription modifiee");
+			Inscription inscription = new Inscription(eleveSaved,classe,dateNow);
+			Inscription inscriptionSaved = inscriptionDAO.save(inscription);
+			
+			//rModel.addFlashAttribute(eleveSaved);
+			return "redirect:/eleve/"+eleveSaved.getId();
+			
+			
+		}
 		
 	}
 	/**

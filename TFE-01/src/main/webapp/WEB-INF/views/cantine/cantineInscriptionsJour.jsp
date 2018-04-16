@@ -14,7 +14,7 @@
 
 <fmt:formatDate pattern="ddMMyyyy" value="${date}" var="dateFmt"/>
 <s:url value="/cantine/inscriptions/${dateFmt}/facturer" var="urlFacturer" />
-<c:out value="${urlFacturer}" />
+
 <jsp:useBean id="now" class="java.util.Date" />
 <fmt:formatDate pattern="dd/MM/YYYY" value="${now}" var="today"/>
 <fmt:formatDate pattern="dd/MM/yyyy" value="${date}" var="date"/>
@@ -30,7 +30,7 @@
 Inscriptions à la cantine pour le <c:out value="${date}" />
 <a href="./${nextDay}"><span class="glyphicon glyphicon-circle-arrow-right"></span></a></h4>
 
-<p>Nombre de repas: <span class="badge">${fn:length(inscriptions)}</span>&emsp;
+<p>Nombre de repas: <span class="badge badge-warning">${fn:length(inscriptions)}</span>&emsp;
 	<c:if test="${(date le today) and (repasAFacturer)}">
 	<button type="button" class="btn btn-primary btn-sm" onClick="location.href='${urlFacturer}'">Facturer les repas</button></c:if></p>
 

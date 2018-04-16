@@ -12,7 +12,7 @@
 </jsp:include>
 
 <div class="container">
-<h1>Inscription d'un enseignant</h1>
+<div class="well well-sm text-center color1"><h4>Inscription d'un enseignant</h4></div>
 
 <sf:form method="POST" class="form-horizontal" modelAttribute="enseignant" action="add">
 

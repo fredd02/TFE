@@ -70,6 +70,11 @@ public class CantineController {
 		return "cantine/cantine";
 	}
 	
+	@RequestMapping(value= "", method = RequestMethod.GET)
+	public String redirectionVersHome() {
+		return "home";
+	}
+	
 	
 	@RequestMapping(value="/download", method=RequestMethod.GET)
 	public void getFile(HttpServletResponse response) {

@@ -147,10 +147,12 @@ public class CompteController {
 		
 		//verifie si le  modele contient dejà le compte et les titulaires suite à une redirection
 		if(!model.containsAttribute("compte")) {
+			log.info("le model ne contient pas l'attribut compte");
 			Compte compte = compteDAO.findOne(id);
 			model.addAttribute("compte", compte);
 		}
 		if(!model.containsAttribute("titulaires")) {
+			log.info("le model ne contient pas l'attribut titulaires");
 			List<Responsable> titulaires = responsableDAO.getTitulairesFromCompte(id);
 			model.addAttribute("titulaires", titulaires);
 		}

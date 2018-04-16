@@ -6,6 +6,7 @@ public class NotFoundException extends RuntimeException {
 	
 	//identifiant de l'objet recherché
 	private String username;
+	
 
 	public NotFoundException(String message, String username) {
 		super(message);

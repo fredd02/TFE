@@ -5,14 +5,14 @@
 <%@ taglib uri="http://www.springframework.org/tags" prefix="s"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="sf"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<%-- <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%> --%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%> 
 <html>
 <jsp:include page="../fragments/header.jsp">
 	<jsp:param name="titre" value="Projet TFE" />
 </jsp:include>
 
 <div class="container">
-<h1>Liste des élèves</h1>
+<h4>Liste des élèves&emsp;<span class="badge badge-warning">${fn:length(elevesList)}</span></h4>
 
  <table class="table table-striped table-bordered nowrap">
  	<thead>

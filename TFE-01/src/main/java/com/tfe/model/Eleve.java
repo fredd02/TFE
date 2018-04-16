@@ -15,6 +15,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -30,15 +31,17 @@ public class Eleve {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	
-	@Pattern(regexp = "[0-9]{2}\\.[0-9]{2}\\.[0-9]{2}\\-[0-9]{3}\\.[0-9]{2}")
+	@Pattern(regexp = "[0-9]{2}\\.[0-9]{2}\\.[0-9]{2}\\-[0-9]{3}\\.[0-9]{2}", message="le nrn n'est pas valide")
 	@Column(nullable=false)
 	private String nrn;
 	
 	@NotNull
+	@Size(min=2, max=30, message="Le nom doit faire entre 2 et 30 caractères")
 	@Column(length=30, nullable=false)
 	private String nom;
 	
 	@NotNull
+	@Size(min=2, max=30, message="Le prénom doit faire entre 2 et 30 caractères")
 	@Column(length=30, nullable=false)
 	private String prenom;
 	
@@ -52,7 +55,7 @@ public class Eleve {
 	private Integer sexe;
 	
 	@Temporal(TemporalType.DATE)
-	@Column(nullable=false)
+	@Column(nullable=false, updatable=false)
 	private Date dateInscription;
 	
 	@OneToMany(mappedBy = "eleve")
