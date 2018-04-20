@@ -30,7 +30,7 @@
 Inscriptions à la cantine pour le <c:out value="${date}" />
 <a href="./${nextDay}"><span class="glyphicon glyphicon-circle-arrow-right"></span></a></h4>
 
-<p>Nombre de repas: <span class="badge badge-warning">${fn:length(inscriptions)}</span>&emsp;
+<p>Nombre de repas: <span class="badge badge-info">${fn:length(inscriptions)}</span>&emsp;
 	<c:if test="${(date le today) and (repasAFacturer)}">
 	<button type="button" class="btn btn-primary btn-sm" onClick="location.href='${urlFacturer}'">Facturer les repas</button></c:if></p>
 

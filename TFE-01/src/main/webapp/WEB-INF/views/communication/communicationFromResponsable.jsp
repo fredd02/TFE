@@ -14,6 +14,8 @@
 
 <div class="container">
 <h4>Courrier</h4>
+<p>Nombre de courriers: <span class="badge badge-info"><c:out value="${fn:length(communications)}" /></span></p>
+<p>courrier  non lu: </p>
 
 
 </div>

@@ -1,6 +1,7 @@
 package com.tfe.controller;
 
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -21,8 +22,12 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.tfe.model.Classe;
 import com.tfe.model.Communication;
+import com.tfe.model.CommunicationResponsable;
+import com.tfe.model.Responsable;
 import com.tfe.repository.IClasseRepository;
 import com.tfe.repository.ICommunicationRepository;
+import com.tfe.repository.ICommunicationResponsableRepository;
+import com.tfe.repository.IResponsableRepository;
 import com.tfe.service.IStorageService;
 
 @Controller
@@ -40,6 +45,12 @@ public class CommunicationController {
 	
 	@Autowired
 	ICommunicationRepository communicationDAO;
+	
+	@Autowired
+	IResponsableRepository responsableDAO;
+	
+	@Autowired
+	ICommunicationResponsableRepository communicationResponsableDAO;
 	
 	@RequestMapping(value="add", method=RequestMethod.GET)
 	public String communicationAddGet(Communication communication, Model model) {
@@ -98,6 +109,22 @@ public class CommunicationController {
 		
 		Communication communicationSaved = communicationDAO.save(communication);
 		
+		//recuperation de la liste des responsables concernés
+		Set<Responsable> responsables = new HashSet<Responsable>();
+		List<Responsable> responsablesClasse = new ArrayList<Responsable>();
+		CommunicationResponsable communicationResponsable;
+		
+		for(Classe classe : listClasses) {
+			responsablesClasse = responsableDAO.getResponsablesFromClasse(classe.getCode());
+			responsables.addAll(responsablesClasse);
+		}
+		
+		for(Responsable responsable : responsables) {
+			communicationResponsable = new CommunicationResponsable(responsable,communicationSaved,false);
+			communicationResponsableDAO.save(communicationResponsable);
+			
+		}
+		
 		rModel.addFlashAttribute("message","la communication a bien été envoyée");
 		
 		
@@ -129,7 +156,7 @@ public class CommunicationController {
 	@RequestMapping(value="{responsable}/list", method = RequestMethod.GET)
 	public String listCommunicationsResponsable(@PathVariable(value="responsable") String username,Model model) {
 		
-		List<Communication> communications = communicationDAO.getCommunicationsFromResponsable(username);
+		List<CommunicationResponsable> communications = communicationResponsableDAO.getCommunicationsFromResponsable(username);
 		
 		model.addAttribute("communications", communications);
 		

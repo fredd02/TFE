@@ -161,7 +161,7 @@
 			      <a class="dropdown-toggle" href="#" data-toggle="dropdown">Communication
 			      	<span class="caret"></span></a>
 			      <ul class="dropdown-menu">
-			      	<li><a href="#">Courrier</a>
+			      	<li><a href="/TFE-01/communication/${username}/list">Courrier</a>
 			      	<li><a href="#">Prendre RDV</a>
 			      	
 			      </ul>
