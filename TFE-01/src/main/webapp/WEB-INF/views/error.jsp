@@ -11,12 +11,12 @@
 
 	<div class="container">
 
-		<h1><s:message code="erreur"/></h1>
+		<h1>Erreur</h1>
 
-		<c:set var="message">
-			<c:out value="${exception.message}"/>
-		</c:set>
-		<h3><s:message code="${message}"/></h3>
+<%-- 		<c:set var="message"> --%>
+<%-- 			<c:out value="${exception.message}"/> --%>
+<%-- 		</c:set> --%>
+<%-- 		<h3><s:message code="${message}"/></h3> --%>
 
 	</div>
 

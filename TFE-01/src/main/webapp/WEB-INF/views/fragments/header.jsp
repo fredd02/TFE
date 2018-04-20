@@ -80,7 +80,16 @@
 			      	<span class="caret"></span></a>
 			      <ul class="dropdown-menu">
 			      	<li><a href="/TFE-01/cantine/inscriptions/${today}">Repas du jour</a>
-			      	<li><a href="/TFE-01/compte/list">Liste des comptes</a>
+			      	<li><a href="/TFE-01/compte/list"></a>
+			      </ul>
+			     </li>
+			     <li class="dropdown">
+			      <a class="dropdown-toggle" href="#" data-toggle="dropdown">Communication
+			      	<span class="caret"></span></a>
+			      <ul class="dropdown-menu">
+			      	<li><a href="/TFE-01/file/upload">uploader un fichier</a>
+			      	<li><a href="/TFE-01/communication/add">nouvelle communication</a>
+			      	<li><a href="/TFE-01/communication/list">liste des communications</a>
 			      </ul>
 			     </li>
 			  </ul>
@@ -143,9 +152,18 @@
 			      <a class="dropdown-toggle" href="#" data-toggle="dropdown">Cantine
 			      	<span class="caret"></span></a>
 			      <ul class="dropdown-menu">
-			      	<li><a href="/TFE-01/classe/list">Menu de la semaine</a>
+			      	<li><a href="/TFE-01/cantine/">Menu de la semaine</a>
 			      	<li><a href="/TFE-01/cantine/inscription/${username}">inscription pour la semaine</a>
 			      	<li><a href="/TFE-01/cantine/repas/${username}">repas facturés</a>
+			      </ul>
+			     </li>
+			     <li class="dropdown">
+			      <a class="dropdown-toggle" href="#" data-toggle="dropdown">Communication
+			      	<span class="caret"></span></a>
+			      <ul class="dropdown-menu">
+			      	<li><a href="#">Courrier</a>
+			      	<li><a href="#">Prendre RDV</a>
+			      	
 			      </ul>
 			     </li>
 			  </ul>

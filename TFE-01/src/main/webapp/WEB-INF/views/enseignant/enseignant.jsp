@@ -45,8 +45,8 @@
 </ul>
 
 <div class="btn-group text-center">
-	<button class="btn btn-primary" onclick="location.href='./${enseignant.id}/update'">modifier les informations</button>
-	<s:url value="/enseignant/${enseignant.id}/delete" var="deleteUrl" />
+	<button class="btn btn-primary" onclick="location.href='./${enseignant.username}/update'">modifier les informations</button>
+	<s:url value="/enseignant/${enseignant.username}/delete" var="deleteUrl" />
 			<button class="btn btn-danger"
 				onclick="
 				if (confirm('Suppression de l'enseignant ?')) {

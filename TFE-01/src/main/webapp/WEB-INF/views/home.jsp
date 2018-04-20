@@ -21,10 +21,10 @@
 
 		
 		<sec:authentication property="authorities" var="roles" scope="page" />
-		Your roles are:
+		roles:
 		<ul>
 			<c:forEach var="role" items="${roles}">
-				<li>u${role}uu</li>
+				<li>${role}</li>
 			</c:forEach>
 		</ul>
 </sec:authorize>
