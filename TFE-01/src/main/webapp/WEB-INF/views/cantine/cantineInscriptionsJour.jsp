@@ -30,26 +30,68 @@
 Inscriptions à la cantine pour le <c:out value="${date}" />
 <a href="./${nextDay}"><span class="glyphicon glyphicon-circle-arrow-right"></span></a></h4>
 
-<p>Nombre de repas: <span class="badge badge-info">${fn:length(inscriptions)}</span>&emsp;
+<table>
+<tbody>
+	<tr>
+		<td>
+			Nombre de repas: <span class="badge badge-info">${fn:length(inscriptions)}</span>&emsp;
+		
+		</td>
+		<td>
+			<form method="GET" action="../selectEleve/${dateFmt}">
+	
+				&emsp;<button type="submit" class="btn btn-primary">ajouter un élève</button>
+
+
+			</form>
+		
+		</td>
+	</tr>
+</tbody>
+</table>
+
+
+
+
+
 	<c:if test="${(date le today) and (repasAFacturer)}">
-	<button type="button" class="btn btn-primary btn-sm" onClick="location.href='${urlFacturer}'">Facturer les repas</button></c:if></p>
+	<p><button type="button" class="btn btn-primary btn-sm" onClick="location.href='${urlFacturer}'">Facturer les repas</button></c:if></p>
 
 
+<table class="table">
+   
+    <tbody>
+    	<c:forEach items="${inscriptions}" var="inscription">
+    	<tr>
+    		<td>
+    			<c:out value="${inscription.eleve.nom}" /> <c:out value="${inscription.eleve.prenom}" />
+    		
+    		</td>
+    		<td>
+    		<c:choose>
+    			<c:when test="${inscription.paye}">&emsp;<span class="bg-success">facturé</span></c:when>
+ 				<c:otherwise>&emsp;<span class="bg-danger">à facturer</span>
+ 				
 
- <ul class="list-group">
- 	<c:forEach items="${inscriptions}" var="inscription">
- 		<li class="list-group-item"><c:out value="${inscription.eleve.nom}" /> <c:out value="${inscription.eleve.prenom}" />
- 		<c:choose>
- 			<c:when test="${inscription.paye}">&emsp;<span class="bg-success">facturé</span></c:when>
- 			<c:otherwise>&emsp;<span class="bg-danger">à facturer</span></c:otherwise>
- 		</c:choose>
+ 				</c:otherwise>
+ 				</c:choose>
+    		</td>
+    		<td>
+    			<c:if test="${!inscription.paye}">
+    				<a href="../desinscrire/${dateFmt}/${inscription.eleve.id}">désinscrire l'élève</a>
+    			
+    			</c:if>
+    		
+    		
+    		</td>
+    		
  		
- 		</li>
- 	
+ 		</tr>
  	</c:forEach>
-  
-  
-</ul> 
+    </tbody>
+</table>
+
+
 
 </div>
 <jsp:include page="../fragments/footer.jsp" />

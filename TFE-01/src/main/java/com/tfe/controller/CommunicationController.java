@@ -160,6 +160,11 @@ public class CommunicationController {
 		
 		model.addAttribute("communications", communications);
 		
+		//nb de communications non lues
+		int nbCommunicationsNonLues = communicationResponsableDAO.getNbCommunicationsNonLuesFromResponsable(username);
+		
+		model.addAttribute("communicationsNonLues", nbCommunicationsNonLues);
+		
 		return "communication/communicationFromResponsable";
 	}
 

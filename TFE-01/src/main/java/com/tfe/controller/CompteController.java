@@ -139,7 +139,7 @@ public class CompteController {
 	}
 	
 	
-	//methode pour voir les détails d'un compte
+	//methode pour voir les détails d'un compte à partir de son id
 	@RequestMapping(value="/{id}", method=RequestMethod.GET)
 	public String compteInfosGet(@PathVariable Long id, Model model) {
 		
@@ -173,6 +173,28 @@ public class CompteController {
 		model.addAttribute("comptes", comptesList);
 		
 		return "compte/comptesList";
+	}
+	
+	//methode pour voir le détail d'un compte à partir du username du responsable
+	@RequestMapping(value="/responsable/{username}", method=RequestMethod.GET)
+	public String getCompteFromUsername(@PathVariable("username") String username, Model model) {
+		
+		//recuperation de l'id du compte
+		Long id = compteDAO.getCompteIdFromResponsable(username);
+		
+		Compte compte = compteDAO.findOne(id);
+		model.addAttribute("compte", compte);
+		
+		List<Responsable> titulaires = responsableDAO.getTitulairesFromCompte(id);
+		model.addAttribute("titulaires", titulaires);
+		
+		//recuperation des 10 dernieres lignes
+				List<LigneCompte> lignes = ligneCompteDAO.get10LastLignesFromCompte(id);
+				model.addAttribute("last10Lignes", lignes);
+		
+		return "compte/compte";
+		
+		
 	}
 	
 	

@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import com.tfe.model.Eleve;
+import com.tfe.model.Responsable;
 
 public interface IEleveRepository extends JpaRepository<Eleve, Long>{
 	
@@ -29,5 +30,8 @@ public interface IEleveRepository extends JpaRepository<Eleve, Long>{
 	//eleves inscrits à la cantine pour une date
 	@Query(value="SELECT * FROM TELEVE e JOIN INSCRIPTION_CANTINE i on e.id = i.FKELEVE WHERE i.date=?1", nativeQuery=true)
 	List<Eleve> getElevesCantineForDate(Date date);
+	
+	//recherche d'un eleve par son nom
+		List<Eleve> readByNomIgnoringCase(String nom);
 
 }

@@ -125,29 +125,23 @@
 			 <ul class="nav navbar-nav">
 			 	<li class="active"><a href="/TFE-01/">Home</a></li>
 			    <li class="dropdown">
-			      <a class="dropdown-toggle" href="#" data-toggle="dropdown">Présentation
+			      <a class="dropdown-toggle" href="#" data-toggle="dropdown">L'école
 			      	<span class="caret"></span></a>
 			      <ul class="dropdown-menu">
-			      	<li><a href="/TFE-01/eleve/add">Inscription</a>
-			      	<li><a href="/TFE-01/eleve/list">Liste</a>
+			      	<li><a href="#">Présentation</a>
+			      	<li><a href="#">Projet pédagogique</a>
+			      	<li><a href="#">Actualité</a>
 			      </ul>
 			     </li>
-			    <li class="dropdown">
-			      <a class="dropdown-toggle" href="#" data-toggle="dropdown">Projet pédagogique
+			     <li class="dropdown">
+			      <a class="dropdown-toggle" href="#" data-toggle="dropdown">Compte
 			      	<span class="caret"></span></a>
 			      <ul class="dropdown-menu">
-			      	<li><a href="/TFE-01/enseignant/add">Inscription</a>
-			      	<li><a href="/TFE-01/enseignant/list">Liste</a>
+			      	<li><a href="/TFE-01/compte/responsable/${username}">consultation du compte</a>
+			      	
 			      </ul>
 			     </li>
-			    <li class="dropdown">
-			      <a class="dropdown-toggle" href="#" data-toggle="dropdown">Actualité
-			      	<span class="caret"></span></a>
-			      <ul class="dropdown-menu">
-			      	<li><a href="/TFE-01/classe/list">Liste</a>
-			      	<li><a href="/#">#</a>
-			      </ul>
-			     </li>
+			    
 			     <li class="dropdown">
 			      <a class="dropdown-toggle" href="#" data-toggle="dropdown">Cantine
 			      	<span class="caret"></span></a>

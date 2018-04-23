@@ -26,7 +26,7 @@ public class InscriptionCantine {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne
 	@JoinColumn(name="FKEleve")
 	private Eleve eleve;
 	

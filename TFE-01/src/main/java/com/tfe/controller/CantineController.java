@@ -236,6 +236,7 @@ public class CantineController {
 				log.info("existe: " + existe);
 				if(!existe)
 					inscriptionCantineDAO.delete(inscriptionBD);
+					log.info("inscription supprimée");
 			}
 		} catch (java.text.ParseException e) {
 			
@@ -331,6 +332,135 @@ public class CantineController {
 		
 		return "redirect:/cantine/inscriptions/"+strDate;
 		
+	}
+	
+	//methode GET pour inscrire un élève à la cantine
+	@RequestMapping(value="selectEleve/{dateString}", method=RequestMethod.GET)
+	public String addEleveCantine(@PathVariable String dateString, Model model) {
+		
+		log.info("methode GET pour ajouter un eleve à la cantine");
+		log.info("date: " + dateString);
+		
+		Date date=new Date();
+		SimpleDateFormat formatter = new SimpleDateFormat("ddMMyyyy");
+		
+		try {
+			date = formatter.parse(dateString);
+			log.info("date: " + date);
+		} catch (java.text.ParseException e) {
+			
+			e.printStackTrace();
+		}
+		
+		
+		
+		
+		
+		model.addAttribute("date", date);
+		
+		return "cantine/cantineAjoutEleve";
+	}
+	
+	//methode POST pour rechercher l'eleve dans la DB
+	@RequestMapping(value="selectEleve/{dateString}", method=RequestMethod.POST)
+	public String selectEleveCantine(@RequestParam(value="nom") String nom, 
+			@PathVariable String dateString,Model model) {
+		log.info("methode POST pour rechercher eleve dans la DB");
+		
+		log.info("date: " + dateString);
+		
+		
+		
+		List<Eleve> eleves= eleveDAO.readByNomIgnoringCase(nom);
+		model.addAttribute("eleves", eleves);
+		
+		//liste des inscriptions pour ce jour
+		Date date=new Date();
+		SimpleDateFormat formatter = new SimpleDateFormat("ddMMyyyy");
+		
+		try {
+			date = formatter.parse(dateString);
+			log.info("date: " + date);
+		} catch (java.text.ParseException e) {
+			
+			e.printStackTrace();
+		}
+		
+		model.addAttribute("date", date);
+		List<InscriptionCantine> inscriptions = inscriptionCantineDAO.getInscriptionsFromDate(date);
+		model.addAttribute("inscriptions", inscriptions);
+		
+		
+		return "cantine/cantineAjoutEleve";
+	}
+	
+	//methode POST pour inscrire les eleves à la cantine
+	@RequestMapping(value="inscriptionEleve/{dateString}", method=RequestMethod.POST)
+	public String addEleveCantine(@PathVariable String dateString,@RequestParam(value="elevesId[]") String[] elevesId
+			) {
+		
+		log.info("methode POST pour inscrire les eleves à la cantine");
+		
+		log.info("dateString: " + dateString);
+		//formatage de la date
+		Date date = new Date();
+		
+		SimpleDateFormat formatter = new SimpleDateFormat("ddMMyyyy");
+		
+		try {
+			date = formatter.parse(dateString);
+			log.info("date: " + date);
+		} catch (java.text.ParseException e) {
+			
+			e.printStackTrace();
+		}
+        
+
+        
+		
+		//recuperation des eleves selectionnés
+		if(elevesId != null) {
+			
+			
+			for(String idString : elevesId) {
+				
+				Long id = Long.parseLong(idString);
+				Eleve eleve = eleveDAO.findOne(id);
+				log.info("eleve selectionné: " + eleve.getPrenom());
+				InscriptionCantine inscriptionCantine = new InscriptionCantine(eleve,date);
+				inscriptionCantineDAO.save(inscriptionCantine);
+				
+			}
+		}
+		
+		return "redirect:/cantine/inscriptions/"+dateString;
+		
+	}
+	
+	
+	//methode pour désinscrire un élève de la cantine
+	@RequestMapping(value="desinscrire/{dateString}/{eleveId}", method=RequestMethod.GET)
+	public String desinscriptionEleveCantine(@PathVariable("dateString") String dateString, @PathVariable("eleveId") String eleveId) {
+		
+		log.info("methode pour desinscrire un eleve de la cantine");
+		
+		Date date = new Date();
+		SimpleDateFormat formatter = new SimpleDateFormat("ddMMyyyy");
+		
+		try {
+			date = formatter.parse(dateString);
+			log.info("date: " + date);
+		} catch (java.text.ParseException e) {
+			
+			e.printStackTrace();
+		}
+		
+		Long id = Long.parseLong(eleveId);
+		Long inscId= inscriptionCantineDAO.getInscriptionCantineWithEleveAndDate(id, date);
+		inscriptionCantineDAO.delete(inscId);
+	
+		
+		return "redirect:/cantine/inscriptions/"+dateString;
 	}
 			
 

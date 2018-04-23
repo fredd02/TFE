@@ -13,7 +13,7 @@
 </jsp:include>
 
 <div class="container">
-<h4>Infos sur le compte</h4>
+<h4>Informations sur le compte</h4>
 
  <ul class="list-group">
   <li class="list-group-item"><b>Nom du compte: </b> <c:out value="${compte.nom}" /></li>
