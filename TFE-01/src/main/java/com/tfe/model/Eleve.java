@@ -45,12 +45,12 @@ public class Eleve {
 	@Column(length=30, nullable=false)
 	private String prenom;
 	
-	@NotNull
+	@NotNull(message="la date de naissance doit être renseignée")
 	@DateTimeFormat(pattern="dd/MM/yyyy")
 	@Column(nullable=false)
 	private Date dateNaissance;
 	
-	@NotNull
+	@NotNull(message="le sexe doit être renseigné")
 	@Column(nullable=false)
 	private Integer sexe;
 	

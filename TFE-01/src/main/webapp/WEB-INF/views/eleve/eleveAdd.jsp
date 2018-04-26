@@ -78,7 +78,7 @@
 			<div class="col-sm-4 inputGroupContainer">
 				<div class="input-group">
 					<span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-					<sf:input path="dateNaissance" id="dateNaissance" class="form-control" placeholder="dateNaissance" />
+					<sf:input path="dateNaissance" id="dateNaissance" class="form-control" placeholder="format jj/mm/aaaa" />
 					
 				</div>
 				<sf:errors path="dateNaissance" class="control-label" />

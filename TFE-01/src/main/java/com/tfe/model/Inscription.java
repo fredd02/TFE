@@ -12,11 +12,14 @@ import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
 @Entity
-@org.hibernate.annotations.Immutable
+//@org.hibernate.annotations.Immutable
 public class Inscription {
 	
 	@Embeddable
 	public static class Id implements Serializable {
+		
+		private static final long serialVersionUID = 1L;
+		
 		@Column(name="FKELEVE")
 		protected Long eleveId;
 		@Column(name="FKCLASSE")
@@ -62,12 +65,23 @@ public class Inscription {
 		@JoinColumn( name="FKCLASSE", insertable=false, updatable=false)
 		protected Classe classe;
 		
-		protected Inscription() {};
+		public Inscription() {};
 		
 		public Inscription(Eleve eleve, Classe classe, Date dateEntree) {
 			this.eleve = eleve;
 			this.classe = classe;
 			this.dateEntree = dateEntree;
+			this.id.eleveId = eleve.getId();
+			this.id.classeId = classe.getCode();
+			eleve.getInscriptions().add(this);
+			classe.getInscriptions().add(this);
+		}
+		
+		public Inscription(Eleve eleve, Classe classe, Date dateEntree, Date dateSortie) {
+			this.eleve = eleve;
+			this.classe = classe;
+			this.dateEntree = dateEntree;
+			this.dateSortie = dateSortie;
 			this.id.eleveId = eleve.getId();
 			this.id.classeId = classe.getCode();
 			eleve.getInscriptions().add(this);
@@ -148,6 +162,14 @@ public class Inscription {
 				return false;
 			return true;
 		}
+
+		@Override
+		public String toString() {
+			return "Inscription [id=" + id + ", dateEntree=" + dateEntree + ", dateSortie=" + dateSortie + ", eleve="
+					+ eleve + ", classe=" + classe + "]";
+		}
+		
+		
 		
 		
 		

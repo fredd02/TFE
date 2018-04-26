@@ -109,26 +109,42 @@
 		</div>
 	</s:bind>
 	
-	
-		<div class="form-group" >
-			<label class="col-sm-4 control-label">
-				classe
-			</label>
-			<div class="col-sm-4 inputGroupContainer">
-				<div class="input-group">
-					<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-					<select id="classe" class="form-control" name="codeClasse">
-					<c:forEach items="${listeClasses}" var="classe">
-						<option value="<c:out value='${classe.code}'/>" 
-							
-							><c:out value="${classe.code}"/></option>
-					</c:forEach>
-					</select>
-					
+	<c:choose>
+		<c:when test="${inscriptionToday}">
+				<div class="form-group" >
+				<label class="col-sm-4 control-label">
+					classe
+				</label>
+				<div class="col-sm-4 inputGroupContainer">
+					<div class="input-group">
+						<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+						<select id="classe" class="form-control" name="codeClasse">
+						<c:forEach items="${listeClasses}" var="classe">
+							<option value="<c:out value='${classe.code}'/>" 
+								
+								><c:out value="${classe.code}"/></option>
+						</c:forEach>
+						</select>
+						
+					</div>
 				</div>
+					 
 			</div>
-				 
-		</div>
+		
+		</c:when>
+		<c:otherwise>
+			<div class="alert alert-warning">
+  				<strong>Attention!</strong> Vous ne pouvez plus modifier la classe par ce formulaire.
+			</div>
+		
+		</c:otherwise>
+	
+	
+	
+	
+	
+	</c:choose>
+		
 	
 	
 	<sf:hidden path="id"/>

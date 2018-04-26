@@ -1,5 +1,6 @@
 package com.tfe.controller;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -45,8 +46,11 @@ public class EleveController {
 	/**
 	 * methode GET pour inscrire un élève
 	 * @param model
+	 * 		modèle transmis à la vue
 	 * @param eleve
+	 * 		objet Eleve qui contiendra les informations et sera transmis à la vue grâce au modèle
 	 * @return
+	 * 		lien vers la page jsp contenant le formulaire d'inscription
 	 */
 	
 	@RequestMapping(value="/add", method=RequestMethod.GET)
@@ -62,14 +66,41 @@ public class EleveController {
 		return "eleve/eleveAdd";
 	}
 	
+	/**
+	 * méthode GET pour modifier les informations d'un élève
+	 * @param idEleve
+	 * 		id de l'élève à modifier
+	 * @param model
+	 * 		modèle qui sera transmis à la vue
+	 * @return
+	 * 		lien vers la page jsp permettant de modifier les informations
+	 */
 	
-	//methode GET pour modifier un eleve
 	@RequestMapping(value="{idEleve}/update", method=RequestMethod.GET)
 	public String updateEleveGet(@PathVariable Long idEleve, Model model) {
+		
+		log.info("methode GET pour modifier un eleve");
+		
+		
 		if(!eleveDAO.exists(idEleve))
-			throw new NotFoundExceptionInt("eleve invalide", idEleve);
+			throw new NotFoundExceptionInt("eleve.invalide", idEleve);
+		
+		
 		Eleve eleve = eleveDAO.findOne(idEleve);
 		model.addAttribute("eleve", eleve);
+		
+		//recuperation de la date d'inscription 
+		// si ce n'est la date du jour, on ne peut pas modifier la classe
+		Date dateInscription = eleve.getDateInscription();
+		log.info("date inscription: " + dateInscription);
+		
+		Date now = new Date();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		String nowStr = sdf.format(now);
+		log.info("date today: " + nowStr);
+		Boolean  inscriptionToday = nowStr.equals(dateInscription.toString());
+		log.info("inscription now: " + inscriptionToday);
+		model.addAttribute("inscriptionToday", inscriptionToday);
 		
 		List<Classe> listeClasses = classeDAO.getClassesOrderedByCode();
 		model.addAttribute("listeClasses",listeClasses);
@@ -127,7 +158,7 @@ public class EleveController {
 	
 	//methode POST pour modifier un eleve
 	@RequestMapping(value="{idEleve}/update", method=RequestMethod.POST)
-	public String updateElevePost(@Valid Eleve eleve, BindingResult errors, @RequestParam(value="codeClasse") String codeClasse, 
+	public String updateElevePost(@Valid Eleve eleve, BindingResult errors, @RequestParam(value="codeClasse", required=false) String codeClasse, 
 			Model model, RedirectAttributes rModel)
 					 {
 		log.info("methode POST pour modifier un eleve");
@@ -144,19 +175,23 @@ public class EleveController {
 		} else {
 			log.info("save eleve");
 			Eleve eleveSaved = eleveDAO.save(eleve);
+			log.info("code classe: " + codeClasse);
 			
 			//gestion de l'inscription
-			Date dateNow = new Date();
-			Classe classe = classeDAO.findOne(codeClasse);
-			//modification de la précédente inscription
-			Inscription inscriptionActuelle = inscriptionDAO.inscriptionActuelleFromEleve(eleve.getId());
-			inscriptionActuelle.setDateSortie(dateNow);
-			log.info("date de sortie: " + inscriptionActuelle.getDateSortie());
-			inscriptionDAO.save(inscriptionActuelle);
-			log.info("inscription modifiee");
-			Inscription inscription = new Inscription(eleveSaved,classe,dateNow);
-			Inscription inscriptionSaved = inscriptionDAO.save(inscription);
+			if(codeClasse != null) {
+				log.info("modification de l'inscription");
+				Classe classe = classeDAO.findOne(codeClasse);
+				
+			    Inscription inscriptionActuelle = inscriptionDAO.inscriptionActuelleFromEleve(eleve.getId());
+			    log.info("suppression de l'inscription");
+			    inscriptionDAO.delete(inscriptionActuelle);
+			    Inscription inscriptionUpdate = inscriptionActuelle;
+			    inscriptionUpdate.setClasse(classe);
+			    inscriptionDAO.save(inscriptionUpdate);
 			
+			
+			}
+		
 			//rModel.addFlashAttribute(eleveSaved);
 			return "redirect:/eleve/"+eleveSaved.getId();
 			

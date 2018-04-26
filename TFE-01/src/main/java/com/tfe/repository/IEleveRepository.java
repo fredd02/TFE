@@ -32,6 +32,8 @@ public interface IEleveRepository extends JpaRepository<Eleve, Long>{
 	List<Eleve> getElevesCantineForDate(Date date);
 	
 	//recherche d'un eleve par son nom
-		List<Eleve> readByNomIgnoringCase(String nom);
+	List<Eleve> readByNomIgnoringCase(String nom);
+	
+	
 
 }
