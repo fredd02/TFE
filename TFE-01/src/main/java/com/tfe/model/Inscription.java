@@ -12,7 +12,7 @@ import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
 @Entity
-//@org.hibernate.annotations.Immutable
+@org.hibernate.annotations.Immutable
 public class Inscription {
 	
 	@Embeddable
@@ -73,8 +73,7 @@ public class Inscription {
 			this.dateEntree = dateEntree;
 			this.id.eleveId = eleve.getId();
 			this.id.classeId = classe.getCode();
-			eleve.getInscriptions().add(this);
-			classe.getInscriptions().add(this);
+			
 		}
 		
 		public Inscription(Eleve eleve, Classe classe, Date dateEntree, Date dateSortie) {
@@ -84,8 +83,7 @@ public class Inscription {
 			this.dateSortie = dateSortie;
 			this.id.eleveId = eleve.getId();
 			this.id.classeId = classe.getCode();
-			eleve.getInscriptions().add(this);
-			classe.getInscriptions().add(this);
+			
 		}
 
 		public Date getDateEntree() {

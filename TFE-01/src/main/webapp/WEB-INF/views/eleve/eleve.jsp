@@ -46,7 +46,7 @@
    	</li >
    	<li class="list-group-item">Inscriptions
    		<ul>
-   			<c:forEach items="${eleve.inscriptions}" var="inscription">
+   			<c:forEach items="${inscriptions}" var="inscription">
    				<li><fmt:formatDate pattern="dd/MM/yyyy" value="${inscription.dateEntree}"/> - 
    				<fmt:formatDate pattern="dd/MM/yyyy" value="${inscription.dateSortie}"/> : 
    					<c:out value="${inscription.classe.code}" /></li>
@@ -58,7 +58,7 @@
    	
    	<li class="list-group-item">Responsables
    		<ul>
-   			<c:forEach items = "${eleve.relations}" var = "relation">
+   			<c:forEach items = "${relations}" var = "relation">
    				<li><a href="../responsable/${relation.responsable.username}"><c:out value="${relation.responsable.nom}" /> <c:out value="${relation.responsable.prenom}" /></a>
    					(${relation.lienParent})</li>
    			</c:forEach>

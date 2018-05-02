@@ -12,7 +12,7 @@
 </jsp:include>
 
 <div class="container">
-<h1>Passage en sup</h1>
+<h4>changement de classe</h4>
 <c:out value="${eleve.nom}" /> <c:out value="${eleve.prenom}" />
 actuellement en <c:out value="${classe}" />
 <p>passage en: </p>

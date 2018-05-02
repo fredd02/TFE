@@ -3,6 +3,7 @@ package com.tfe.controller;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import javax.validation.Valid;
 
@@ -23,9 +24,11 @@ import com.tfe.exceptions.NotFoundExceptionInt;
 import com.tfe.model.Classe;
 import com.tfe.model.Eleve;
 import com.tfe.model.Inscription;
+import com.tfe.model.Relation;
 import com.tfe.repository.IClasseRepository;
 import com.tfe.repository.IEleveRepository;
 import com.tfe.repository.IInscriptionRepository;
+import com.tfe.repository.IRelationRepository;
 
 @Controller
 @RequestMapping("/eleve")
@@ -42,6 +45,9 @@ public class EleveController {
 	
 	@Autowired
 	IInscriptionRepository inscriptionDAO;
+	
+	@Autowired
+	IRelationRepository relationDAO;
 	
 	/**
 	 * methode GET pour inscrire un élève
@@ -179,15 +185,32 @@ public class EleveController {
 			
 			//gestion de l'inscription
 			if(codeClasse != null) {
-				log.info("modification de l'inscription");
+				log.info("modification de l'inscription---");
 				Classe classe = classeDAO.findOne(codeClasse);
 				
-			    Inscription inscriptionActuelle = inscriptionDAO.inscriptionActuelleFromEleve(eleve.getId());
-			    log.info("suppression de l'inscription");
-			    inscriptionDAO.delete(inscriptionActuelle);
-			    Inscription inscriptionUpdate = inscriptionActuelle;
-			    inscriptionUpdate.setClasse(classe);
-			    inscriptionDAO.save(inscriptionUpdate);
+				 Inscription inscriptionActuelle = inscriptionDAO.inscriptionActuelleFromEleve(eleve.getId());
+				
+				//si inscription
+				if(inscriptionActuelle != null) {
+					log.info("suppression de l'inscription");
+				    inscriptionDAO.delete(inscriptionActuelle);
+				    log.info("end of delete");
+				    Inscription inscriptionUpdate = new Inscription(inscriptionActuelle.getEleve(),classe, inscriptionActuelle.getDateEntree());
+				    
+				    log.info("code: " +inscriptionUpdate.getClasse().getCode());
+				    inscriptionDAO.save(inscriptionUpdate);
+				    inscriptionDAO.flush();
+					
+				} else {
+					//si pas encore d'inscription
+					log.info("pas encore d'inscription");
+					Date now = new Date();
+					Inscription inscription = new Inscription(eleve, classe,now);
+					inscriptionDAO.save(inscription);
+				}
+				
+			    
+			    
 			
 			
 			}
@@ -234,6 +257,14 @@ public class EleveController {
 		log.info("nom de l'eleve: " + eleve.getNom());
 		
 		model.addAttribute("eleve", eleve);
+		
+		//recuperation des inscriptions
+		List<Inscription> inscriptions = inscriptionDAO.getInscriptionsFromEleve(id);
+		model.addAttribute("inscriptions", inscriptions);
+		
+		//recuperation des relations
+		List<Relation> relations = relationDAO.getRelationsFromEleve(id);
+		model.addAttribute("relations", relations);
 		
 		return "eleve/eleve";
 	}

@@ -30,12 +30,12 @@ public class Classe {
 	@JoinColumn(name="TITULAIRE")
 	private Enseignant titulaire;
 	
-	@OneToMany(mappedBy = "classe")
-	private Set<Inscription> inscriptions = new HashSet<>();
-	
-	public Set<Inscription> getInscriptions() {
-		return inscriptions;
-	}
+//	@OneToMany(mappedBy = "classe")
+//	private Set<Inscription> inscriptions = new HashSet<>();
+//	
+//	public Set<Inscription> getInscriptions() {
+//		return inscriptions;
+//	}
 	
 	public Classe() {
 		

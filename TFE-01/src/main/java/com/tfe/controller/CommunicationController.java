@@ -144,7 +144,7 @@ public class CommunicationController {
 	@RequestMapping(value="list", method=RequestMethod.GET)
 	public String listCommunications(Model model) {
 		
-		List<Communication> communications = communicationDAO.findAll();
+		List<Communication> communications = communicationDAO.findAllByOrderByDateDesc();
 		
 		model.addAttribute("communications", communications);
 		

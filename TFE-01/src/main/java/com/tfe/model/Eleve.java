@@ -58,12 +58,12 @@ public class Eleve {
 	@Column(nullable=false, updatable=false)
 	private Date dateInscription;
 	
-	@OneToMany(mappedBy = "eleve")
-	private Set<Inscription> inscriptions = new HashSet<>();
-	
-	public Set<Inscription> getInscriptions(){
-		return inscriptions;
-	}
+//	@OneToMany(mappedBy = "eleve")
+//	private Set<Inscription> inscriptions = new HashSet<>();
+//	
+//	public Set<Inscription> getInscriptions(){
+//		return inscriptions;
+//	}
 	
 	@OneToMany(mappedBy ="eleve")
 	private Set<Relation> relations = new HashSet<>();
