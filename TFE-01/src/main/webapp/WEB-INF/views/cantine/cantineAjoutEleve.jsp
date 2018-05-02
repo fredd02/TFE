@@ -35,10 +35,10 @@
 </form>
 <br><br>
 
-<h4>Liste des élèves trouvés</h4>
+<h4>Elèves correspondant à la requète</h4>
 <c:choose>
 	<c:when test="${empty eleves}">
-		<p>aucun eleve n'a été trouvé</p>
+		<p>aucun élève ne correspond à la recherche</p>
 	
 	</c:when>
 	<c:otherwise>
@@ -51,6 +51,12 @@
  								<c:set var="inscrit" value="true"/>
  							
  							</c:if>
+ 				</c:forEach>
+ 				<c:forEach items="${elevesWithCompte}" var="eleveWithCompte">
+ 							<c:if test="${eleveWithCompte.id eq eleve.id}">
+ 								<c:set var="compte" value="true"/>
+ 							
+ 							</c:if>
  				</c:forEach>			
 			
 			
@@ -60,7 +66,7 @@
  					<c:choose>
  						<c:when test="${inscrit eq 'true' }">
  							<label><input type="checkbox" name="elevesId[]" value="${eleve.id}" <c:out value="disabled='true'" />> <c:out value="${eleve.nom} ${eleve.prenom}" />
- 							&emsp;<span class="bg-danger">élève déjà inscrit</span>
+ 							&emsp;<span class="bg-danger">élève déjà inscrit pour ce jour</span>
  					
  					</label>
  						
@@ -68,12 +74,26 @@
  						
  						</c:when>
  						<c:otherwise>
- 							<label><input type="checkbox" name="elevesId[]" value="${eleve.id}"> <c:out value="${eleve.nom} ${eleve.prenom}" />
+ 							<c:choose>
+ 								<c:when test="${compte eq 'true'}">
+ 									<label><input type="checkbox" name="elevesId[]" value="${eleve.id}"> <c:out value="${eleve.nom} ${eleve.prenom}" />
+ 							
+ 									</label>
+ 								
+ 								</c:when>
+ 								<c:otherwise>
+ 									<label><input type="checkbox" name="elevesId[]" value="${eleve.id}" <c:out value="disabled='true'" />> <c:out value="${eleve.nom} ${eleve.prenom}" />
+ 									&emsp;<span class="bg-danger">cet élève ne possède pas de compte</span>
+ 									</label>
+ 								
+ 								
+ 								</c:otherwise>
+ 							
+ 							
+ 							
+ 							</c:choose>
  						
- 					
- 						</label>
- 						
- 						
+ 							
  						
  						</c:otherwise>
  					

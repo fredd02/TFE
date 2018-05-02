@@ -24,7 +24,12 @@
   		</c:forEach>
   		</ul></li>
   <li class="list-group-item"><b>Solde: </b><c:out value="${compte.solde}" /></li>
+  <sec:authorize access="hasAnyAuthority('ADMIN','DIRECTEUR')">
+  	<li class="list-group-item"><a href="${compte.id}/credit">créditer le compte</a></li>
+  </sec:authorize>
 </ul> 
+
+
 
 <h4>Liste des 10 dernières opérations</h4>
 

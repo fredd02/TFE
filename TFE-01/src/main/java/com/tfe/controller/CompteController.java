@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.tfe.exceptions.NotFoundExceptionInt;
 import com.tfe.model.Compte;
 import com.tfe.model.LigneCompte;
 import com.tfe.model.Responsable;
@@ -195,6 +196,54 @@ public class CompteController {
 		return "compte/compte";
 		
 		
+	}
+	
+	//methode GET pour créditer un compte
+	@RequestMapping(value="/{idCompte}/credit", method=RequestMethod.GET)
+	public String getCompteCredit(@PathVariable Long idCompte, LigneCompte ligneCompte, Model model) {
+		log.info("methode GET pour crediter un compte");
+		
+		//verifie si le compte existe
+		if(!compteDAO.exists(idCompte)) 
+			throw new NotFoundExceptionInt("compte.invalide", idCompte);
+		
+		Compte compte = compteDAO.findOne(idCompte);
+		model.addAttribute("compte", compte);
+		model.addAttribute("ligneCompte", ligneCompte);
+		
+		return "compte/compteCredit";
+			
+		
+	}
+	
+	//methode POST pour créditer un compte
+	@RequestMapping(value="/{idCompte}/credit", method=RequestMethod.POST)
+	public String postCompteCredit(@PathVariable Long idCompte, @Valid LigneCompte ligneCompte, BindingResult errors, Model model) {
+		
+		log.info("methode post pour créditer un compte");
+		
+		if(errors.hasErrors()) {
+			log.info("erreurs dans la ligne de compte");
+			Compte compte = compteDAO.findOne(idCompte);
+			model.addAttribute("compte", compte);
+			model.addAttribute("ligneCompte", ligneCompte);
+			return"compte/compteCredit";
+		}
+		
+		if (ligneCompte.getMontant()<=0) {
+			errors.rejectValue("montant", "compte.credit","le montant doit être positif");
+			return "compte/compteCredit";
+		}
+		
+		//ajout de la ligne de compte
+		Date date=new Date();
+		ligneCompte.setDate(date);
+		ligneCompte.setDesignation("CREDIT");
+		Compte compte = compteDAO.findOne(idCompte);
+		ligneCompte.setCompte(compte);
+		ligneCompteDAO.save(ligneCompte);
+		
+		return "redirect:/compte/{idCompte}";
 	}
 	
 	

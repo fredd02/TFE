@@ -274,9 +274,15 @@ public class CantineController {
 		log.info("nexDay:" + nextDay);
 		Date previousDay = DateUtils.addDays(date, -1);
 		
+		Date now = new Date();
+		
 		model.addAttribute("date",date);
 		model.addAttribute("nextDay",nextDay);
 		model.addAttribute("previousDay",previousDay);
+		
+		//verifie si la date du repas est passée
+		Boolean passe = (date.before(now));
+		model.addAttribute("date_passee", passe);
 		
 		//liste des eleves inscrits
 		List<InscriptionCantine> inscriptions = inscriptionCantineDAO.getInscriptionsFromDate(date);
@@ -352,10 +358,6 @@ public class CantineController {
 			e.printStackTrace();
 		}
 		
-		
-		
-		
-		
 		model.addAttribute("date", date);
 		
 		return "cantine/cantineAjoutEleve";
@@ -371,8 +373,21 @@ public class CantineController {
 		
 		
 		
-		List<Eleve> eleves= eleveDAO.readByNomIgnoringCase(nom);
+		//List<Eleve> eleves= eleveDAO.readByNomIgnoringCase(nom);
+		List<Eleve> eleves= eleveDAO.readByNomContainingIgnoringCase(nom);
+		
+		//liste de ces eleves ayant un compte
+		List<Eleve> elevesWithCompte = new ArrayList<Eleve>();
+		for(Eleve eleve : eleves) {
+			if (eleveDAO.getCompteFromEleve(eleve.getId())!= null) {
+				elevesWithCompte.add(eleve);
+				
+			}
+		}
+		
+		
 		model.addAttribute("eleves", eleves);
+		model.addAttribute("elevesWithCompte", elevesWithCompte);
 		
 		//liste des inscriptions pour ce jour
 		Date date=new Date();

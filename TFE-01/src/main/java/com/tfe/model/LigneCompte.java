@@ -9,6 +9,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.DecimalMax;
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.NotNull;
 
 import lombok.Data;
 
@@ -26,6 +29,8 @@ public class LigneCompte {
 	private String designation;
 	
 	@Column
+	@NotNull
+	@DecimalMax(value="1000")
 	private Double montant;
 	
 	@Column

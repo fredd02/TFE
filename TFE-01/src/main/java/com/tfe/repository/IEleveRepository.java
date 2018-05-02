@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import com.tfe.model.Eleve;
 import com.tfe.model.Responsable;
@@ -32,7 +33,12 @@ public interface IEleveRepository extends JpaRepository<Eleve, Long>{
 	List<Eleve> getElevesCantineForDate(Date date);
 	
 	//recherche d'un eleve par son nom
-	List<Eleve> readByNomIgnoringCase(String nom);
+	List<Eleve> readByNomContainingIgnoringCase(String nom);
+	
+	//recherche du numero de compte d'un eleve
+	@Query(value="SELECT res.fkcompte FROM TELEVE e JOIN RELATION rel ON e.id=rel.fkeleve JOIN TRESPONSABLE res ON rel.FKRESPONSABLE = "
+			+ "res.USERNAME WHERE e.id=?1", nativeQuery=true)
+	Long getCompteFromEleve(Long id);
 	
 	
 
