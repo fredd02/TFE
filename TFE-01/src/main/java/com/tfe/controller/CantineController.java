@@ -9,6 +9,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Iterator;
@@ -24,6 +25,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.DefaultResourceLoader;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -34,11 +37,13 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.tfe.model.Compte;
 import com.tfe.model.Eleve;
+import com.tfe.model.Enseignant;
 import com.tfe.model.Inscription;
 import com.tfe.model.InscriptionCantine;
 import com.tfe.model.LigneCompte;
 import com.tfe.repository.ICompteRepository;
 import com.tfe.repository.IEleveRepository;
+import com.tfe.repository.IEnseignantRepository;
 import com.tfe.repository.IInscriptionCantineRepository;
 import com.tfe.repository.ILigneCompteRepository;
 
@@ -53,6 +58,9 @@ public class CantineController {
 	
 	@Autowired
 	IEleveRepository eleveDAO;
+	
+	@Autowired
+	IEnseignantRepository enseignantDAO;
 	
 	@Autowired
 	IInscriptionCantineRepository inscriptionCantineDAO;
@@ -129,6 +137,17 @@ public class CantineController {
 		model.addAttribute("jeudi", jeudi);
 		model.addAttribute("vendredi", vendredi);
 		
+		//verifie les jours qui sont déjà passés
+		Date now = new Date();
+		if(!lundi.after(now))
+			model.addAttribute("lundiPast", true);
+		if(!mardi.after(now))
+			model.addAttribute("mardiPast", true);
+		if(!jeudi.after(now))
+			model.addAttribute("jeudiPast", true);
+		if(!vendredi.after(now))
+			model.addAttribute("vendrediPast", true);
+		
 		//recuperation des inscriptions
 		List<InscriptionCantine> inscriptions = inscriptionCantineDAO.inscriptionFromResponsableBeetwen2Dates(username, lundi, vendredi);
 		
@@ -171,7 +190,8 @@ public class CantineController {
 		for(Eleve eleve : eleves) {
 			for(String inscription : inscriptions) {	
 				if(inscription.contains(eleve.getId()+"_")) {
-					String dateString = inscription.substring(3);
+					//String dateString = inscription.substring(3);
+					String dateString = inscription.split("_")[1];
 					log.info("eleve: " + eleve.getPrenom() + " " + dateString  );
 					Date date;
 					InscriptionCantine insc;
@@ -266,9 +286,13 @@ public class CantineController {
 	
 	//methode GET pour afficher les eleves inscrits aux repas
 	@RequestMapping(value="/inscriptions/{date}", method=RequestMethod.GET)
-	public String getInscriptionsFromCantine(@PathVariable @DateTimeFormat(pattern="ddMMyyyy")Date date, Model model) {
+	public String getInscriptionsFromCantine(@PathVariable @DateTimeFormat(pattern="ddMMyyyy")Date date, Model model, Authentication authentication) {
 		
 		log.info("methode pour afficher les inscriptions aux repas");
+		
+		Collection<? extends GrantedAuthority>	 authorities = authentication.getAuthorities();
+		log.info(authorities.toString());
+		
 		log.info("date" + date);
 		Date nextDay = DateUtils.addDays(date, 1);
 		log.info("nexDay:" + nextDay);
@@ -286,6 +310,18 @@ public class CantineController {
 		
 		//liste des eleves inscrits
 		List<InscriptionCantine> inscriptions = inscriptionCantineDAO.getInscriptionsFromDate(date);
+		
+		//si role ENSEIGNANT, recuperation des eleves de l'enseignant
+		for(GrantedAuthority authority : authorities) {
+			log.info(authority.getAuthority().toString());
+			if(authority.getAuthority().equals("ENSEIGNANT")) {
+				log.info("enseigant");
+				inscriptions = inscriptionCantineDAO.getInscriptionsFromEnseignantForDate(authentication.getName(), date);
+				Enseignant enseignant = enseignantDAO.findOne(authentication.getName());
+				model.addAttribute("enseignant", enseignant);
+			}
+			
+		}
 		
 		//verifie si des respas sont à facturer
 		Boolean repasAFacturer = false;

@@ -44,12 +44,13 @@
 			<c:forEach items="${eleves}" var="eleve">
 				<tr>
 					<td><c:out value="${eleve.prenom}" /></td>
+					
 					<td><input type="checkbox" name="lundi[]" 
 						<c:forEach items="${inscriptions}" var="inscription" > 
 							<fmt:formatDate pattern='dd/MM/YYYY'  value='${inscription.date}' var="inscriptionDate"/>
     						<c:if test="${(inscription.eleve.id == eleve.id) && ( inscriptionDate == lundi)}"><c:out value="checked='checked'" /></c:if>
     					</c:forEach>
-    					<c:if test="${lundi le today}">
+    					<c:if test="${lundiPast}">
     					<c:out value="disabled='true'" /></c:if>
 					 	value="${eleve.id}_${lundi}">
     					
@@ -60,7 +61,7 @@
 							<fmt:formatDate pattern='dd/MM/YYYY'  value='${inscription.date}' var="inscriptionDate"/>
     						<c:if test="${(inscription.eleve.id == eleve.id) && ( inscriptionDate == mardi)}"><c:out value="checked='checked'" /></c:if>
     					</c:forEach>
-    					<c:if test="${mardi le today}">
+    					<c:if test="${mardiPast}">
     					<c:out value="disabled='true'" /></c:if>
 					 	value="${eleve.id}_${mardi}">
     					
@@ -70,7 +71,7 @@
 							<fmt:formatDate pattern='dd/MM/YYYY'  value='${inscription.date}' var="inscriptionDate"/>
     						<c:if test="${(inscription.eleve.id == eleve.id) && ( inscriptionDate == jeudi)}"><c:out value="checked='checked'" /></c:if>
     					</c:forEach>
-    					<c:if test="${jeudi le today}">
+    					<c:if test="${jeudiPast}">
     					<c:out value="disabled='true'" /></c:if>
 					 	value="${eleve.id}_${jeudi}">
     					
@@ -80,7 +81,7 @@
 							<fmt:formatDate pattern='dd/MM/YYYY'  value='${inscription.date}' var="inscriptionDate"/>
     						<c:if test="${(inscription.eleve.id == eleve.id) && ( inscriptionDate == vendredi)}"><c:out value="checked='checked'" /></c:if>
     					</c:forEach>
-    					<c:if test="${vendredi le today}">
+    					<c:if test="${vendrediPast}">
     					<c:out value="disabled='true'" /></c:if>
 					 	value="${eleve.id}_${vendredi}">
     					

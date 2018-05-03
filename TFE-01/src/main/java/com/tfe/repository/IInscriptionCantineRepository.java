@@ -45,6 +45,14 @@ public interface IInscriptionCantineRepository extends JpaRepository<Inscription
 	@Query(value="UPDATE INSCRIPTION_CANTINE SET paye=true where date=?1", nativeQuery=true)
 	public int setPayeForInscriptionsFromDate(Date date);
 	
+	//inscriptions des eleves d'un enseignant pour une date
+	@Query(value="SELECT * FROM TELEVE e JOIN INSCRIPTION_CANTINE ic on e.id = ic.FKELEVE "
+			+ "JOIN INSCRIPTION i on e.id = i.fkeleve JOIN TCLASSE cl ON i.FKCLASSE=cl.code"
+			+ " WHERE i.date_sortie is null and cl.titulaire = ?1 AND ic.date=?2", nativeQuery=true)
+	public List<InscriptionCantine> getInscriptionsFromEnseignantForDate(String username, Date date);
+	
+
+	
 	
 	
 
