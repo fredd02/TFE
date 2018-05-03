@@ -20,8 +20,8 @@
  	<ul>
  		<li>date: <fmt:formatDate pattern="dd/MM/YYYY" value="${communication.date}"/></li>
  		<li>sujet: <c:out value="${communication.sujet}" /></li>
- 		<li>message: <c:out value="${communication.corps}" /></li>
- 		<li>fichier joint: <c:out value="${communication.lienFichier}" /></li>
+<%--  		<li>message: <c:out value="${communication.corps}" /></li> --%>
+ 		<li>fichier joint: <a href="${communication.lienFichier}">ouvrir</a></li>
  	
  	</ul>
  	</li>

@@ -16,6 +16,11 @@ public interface IEleveRepository extends JpaRepository<Eleve, Long>{
 	@Query(value="SELECT * FROM TELEVE e JOIN INSCRIPTION i on e.id = i.fkeleve WHERE i.date_sortie is null and i.fkclasse = ?1",nativeQuery=true)
 	List<Eleve> elevesFromClasse(String code);
 	
+	//liste des eleves d'un titulaire
+	@Query(value="SELECT * FROM TELEVE e JOIN INSCRIPTION i on e.id = i.fkeleve JOIN TCLASSE cl ON i.FKCLASSE=cl.code WHERE i.date_sortie is null and cl.titulaire = ?1",nativeQuery=true)
+	List<Eleve> elevesFromTitulaire(String username);
+	
+	
 	//classe actuelle de l'eleve
 	@Query(value="SELECT i.fkclasse FROM INSCRIPTION i WHERE i.date_sortie is null and i.fkeleve=?1",nativeQuery=true)
 	String classeFromEleve(Long id);

@@ -23,6 +23,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.tfe.model.Classe;
 import com.tfe.model.Communication;
 import com.tfe.model.CommunicationResponsable;
+import com.tfe.model.CommunicationResponsable.Id;
 import com.tfe.model.Responsable;
 import com.tfe.repository.IClasseRepository;
 import com.tfe.repository.ICommunicationRepository;
@@ -166,6 +167,28 @@ public class CommunicationController {
 		model.addAttribute("communicationsNonLues", nbCommunicationsNonLues);
 		
 		return "communication/communicationFromResponsable";
+	}
+	
+	
+	//methode pour marquer courrier lu
+	@RequestMapping(value="{username}/read/{idCourrier}", method=RequestMethod.GET)
+	public String getCourrierRead(@PathVariable(value="username") String username, @PathVariable(value="idCourrier") int idCourrier) {
+		log.info("methode GET pour marquer courrier lu");
+		
+		//idCourrier=idCourrier.substring(1);
+		log.info("id courrier: " + idCourrier);
+		Long idCour = Long.valueOf(idCourrier);
+		Id id = new Id(username,idCour);
+		
+		
+		CommunicationResponsable communication = communicationResponsableDAO.findOne(id);
+		log.info(communication.getLu().toString());
+		communication.setLu(true);
+		log.info(communication.getLu().toString());
+		communicationResponsableDAO.delete(id);
+		communicationResponsableDAO.save(communication);
+		
+		return"redirect:/communication/{username}/list";
 	}
 
 	

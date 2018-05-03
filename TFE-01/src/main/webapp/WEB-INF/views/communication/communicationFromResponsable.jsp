@@ -30,7 +30,20 @@
 	<c:forEach items="${communications}" var="communication">
 		<tr>
 			<td><fmt:formatDate pattern="dd/MM/YYYY" value="${communication.communication.date}"/></td>
-			<td><c:out value="${communication.communication.sujet}" /></td>
+			<c:choose>
+				<c:when test="${communication.lu}">
+					<td><c:out value="${communication.communication.sujet}" /></td>
+				
+				</c:when>
+				<c:otherwise>	
+					<td><b><c:out value="${communication.communication.sujet}" /></b></td>
+				
+				
+				</c:otherwise>
+			</c:choose>
+			
+			
+			
 			<td><button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#${communication.communication.id}"
 			id="#${communication.communication.id}">
   				lire
@@ -47,7 +60,7 @@
 
       <!-- Modal body -->
       <div class="modal-body">
-        <a href="${communication.communication.lienFichier}">fichier</a>
+        <a href="${communication.communication.lienFichier}">ouvrir le fichier</a>
       </div>
 
       <!-- Modal footer -->
@@ -75,14 +88,17 @@
 <script>
 $(document).ready(function(){
 	var idClicked;
+	var id;
 	$(".btn.btn-primary.btn-sm").click(function(e){
 		idClicked = e.target.id;
-		alert(idClicked);
+		id = parseInt(idClicked.substring(1));
+		//alert(id);
 		
 	});
 	$(".btn.btn-danger").click(function(){
-		alert(idClicked);
-		window.location="read/"+idClicked;
+		//alert(id);
+		window.location="read/"+id;
+		
 		
 	});
 	
