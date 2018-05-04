@@ -97,27 +97,30 @@ public class CantineController {
         }
     }
 	
-	//methode GET pour inscrire les eleves à la cantine
+	/**
+	 * méthode GET pour inscrire les enfants d'un responsable à la cantine
+	 * @param username
+	 * 		username du responsable
+	 * @param model
+	 * 		objet model à envoyer à la vue
+	 * @return
+	 * 		nom logique de la vue jsp
+	 */
 	@RequestMapping(value="/inscription/{username}", method=RequestMethod.GET)
 	public String inscriptionCantineGet(@PathVariable String username, Model model) {
 		
 		//recuperation des eleves du responsable
-		List<Eleve> eleves = eleveDAO.getElevesFromResponsable(username);
-		log.info("nb d'eleves: " + eleves.size());
-		
+		List<Eleve> eleves = eleveDAO.getElevesFromResponsable(username);	
 		model.addAttribute("eleves", eleves);
-		
+	
 		GregorianCalendar calendar = new GregorianCalendar();
-		SimpleDateFormat format1 = new SimpleDateFormat("dd/MM/YYYY");
 		Date lundi;
 		calendar.setTime(new Date());
 		int today = calendar.get(calendar.DAY_OF_WEEK);
-		log.info("jour: " + today);
+		//verifie si on est entre le lundi et vendredi
 		if(today >=2 & today <=6) {
 			calendar.add(Calendar.DATE, (2-today)); 
-			log.info(calendar.getTime().toString());
 			lundi = calendar.getTime();
-			
 		} else {
 			if(today == 7)
 				calendar.add(Calendar.DATE, 2);
@@ -131,7 +134,6 @@ public class CantineController {
 		Date jeudi = calendar.getTime();
 		calendar.add(Calendar.DATE, 1);
 		Date vendredi = calendar.getTime();
-		
 		model.addAttribute("lundi", lundi);
 		model.addAttribute("mardi", mardi);
 		model.addAttribute("jeudi", jeudi);
@@ -150,27 +152,39 @@ public class CantineController {
 		
 		//recuperation des inscriptions
 		List<InscriptionCantine> inscriptions = inscriptionCantineDAO.inscriptionFromResponsableBeetwen2Dates(username, lundi, vendredi);
-		
-		log.info("nb d'inscriptions: " +String.valueOf(inscriptions.size()));
-		
 		model.addAttribute("inscriptions", inscriptions);
-			
-		
-		
-		
-		
 		return "cantine/cantineInscription";
 	}
 	
 	
-	//methode POST pour inscrire à la cantine
+	/**
+	 * methode POST pour inscrire les élèves à la cantine
+	 * @param username
+	 * 		username du parent qui effectue la requête
+	 * @param lundi
+	 * 		recupère les inscriptions du lundi
+	 * @param mardi
+	 * 		recupère les inscriptions du mardi
+	 * @param jeudi
+	 * 		recupère les inscriptions du jeudi
+	 * @param vendredi
+	 * 		recupère les inscriptions du vendredi
+	 * @param lundi_SA
+	 * 		récupère la date du lundi de la semaine affichée par la vue jsp
+	 * 		
+	 * @param vendredi_SA
+	 * 		récupère la date du vendredi de la semaine affichée par la vue jsp
+	 * @param model
+	 * 		FlashAttribute permettant de transférer des données lors de la redirection
+	 * @return
+	 * 		redirige vers la méthode GET d'inscription à la cantine
+	 */
 	@RequestMapping(value="/inscription/{username}", method=RequestMethod.POST)
 	String inscriptionCantinePost(@PathVariable String username, @RequestParam(value="lundi[]", required=false) String[] lundi,
 			@RequestParam(value="mardi[]", required=false) String[] mardi, @RequestParam(value="jeudi[]", required=false) String[] jeudi,
 			@RequestParam(value="vendredi[]", required=false) String[] vendredi, 
 			@RequestParam(value="lundi_SA") String lundi_SA, @RequestParam(value="vendredi_SA") String vendredi_SA,RedirectAttributes model) {
 		
-		log.info("methode POST pour inscrire à la cantine");
 		//regroupement des inscriptions dans une liste
 		List<String> inscriptions = new ArrayList<String>();
 		if(lundi != null)
@@ -207,7 +221,7 @@ public class CantineController {
 						}
 						 
 					} catch (java.text.ParseException e) {
-						// TODO Auto-generated catch block
+						
 						e.printStackTrace();
 					}
 					
@@ -218,9 +232,6 @@ public class CantineController {
 		}
 		
 		//supression des inscriptions décochées
-		log.info("suppression des inscriptions");
-		log.info(lundi_SA);
-		log.info(vendredi_SA);
 		Date lundi_SAD;
 		Date vendredi_SAD;
 		String idEleve;
@@ -229,23 +240,14 @@ public class CantineController {
 		try {
 			lundi_SAD = dateFormat.parse(lundi_SA);
 			vendredi_SAD = dateFormat.parse(vendredi_SA);
-			log.info("lundi: " + lundi_SAD);
-			log.info("vendredi: " + vendredi_SAD);
+			
 			List<InscriptionCantine> inscriptionsBD = inscriptionCantineDAO.inscriptionFromResponsableBeetwen2Dates(username, lundi_SAD, vendredi_SAD);
 			for(InscriptionCantine inscriptionBD : inscriptionsBD) {
-				log.info("inscriptionBD:");
-				log.info(inscriptionBD.getEleve().getId().toString());
-				log.info(dateFormat.format(inscriptionBD.getDate()).toString());
 				existe=false;
 				for(String inscription : inscriptions) {
 					
 					idEleve = inscription.split("_")[0];
-					log.info("id eleve: " + idEleve);
-					//log.info(inscriptionBD.getEleve().getId().toString());
 					dateInscription = inscription.split("_")[1];
-					log.info("date inscription: " + dateInscription);
-					//log.info(dateFormat.format(inscriptionBD.getDate()).toString());
-					
 					if ((inscriptionBD.getEleve().getId().toString().equals(idEleve)) && 
 							(dateFormat.format(inscriptionBD.getDate()).toString().equals(dateInscription))) {
 						existe = true;
@@ -253,10 +255,10 @@ public class CantineController {
 					}
 					
 				}
-				log.info("existe: " + existe);
+				
 				if(!existe)
 					inscriptionCantineDAO.delete(inscriptionBD);
-					log.info("inscription supprimée");
+					
 			}
 		} catch (java.text.ParseException e) {
 			
@@ -323,7 +325,7 @@ public class CantineController {
 			
 		}
 		
-		//verifie si des respas sont à facturer
+		//verifie si des repas sont à facturer
 		Boolean repasAFacturer = false;
 		
 		Iterator<InscriptionCantine> iterator = inscriptions.iterator();

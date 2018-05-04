@@ -30,16 +30,20 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
 	protected void configure(HttpSecurity http) throws Exception {
 		http
 			.authorizeRequests()
+				.antMatchers("/eleve/add","eleve/**/update","/eleve/**/sup").hasAnyAuthority("ADMIN","DIRECTEUR")
 				.antMatchers("/eleve/**","/enseignant/**","/classe/**","/responsable/**").hasAnyAuthority("ADMIN","DIRECTEUR","ENSEIGNANT")
-				
-				.anyRequest().permitAll()
+				.antMatchers("/compte/add","/compte/**/credit").hasAnyAuthority("ADMIN","DIRECTEUR")
+				.antMatchers("/compte/responsable/**").hasAnyAuthority("PARENT")
+				.antMatchers("/compte/**","/compte/list").hasAnyAuthority("ADMIN","DIRECTEUR","ENSEIGNANT")
+				.antMatchers("/cantine/inscription/**","cantine/repas/**").hasAnyAuthority("PARENT")
+				.antMatchers("/cantine/inscriptions/**","/cantine/selectEleve/**","cantine/desinscrire/**").hasAnyAuthority("ADMIN","DIRECTEUR","ENSEIGNANT")
+				.antMatchers("/**").access("permitAll")
 				.and()
-			.formLogin()
-				.loginPage("/login")
-				.permitAll()
+					.formLogin().loginPage("/login")
 				.and()
-			.logout().logoutSuccessUrl("/login")
-				.permitAll();
+					.logout().logoutUrl("/logout").logoutSuccessUrl("/login")
+				.and()
+					.exceptionHandling().accessDeniedPage("/403");
 			
 	}
 	

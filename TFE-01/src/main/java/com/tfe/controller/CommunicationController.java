@@ -53,6 +53,7 @@ public class CommunicationController {
 	@Autowired
 	ICommunicationResponsableRepository communicationResponsableDAO;
 	
+	//methode GET pour ajouter une communication
 	@RequestMapping(value="add", method=RequestMethod.GET)
 	public String communicationAddGet(Communication communication, Model model) {
 		
