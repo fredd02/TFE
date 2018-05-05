@@ -35,6 +35,16 @@ public class HomeController {
 		return "login";
 	}
 	
+	@RequestMapping("projetPedagogique")
+	public String projetPedagogique() {
+		return "projetPedagogique";
+	}
+	
+	@RequestMapping("contact")
+	public String contact() {
+		return "contact";
+	}
+	
 	@RequestMapping("/403")
 	public String error403() {
 		return "accessDenied";

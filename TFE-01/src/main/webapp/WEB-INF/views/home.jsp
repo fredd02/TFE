@@ -11,8 +11,12 @@
 </jsp:include>
 
 <div class="container">
-<h1>Home</h1>
-
+<div class="jumbotron">
+<font color="white"><h1>Bienvenue!</h1>
+Bienvenue sur le site de l'école primaire d'Avernas-Le-Bauduin.<br> 
+Vous trouverez ici toutes les informations pratiques concernant notre école
+</font>
+</div>
 
 <sec:authorize access="isAuthenticated()"> 
 		<h4>

@@ -185,15 +185,8 @@
    			 </div>
  		
 			 <ul class="nav navbar-nav">
-			 	<li class="active"><a href="/TFE-01/">Présentation</a></li>
-			    <li class="dropdown">
-			      <a class="dropdown-toggle" href="#" data-toggle="dropdown">Projet pédagogique
-			      	<span class="caret"></span></a>
-			      <ul class="dropdown-menu">
-			      	<li><a href="/TFE-01/eleve/add">Inscription</a>
-			      	<li><a href="/TFE-01/eleve/list">Liste</a>
-			      </ul>
-			     </li>
+			 	<li class="active"><a href="/TFE-01/">Accueil</a></li>
+			    <li><a href="/TFE-01/projetPedagogique">Projet pédagogique</a></li>
 			    <li class="dropdown">
 			      <a class="dropdown-toggle" href="#" data-toggle="dropdown">Actualité
 			      	<span class="caret"></span></a>
@@ -202,14 +195,7 @@
 			      	<li><a href="/TFE-01/enseignant/list">Liste</a>
 			      </ul>
 			     </li>
-			    <li class="dropdown">
-			      <a class="dropdown-toggle" href="#" data-toggle="dropdown">Contact
-			      	<span class="caret"></span></a>
-			      <ul class="dropdown-menu">
-			      	<li><a href="/TFE-01/classe/list">Liste</a>
-			      	<li><a href="/#">#</a>
-			      </ul>
-			     </li>
+			    <li><a href="/TFE-01/contact">Contact</a></li>
 			  </ul>
 			  <ul class="nav navbar-nav navbar-right">
 				<sec:authorize access="isAuthenticated()">

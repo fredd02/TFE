@@ -75,6 +75,15 @@ public class Eleve {
 	
 	
 	public Eleve() {}
+	
+	public Eleve(String nrn, String nom, String prenom, Date dateNaissance, Integer sexe, Date dateInscription) {
+		this.nrn = nrn;
+		this.nom=nom;
+		this.prenom=prenom;
+		this.dateNaissance = dateNaissance;
+		this.sexe=sexe;
+		this.dateInscription = dateInscription;
+	}
 
 	
 	
