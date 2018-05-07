@@ -13,7 +13,7 @@
 
 <div class="container">
 
-<c:out value="${message}" />
+<h4><c:out value="${message}" /></h4>
 
 </div>
 <jsp:include page="../fragments/footer.jsp" />

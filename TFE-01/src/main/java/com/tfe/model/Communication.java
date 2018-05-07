@@ -36,7 +36,7 @@ public class Communication {
 	@Column
 	private String lienFichier;
 	
-	@ManyToMany(cascade=CascadeType.PERSIST)
+	@ManyToMany(cascade= {CascadeType.PERSIST, CascadeType.DETACH})
 	@JoinTable(name="communicationToClasse", joinColumns=@JoinColumn(name="FKCommunication"),
 		inverseJoinColumns=@JoinColumn(name="FKClasse"))
 	protected Set<Classe> classes = new HashSet<Classe>();

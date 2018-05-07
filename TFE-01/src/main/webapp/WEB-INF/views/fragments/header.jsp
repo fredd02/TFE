@@ -20,6 +20,10 @@
  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
  <s:url value="/resources/css/common.css" var="commonCss" />
 <link href="${commonCss}" rel="stylesheet">
+
+<s:url value="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap.min.css" var="dataTablesCss" />
+ <link rel="stylesheet" href="${dataTablesCss}" />
+
  
  </head>
  <body>

@@ -1,7 +1,11 @@
 package com.tfe.controller;
 
+import java.util.Locale;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,6 +14,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 @RequestMapping("/")
 public class HomeController {
+	
+	@Autowired
+    private MessageSource messageSource;
 	
 	//logger
 	private final Logger log = LoggerFactory.getLogger(this.getClass());
@@ -23,11 +30,15 @@ public class HomeController {
 	}
 	
 	@RequestMapping(value="/login", method=RequestMethod.GET)
-	public String login(Model model, String error, String logout) {
+	public String login(Model model, String error, String logout, Locale locale) {
 		log.info("login controleur");
 		log.info("error: " + error + "|");
-		if(error !=null)
-			model.addAttribute("error", "Your username and password is invalid");
+		if(error !=null) {
+			String message = messageSource.getMessage("login.error",null, "", locale);
+			model.addAttribute("error", message);
+			
+		}
+			
 		
 		if(logout != null)
 			model.addAttribute("message","You have been logged out successfully");

@@ -11,6 +11,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -40,6 +41,7 @@ public class FileUploadController {
 		this.storageService = storageService;
 	}
 	
+	//methode GET pour uploader un fichier
 	@GetMapping("/upload")
 	public String listUploadedFiles(Model model) throws IOException {
 		
@@ -54,16 +56,23 @@ public class FileUploadController {
 		
 	}
 	
+	//methode POST pour uploader un fichier
 	@RequestMapping(value="/upload", method=RequestMethod.POST, headers = "content-type=multipart/form-data")
-	public String handleFileUpload(@RequestParam("file") MultipartFile file,
+	public String handleFileUpload(@RequestParam("file") MultipartFile file, 
 			RedirectAttributes redirectAttributes) throws IOException {
 		
 		log.info("methode POST pour uploader des fichiers");
 		
-		storageService.store(file);
-		redirectAttributes.addFlashAttribute("message", "You succefully uploaded" + file.getOriginalFilename());
+		if(!file.getContentType().equals("application/pdf")) {
+			redirectAttributes.addFlashAttribute("messageError","Vous ne pouvez uploader que des fichiers pdf");
+			return "redirect:/file/upload";
+		}
+		log.info(file.getContentType());
 		
-		return "redirect:/uploadedFiles";
+		storageService.store(file);
+		redirectAttributes.addFlashAttribute("messageSuccess", "Fichier uploadé avec succès: " + file.getOriginalFilename());
+		
+		return "redirect:/file/upload";
 	}
 	
 	@GetMapping("/files/{filename:.+}")

@@ -12,14 +12,27 @@
 </jsp:include>
 
 <div class="container">
+<c:if test="${!empty messageError}">
+	<div class="alert alert-danger">
+		<c:out value="${message}" />
+	</div>
+</c:if>
 
-<c:out value="${message}" />
+<c:if test="${!empty messageSuccess}">
+	<div class="alert alert-success">
+		<c:out value="${messageSuccess}" />
+	</div>
+</c:if>
+
 
 <sf:form method="POST" enctype="multipart/form-data" action="upload">
 	<div class="form-group">
     <label for="file">Fichier à uploader:</label>
+    
     <input type="file" class="form-control" id="file" name="file">
+    
   </div>
+  
   
   <button type="submit" class="btn btn-primary" value="Upload">uploader</button>
 

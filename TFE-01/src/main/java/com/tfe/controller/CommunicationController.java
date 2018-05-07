@@ -11,6 +11,7 @@ import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,6 +21,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.tfe.exceptions.NoAccessException;
+import com.tfe.exceptions.NotFoundExceptionInt;
 import com.tfe.model.Classe;
 import com.tfe.model.Communication;
 import com.tfe.model.CommunicationResponsable;
@@ -74,28 +77,30 @@ public class CommunicationController {
 		return "communication/communicationAdd";
 		
 	}
-	
+	/**
+	 * methode POST pour envoyer une communication
+	 * @param communication
+	 * 		objet Communication à créer
+	 * @param nomFichier
+	 * 		nom du fichier selectionné dans le formulaire
+	 * @param classes
+	 * 		classes concernées par la commuication
+	 * @param rModel
+	 * @return
+	 * 		redirige
+	 */
 	@RequestMapping(value="add", method=RequestMethod.POST)
-	public String communicationAddPost(Communication communication,@RequestParam(value="nomFichier", required=false)String nomFichier,
-				@RequestParam(value="classeCode")String[] classes, RedirectAttributes rModel) {
+	public String communicationAddPost(Communication communication,@RequestParam(value="nomFichier")String nomFichier,
+				@RequestParam(value="classeCode")String[] classes, Model model) {
 		
-		log.info("methode POST pour communication");
-		
-		if(nomFichier != null)
-			log.info("nom du fichier: " + nomFichier);
 		
 		//URI du fichier
 		Path path = storageService.load(nomFichier);
-		log.info("path du fichier: " + path.toString());
 		
 		String fileURI = MvcUriComponentsBuilder.fromMethodName(FileUploadController.class,
 				"serveFile", path.getFileName().toString()).build().toString();
 		
-		log.info(fileURI);
 		communication.setLienFichier(fileURI);
-		
-		
-		
 		
 		Date dateNow = new Date();
 		communication.setDate(dateNow);
@@ -127,20 +132,18 @@ public class CommunicationController {
 			
 		}
 		
-		rModel.addFlashAttribute("message","la communication a bien été envoyée");
+		model.addAttribute("message","la communication a bien été envoyée");
 		
-		
-		
-		return "redirect:status";
+		return "communication/status";
 		
 	}
 	
-	@RequestMapping(value="status", method=RequestMethod.GET)
-	public String communicationStatus() {
-		
-		
-		return"communication/status";
-	}
+//	@RequestMapping(value="status", method=RequestMethod.GET)
+//	public String communicationStatus() {
+//		
+//		
+//		return"communication/status";
+//	}
 	
 	//liste des communications
 	@RequestMapping(value="list", method=RequestMethod.GET)
@@ -190,6 +193,51 @@ public class CommunicationController {
 		communicationResponsableDAO.save(communication);
 		
 		return"redirect:/communication/{username}/list";
+	}
+	
+	//methode pour afficher le suivi des communications
+	@RequestMapping(value="{idCommunication}/suivi", method=RequestMethod.GET)
+	public String getCommunicationSuivi(@PathVariable Long idCommunication, Model model) {
+		
+		log.info("methode GET pour afficher le suivi des communications");
+		log.info("id de la communication: " + idCommunication);
+		Communication communication = communicationDAO.getOne(idCommunication);
+		
+		model.addAttribute("communication", communication);
+		
+		List<CommunicationResponsable> communicationsResponsableLues = communicationResponsableDAO.getCommunicationsResponsableLuesFromIdCommunication(idCommunication);
+		model.addAttribute("communicationsLues", communicationsResponsableLues);
+		
+		List<CommunicationResponsable> communicationsResponsableNonLues = communicationResponsableDAO.getCommunicationsResponsableNonLuesFromIdCommunication(idCommunication);
+		model.addAttribute("communicationsNonLues", communicationsResponsableNonLues);
+		
+		return "communication/suivi";
+		
+	}
+	
+	//methode POST pour supprimer une communication
+	@RequestMapping(value="{idCommunication}/delete", method=RequestMethod.POST)
+	public String PostCommunicationDelete(@PathVariable Long idCommunication) {
+		log.info("methode POST pour supprimer une communication");
+		
+		if(!communicationDAO.exists(idCommunication))
+			throw new NotFoundExceptionInt("communication non trouvée pour suppression ",idCommunication);
+		try {
+			
+			//suppression des dépendances dans la table communicationResponsable
+			List<CommunicationResponsable> communicationsResponsable = communicationResponsableDAO.getCommunicationsResponsableForCommunication(idCommunication);
+			for(CommunicationResponsable communication : communicationsResponsable) {
+				communicationResponsableDAO.delete(communication);
+			}
+			
+			communicationDAO.delete(idCommunication);
+		} catch (DataIntegrityViolationException e) {
+			log.error("SQL", e);
+			throw new NoAccessException("communication.suppression.dependance");
+		}
+		
+		return "redirect:/communication/list";
+		
 	}
 
 	

@@ -14,7 +14,7 @@
 <div class="container">
 <h4>Liste des élèves&emsp;<span class="badge badge-warning">${fn:length(elevesList)}</span></h4>
 
- <table class="table table-striped table-bordered nowrap">
+ <table id="eleves" class="table table-striped table-bordered nowrap">
  	<thead>
  		<tr>
  			<th>Nom</th>
@@ -61,4 +61,21 @@
 
 </div>
 <jsp:include page="../fragments/footer.jsp" />
+<script>
+$(document).ready(function() {
+    $('#eleves').DataTable( {
+        "language": {
+            "lengthMenu": "Afficher _MENU_ élèves par page",
+            "zeroRecords": "Nothing found - sorry",
+            "info": " page _PAGE_ de _PAGES_",
+            "infoEmpty": "Aucun élève",
+            "infoFiltered": "(filtré de _MAX_ élèves au total)"
+        }
+    }
+    		
+    
+    );
+} );
+
+</script>
 </html>

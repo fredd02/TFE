@@ -22,8 +22,19 @@
  		<li>sujet: <c:out value="${communication.sujet}" /></li>
 <%--  		<li>message: <c:out value="${communication.corps}" /></li> --%>
  		<li>fichier joint: <a href="${communication.lienFichier}">ouvrir</a></li>
- 	
+ 		<br>
+ 		
  	</ul>
+ 	<div class="btn-group">
+ 		<button class="btn btn-info btn-sm" 
+				onclick="location.href='./${communication.id}/suivi'">suivi</button>
+		<button class="btn btn-danger btn-sm"
+				onclick="
+				if (confirm('Suppression de la communication  ?')) {
+				 this.disabled=true;
+                 post('./${communication.id}/delete',{'${_csrf.parameterName}': '${_csrf.token}'})}                             
+                                              ">supprimer</button>		
+	</div>		
  	</li>
  
  
