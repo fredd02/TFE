@@ -128,7 +128,7 @@ public class ResponsableController {
 	public String responsableExistantAddPost(@PathVariable Long id,@RequestParam("nom") String nom, Model model) {
 		log.info("methode POST pour rechercher un responsable");
 		
-		List<Responsable> responsables = responsableDAO.readByNomIgnoringCase(nom);
+		List<Responsable> responsables = responsableDAO.readByNomContainingIgnoringCase(nom);
 		model.addAttribute("responsables", responsables);
 		
 		Eleve eleve = eleveDAO.getOne(id);

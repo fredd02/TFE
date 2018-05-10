@@ -10,7 +10,7 @@ import com.tfe.model.Responsable;
 public interface IResponsableRepository extends IUserRepository<Responsable>{
 	
 	//recherche d'un responsable par son nom
-	List<Responsable> readByNomIgnoringCase(String nom);
+	List<Responsable> readByNomContainingIgnoringCase(String nom);
 	
 	
 	
@@ -29,5 +29,10 @@ public interface IResponsableRepository extends IUserRepository<Responsable>{
 	@Query(value="SELECT * FROM TRESPONSABLE res JOIN USERS u ON res.username = u.username JOIN RELATION rel on res.username=rel.FKRESPONSABLE"
 			+ " JOIN INSCRIPTION ins ON rel.FKELEVE=ins.FKELEVE WHERE  ins.FKCLASSE=?1", nativeQuery=true)
 	List<Responsable> getResponsablesFromClasse(String code);
+	
+	//liste des responsables d'un élève
+	@Query(value="SELECT * FROM TRESPONSABLE res JOIN RELATION rel ON res.username= rel.FKRESPONSABLE"
+			+ " WHERE rel.FKELEVE=?1", nativeQuery=true)
+	List<Responsable> getResponsablesFromEleve(Long id);
 
 }

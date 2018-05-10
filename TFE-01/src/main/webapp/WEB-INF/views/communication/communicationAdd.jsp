@@ -18,6 +18,8 @@
 
 <sf:form method="POST" class="form-horizontal" modelAttribute="communication" action="add">
 
+	<sf:errors path="*" element="div" cssClass="alert alert-danger" />
+
 	<s:bind path="sujet">
 		<div class="form-group ${status.error ? 'has-error' : ''}">
 			<sf:label path="sujet" class="col-sm-4 control-label">

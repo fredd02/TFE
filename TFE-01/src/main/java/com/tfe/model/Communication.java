@@ -14,6 +14,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 import lombok.Data;
 
 @Data
@@ -27,6 +29,7 @@ public class Communication {
 	@Column
 	private Date date;
 	
+	@NotEmpty(message="le sujet doit être précisé")
 	@Column
 	private String sujet;
 	

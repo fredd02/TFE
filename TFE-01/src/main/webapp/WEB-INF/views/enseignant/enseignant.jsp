@@ -5,6 +5,7 @@
 <%@ taglib uri="http://www.springframework.org/tags" prefix="s"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="sf"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <%-- <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%> --%>
 <html>
 <jsp:include page="../fragments/header.jsp">
@@ -44,6 +45,8 @@
   </li>
 </ul>
 
+
+<sec:authorize access="hasAnyAuthority('ADMIN','DIRECTEUR')">
 <div class="btn-group text-center">
 	<button class="btn btn-primary" onclick="location.href='./${enseignant.username}/update'">modifier les informations</button>
 	<s:url value="/enseignant/${enseignant.username}/delete" var="deleteUrl" />
@@ -55,6 +58,7 @@
                                               ">supprimer l'enseignant</button>
 	
 </div>
+</sec:authorize>
 
 
 

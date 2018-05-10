@@ -31,9 +31,9 @@
 
 
 
-<h4>Liste des 10 dernières opérations</h4>
+<h4>Liste des opérations</h4>
 
-<table class="table table-striped">
+<table id="operations" class="table table-striped">
     <thead>
       <tr>
         <th>date</th>
@@ -61,4 +61,21 @@
 
 </div>
 <jsp:include page="../fragments/footer.jsp" />
+<script>
+$(document).ready(function() {
+    $('#operations').DataTable( {
+        "language": {
+            "lengthMenu": "Afficher _MENU_ opérations par page",
+            "zeroRecords": "Nothing found - sorry",
+            "info": " page _PAGE_ de _PAGES_",
+            "infoEmpty": "Aucune opération",
+            "infoFiltered": "(filtré de _MAX_ opérations au total)"
+        }
+    }
+    		
+    
+    );
+} );
+
+</script>
 </html>

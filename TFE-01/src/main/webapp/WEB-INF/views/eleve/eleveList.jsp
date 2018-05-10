@@ -66,16 +66,13 @@ $(document).ready(function() {
     $('#eleves').DataTable( {
         "language": {
             "lengthMenu": "Afficher _MENU_ élèves par page",
-            "zeroRecords": "Nothing found - sorry",
+            "zeroRecords": "Aucun résultat - désolé",
             "info": " page _PAGE_ de _PAGES_",
             "infoEmpty": "Aucun élève",
             "infoFiltered": "(filtré de _MAX_ élèves au total)"
         }
     }
-    		
-    
     );
 } );
-
 </script>
 </html>

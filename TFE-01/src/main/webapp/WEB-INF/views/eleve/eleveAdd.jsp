@@ -39,7 +39,7 @@
 	<s:bind path="nom">
 		<div class="form-group ${status.error ? 'has-error' : ''}">
 			<sf:label path="nom" class="col-sm-4 control-label">
-				nom
+				nom (*)
 			</sf:label>
 			<div class="col-sm-4 inputGroupContainer">
 				<div class="input-group">
@@ -56,7 +56,7 @@
 	<s:bind path="prenom">
 		<div class="form-group ${status.error ? 'has-error' : ''}">
 			<sf:label path="prenom" class="col-sm-4 control-label">
-				prénom
+				prénom (*)
 			</sf:label>
 			<div class="col-sm-4 inputGroupContainer">
 				<div class="input-group">
@@ -73,7 +73,7 @@
 	<s:bind path="dateNaissance">
 		<div class="form-group ${status.error ? 'has-error' : ''}">
 			<sf:label path="dateNaissance" class="col-sm-4 control-label">
-				date de naissance
+				date de naissance (*)
 			</sf:label>
 			<div class="col-sm-4 inputGroupContainer">
 				<div class="input-group">
@@ -125,6 +125,9 @@
 				</div>
 			</div>
 				 
+		</div>
+		<div class="col-sm-offset-4">
+		(*) : champ obligatoire
 		</div>
 	
 	

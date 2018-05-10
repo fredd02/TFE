@@ -10,9 +10,12 @@ import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -25,14 +28,22 @@ import com.tfe.model.Classe;
 import com.tfe.model.Eleve;
 import com.tfe.model.Inscription;
 import com.tfe.model.Relation;
+import com.tfe.model.Responsable;
 import com.tfe.repository.IClasseRepository;
 import com.tfe.repository.IEleveRepository;
 import com.tfe.repository.IInscriptionRepository;
 import com.tfe.repository.IRelationRepository;
+import com.tfe.repository.IResponsableRepository;
 
 @Controller
 @RequestMapping("/eleve")
 public class EleveController {
+	
+	//afin que les inputs vides soient convertis en null
+	@InitBinder
+	public void initBinder(WebDataBinder binder) {
+	    binder.registerCustomEditor(String.class, new StringTrimmerEditor(true));
+	}
 	
 	//logger
 	private final Logger log = LoggerFactory.getLogger(this.getClass());
@@ -48,6 +59,9 @@ public class EleveController {
 	
 	@Autowired
 	IRelationRepository relationDAO;
+	
+	@Autowired
+	IResponsableRepository responsableDAO;
 	
 	/**
 	 * methode GET pour inscrire un élève
@@ -130,10 +144,12 @@ public class EleveController {
 			Model model, RedirectAttributes rModel) {
 		
 		log.info("methode POST pour inscrire un élève");
+		log.info(eleve.getPrenom());
 	
 		
 		//validation
 		if(errors.hasErrors()) {
+			
 			
 			List<Classe> listeClasses = classeDAO.getClassesOrderedByCode();
 			model.addAttribute("listeClasses",listeClasses);
@@ -231,7 +247,7 @@ public class EleveController {
 	public String eleveList(Model model) {
 		log.info("methode GET pour afficher la liste des élèves");
 		
-		List<Eleve> elevesList = eleveDAO.findAll();
+		List<Eleve> elevesList = eleveDAO.getElevesActuels();
 		//recuperation des inscriptions actuelles
 		List<Inscription> inscriptionsActuelles = inscriptionDAO.inscriptionsActuelles();
 		
@@ -285,6 +301,31 @@ public class EleveController {
 		
 		return "eleve/eleveSup";
 		
+	}
+	
+	
+	//methode POST pour desinscrire un élève
+	@RequestMapping(value="/{idEleve}/desinscrire", method=RequestMethod.POST)
+	public String eleveDelete(@PathVariable Long idEleve) {
+		
+		log.info("methode POST pour desinscrire un élève");
+		log.info("id eleve: " + idEleve);
+		
+		Date now = new Date();
+		Inscription inscription = inscriptionDAO.inscriptionActuelleFromEleve(idEleve);
+		inscription.setDateSortie(now);
+		inscriptionDAO.save(inscription);
+		
+		
+	
+		
+			
+		
+		
+		
+		
+		
+		return "redirect:/eleve/list";
 	}
 	
 	

@@ -23,6 +23,11 @@
 
 <s:url value="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap.min.css" var="dataTablesCss" />
  <link rel="stylesheet" href="${dataTablesCss}" />
+ 
+ <sec:authorize access="hasAnyAuthority('ADMIN')" var="admin" />
+ <sec:authorize access="hasAnyAuthority('DIRECTEUR')" var="directeur" />
+ <sec:authorize access="hasAnyAuthority('ENSEIGNANT')" var="enseignant" />
+ <sec:authorize access="hasAnyAuthority('PARENT')" var="parent" />
 
  
  </head>
@@ -38,7 +43,7 @@
 	<img src="/TFE-01/resources/img/bandeau.png">
 </div>
 
-<sec:authorize access="hasAnyAuthority('ADMIN','DIRECTEUR','ENSEIGNANT')"> 
+<c:if test="${admin || directeur || enseignant}">
 	<nav class="navbar navbar-default">
  		<div class="container-fluid">
  			<div class="navbar-header">
@@ -59,7 +64,9 @@
 			      <a class="dropdown-toggle" href="#" data-toggle="dropdown">Enseignants
 			      	<span class="caret"></span></a>
 			      <ul class="dropdown-menu">
+			      <c:if test="${admin || directeur}">
 			      	<li><a href="/TFE-01/enseignant/add">Inscription</a>
+			      </c:if>	
 			      	<li><a href="/TFE-01/enseignant/list">Liste</a>
 			      </ul>
 			     </li>
@@ -116,7 +123,7 @@
 
 
 
-</sec:authorize>
+</c:if>
 
  <sec:authorize access="hasAnyAuthority('PARENT')">
  <sec:authentication property="principal.username" var="username" />
@@ -160,7 +167,7 @@
 			      	<span class="caret"></span></a>
 			      <ul class="dropdown-menu">
 			      	<li><a href="/TFE-01/communication/${username}/list">Courrier</a>
-			      	<li><a href="#">Prendre RDV</a>
+<!-- 			      	<li><a href="#">Prendre RDV</a> -->
 			      	
 			      </ul>
 			     </li>

@@ -3,16 +3,17 @@ package com.tfe.model;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
 @Entity
-@org.hibernate.annotations.Immutable
 public class Inscription {
 	
 	@Embeddable
@@ -57,11 +58,11 @@ public class Inscription {
 		@Column(updatable = true)
 		protected Date dateSortie;
 		
-		@ManyToOne
+		@ManyToOne(fetch=FetchType.LAZY)
 		@JoinColumn(name="FKELEVE", insertable=false, updatable=false)
 		protected Eleve eleve;
 		
-		@ManyToOne
+		@ManyToOne(fetch=FetchType.LAZY)
 		@JoinColumn( name="FKCLASSE", insertable=false, updatable=false)
 		protected Classe classe;
 		

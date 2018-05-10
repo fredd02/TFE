@@ -14,6 +14,7 @@
 <s:url value="/responsable/add/${eleve.id}" var ="addResponsableURL" />
 <s:url value="/responsable/search/${eleve.id}" var ="searchResponsableURL" />
 <s:url value="/eleve/${eleve.id}/update" var ="updateEleveURL" />
+<s:url value="/eleve/${eleve.id}/desinscrire" var ="desinscrireEleveURL" />
 
 
 <div class="container">
@@ -23,7 +24,11 @@
 <div class="btn-group">
 	
 	<button class="btn btn-primary" onclick="location.href='${updateEleveURL}'">modifier les informations</button>
-	<button class="btn btn-primary" onclick="location.href='${searchResponsableURL}'">supprimer l'élève</button>
+	<button class="btn btn-danger" onclick="
+								if (confirm('<s:message code="eleve.confirmation.desinscrire"/>')) {
+								 this.disabled=true; post('${desinscrireEleveURL}',{'${_csrf.parameterName}': '${_csrf.token}'})}">
+								 	désinscrire l'élève
+							</button>
 </div>
 <br><br>
 

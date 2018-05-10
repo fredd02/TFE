@@ -32,15 +32,15 @@ public class Eleve {
 	private Long id;
 	
 	@Pattern(regexp = "[0-9]{2}\\.[0-9]{2}\\.[0-9]{2}\\-[0-9]{3}\\.[0-9]{2}", message="le nrn n'est pas valide")
-	@Column(nullable=false)
+	@Column
 	private String nrn;
 	
-	@NotNull
+	@NotNull(message="Le nom doit être renseigné")
 	@Size(min=2, max=30, message="Le nom doit faire entre 2 et 30 caractères")
 	@Column(length=30, nullable=false)
 	private String nom;
 	
-	@NotNull
+	@NotNull(message="Le prénom doit être renseigné")
 	@Size(min=2, max=30, message="Le prénom doit faire entre 2 et 30 caractères")
 	@Column(length=30, nullable=false)
 	private String prenom;

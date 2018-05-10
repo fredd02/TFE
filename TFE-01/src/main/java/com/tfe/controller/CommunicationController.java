@@ -8,12 +8,15 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import javax.validation.Valid;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -80,18 +83,42 @@ public class CommunicationController {
 	/**
 	 * methode POST pour envoyer une communication
 	 * @param communication
-	 * 		objet Communication à créer
+	 * 		objet Communication reçu par le formulaire
 	 * @param nomFichier
 	 * 		nom du fichier selectionné dans le formulaire
 	 * @param classes
 	 * 		classes concernées par la commuication
-	 * @param rModel
+	 * @param Model
+	 * 			objet Model qui sera renvoyé à la vue
 	 * @return
-	 * 		redirige
+	 * 		chemin logique de la page jsp
 	 */
 	@RequestMapping(value="add", method=RequestMethod.POST)
-	public String communicationAddPost(Communication communication,@RequestParam(value="nomFichier")String nomFichier,
-				@RequestParam(value="classeCode")String[] classes, Model model) {
+	public String communicationAddPost(@Valid Communication communication, BindingResult errors,@RequestParam(value="nomFichier")String nomFichier,
+				@RequestParam(value="classeCode", required=false)String[] classesSelect, Model model) {
+		
+		log.info("methode POST pour envoyer une communication");
+		
+		//verifie si au moins une classe a été sélectionnée
+		if(classesSelect == null) {
+			errors.rejectValue("classes", "classe.selection.min");
+		}
+
+		if(errors.hasErrors()) {
+			model.addAttribute("communication", communication);
+			
+			//liste des liens vers les fichiers
+			model.addAttribute("files", storageService.loadAll().map(
+					path ->  path.getFileName().toString())
+					.collect(Collectors.toList()));
+			
+			//liste des classes
+			List<Classe> classes = classeDAO.getClassesOrderedByCode();
+			model.addAttribute("classes", classes);
+			return "communication/communicationAdd";
+			
+		}
+			
 		
 		
 		//URI du fichier
@@ -107,7 +134,7 @@ public class CommunicationController {
 		Classe classeToAdd;
 		Set<Classe> listClasses = new HashSet<Classe>();
 		
-		for(String classe : classes) {
+		for(String classe : classesSelect) {
 			classeToAdd = classeDAO.findOne(classe);
 			listClasses.add(classeToAdd);
 		}

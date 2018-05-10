@@ -53,29 +53,34 @@ public class CompteController {
 		log.info("methode GET pour ajouter un compte");
 		
 		//recherche du titulaire
-		List<Responsable> responsables = responsableDAO.readByNomIgnoringCase(nom);
-		List<Responsable> responsablesAndCo = new ArrayList<Responsable>(responsables);
-		String username;
-		List<Responsable> Coresponsables = new ArrayList<Responsable>();
-		log.info("etape1");
-		for(Responsable responsable : responsables) {
-			username = responsable.getUsername();
-			log.info(username);
-			Coresponsables = responsableDAO.getCoResponsablesFrom(username);
-			log.info("etape2");
-			for(Responsable Cores : Coresponsables) {
-				responsablesAndCo.add(Cores);
+		if(nom != null) {
+			List<Responsable> responsables = responsableDAO.readByNomContainingIgnoringCase(nom);
+			List<Responsable> responsablesAndCo = new ArrayList<Responsable>(responsables);
+			String username;
+			List<Responsable> Coresponsables = new ArrayList<Responsable>();
+			log.info("etape1");
+			for(Responsable responsable : responsables) {
+				username = responsable.getUsername();
+				log.info(username);
+				Coresponsables = responsableDAO.getCoResponsablesFrom(username);
+				log.info("etape2");
+				for(Responsable Cores : Coresponsables) {
+					responsablesAndCo.add(Cores);
+				}
 			}
-		}
-		//elimination des doublons
-		List<Responsable> responsablesAndCoDistincts = new ArrayList<Responsable>();
-		for(Responsable responsable : responsablesAndCo) {
-			if(!responsablesAndCoDistincts.contains(responsable)) {
-				responsablesAndCoDistincts.add(responsable);
+			//elimination des doublons
+			List<Responsable> responsablesAndCoDistincts = new ArrayList<Responsable>();
+			for(Responsable responsable : responsablesAndCo) {
+				if(!responsablesAndCoDistincts.contains(responsable)) {
+					responsablesAndCoDistincts.add(responsable);
+				}
 			}
+			model.addAttribute("responsables", responsablesAndCoDistincts);
+			
 		}
 		
-		model.addAttribute("responsables", responsablesAndCoDistincts);
+		
+		
 		model.addAttribute("compte", compte);
 		
 		
