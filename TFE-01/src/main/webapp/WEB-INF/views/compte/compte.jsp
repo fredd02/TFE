@@ -63,6 +63,9 @@
 <jsp:include page="../fragments/footer.jsp" />
 <script>
 $(document).ready(function() {
+	//pour pouvoir trier selon la date
+	$.fn.dataTable.moment( 'dd/MM/YYYY' );
+	
     $('#operations').DataTable( {
         "language": {
             "lengthMenu": "Afficher _MENU_ opérations par page",

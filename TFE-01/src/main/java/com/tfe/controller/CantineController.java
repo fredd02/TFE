@@ -35,12 +35,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.tfe.model.Classe;
 import com.tfe.model.Compte;
 import com.tfe.model.Eleve;
 import com.tfe.model.Enseignant;
 import com.tfe.model.Inscription;
 import com.tfe.model.InscriptionCantine;
 import com.tfe.model.LigneCompte;
+import com.tfe.repository.IClasseRepository;
 import com.tfe.repository.ICompteRepository;
 import com.tfe.repository.IEleveRepository;
 import com.tfe.repository.IEnseignantRepository;
@@ -58,6 +60,9 @@ public class CantineController {
 	
 	@Autowired
 	IEleveRepository eleveDAO;
+	
+	@Autowired
+	IClasseRepository classeDAO;
 	
 	@Autowired
 	IEnseignantRepository enseignantDAO;
@@ -358,7 +363,9 @@ public class CantineController {
 				Compte compte = compteDAO.getCompteFromEleve(inscription.getEleve().getId());
 				Eleve eleve = inscription.getEleve();
 				log.info("id eleve: " + eleve.getId());
-				LigneCompte ligne = new LigneCompte(compte,date,"cantine",-3.80,eleve);
+				Double prix = classeDAO.getClasseFromEleve(eleve.getId()).getPrixCantine();
+				log.info("prix cantine: " + prix);
+				LigneCompte ligne = new LigneCompte(compte,date,"cantine",-prix,eleve);
 				ligneCompteDAO.save(ligne);
 				log.info("ligne enregistree");
 				
@@ -514,6 +521,60 @@ public class CantineController {
 	
 		
 		return "redirect:/cantine/inscriptions/"+dateString;
+	}
+	
+	//methode GET pour modifier le prix
+	@RequestMapping(value="/prix", method=RequestMethod.GET)
+	public String getPrixCantine(Model model) {
+		log.info("methode GET pour modifier le prix");
+		
+		Double prixMaternelles = classeDAO.findOne("M0").getPrixCantine();
+		Double prixPrimaires = classeDAO.findOne("P1").getPrixCantine();
+		log.info("prix maternelles: " + prixMaternelles);
+		
+		model.addAttribute("prixMaternelles", prixMaternelles);
+		model.addAttribute("prixPrimaires", prixPrimaires);
+		
+		return "cantine/cantinePrix";
+	}
+	
+	//methode POST pour modifier le prix
+	@RequestMapping(value="prix", method=RequestMethod.POST)
+	public String postPrixCantine(@RequestParam(value="prixMaternelles", required=false) String prixMat,
+			@RequestParam(value="prixPrimaires", required=false) String prixPrim, RedirectAttributes rModel) {
+		log.info("methode POST pour modifier le prix");
+		
+		if(prixMat.isEmpty() || prixPrim.isEmpty()) {
+			log.info("un champ est nul");
+			rModel.addFlashAttribute("erreur", "les champs ne peuvent être vides");
+			return "redirect:/cantine/prix";
+			
+		}
+		
+		log.info(prixMat);
+		Double prixMatDouble = Double.parseDouble(prixMat);
+		Double prixPrimDouble = Double.parseDouble(prixPrim);
+		
+		//modification du prix pour classes de maternelle
+		List<Classe> maternelles = classeDAO.findByCodeStartingWith("M");
+		for(Classe classe : maternelles) {
+			classe.setPrixCantine(prixMatDouble);
+			classeDAO.save(classe);
+		}
+		
+		//modification du prix pour classes de primaire
+				List<Classe> primaires = classeDAO.findByCodeStartingWith("P");
+				for(Classe classe : primaires) {
+					classe.setPrixCantine(prixPrimDouble);
+					classeDAO.save(classe);
+				}
+				
+				rModel.addFlashAttribute("success", "la modification a été enregistrée");
+			
+		
+		return "redirect:/cantine/prix";
+		
+		
 	}
 			
 

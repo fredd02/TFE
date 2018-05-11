@@ -92,6 +92,7 @@
 			      <ul class="dropdown-menu">
 			      	<li><a href="/TFE-01/cantine/inscriptions/${today}">Repas du jour</a>
 			      	<li><a href="/TFE-01/compte/list"></a>
+			      	<li><a href="/TFE-01/cantine/prix">Modification du prix</a>
 			      </ul>
 			     </li>
 			     <li class="dropdown">

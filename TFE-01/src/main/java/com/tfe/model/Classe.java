@@ -26,6 +26,9 @@ public class Classe {
 	@Column
 	private String nom;
 	
+	@Column
+	private Double prixCantine;
+	
 	@ManyToOne
 	@JoinColumn(name="TITULAIRE")
 	private Enseignant titulaire;

@@ -63,6 +63,7 @@
 <jsp:include page="../fragments/footer.jsp" />
 <script>
 $(document).ready(function() {
+	$.fn.dataTable.moment( 'dd/MM/YYYY' );
     $('#eleves').DataTable( {
         "language": {
             "lengthMenu": "Afficher _MENU_ élèves par page",
