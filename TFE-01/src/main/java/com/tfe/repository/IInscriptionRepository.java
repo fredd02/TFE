@@ -14,7 +14,6 @@ import com.tfe.model.Inscription;
 import com.tfe.model.Inscription.Id;
 
 @Repository
-//@Transactional
 public interface IInscriptionRepository extends JpaRepository<Inscription, Id>{
 	
 	//recuperation des inscriptions actuelles

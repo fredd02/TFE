@@ -19,6 +19,7 @@ import com.tfe.storage.StorageProperties;
 
 @SpringBootApplication
 @EnableConfigurationProperties(StorageProperties.class)
+
 public class Tfe01Application extends WebMvcConfigurerAdapter{
 
 	public static void main(String[] args) {
