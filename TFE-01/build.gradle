@@ -3,6 +3,7 @@ buildscript {
 		springBootVersion = '1.5.10.RELEASE'
 	}
 	repositories {
+		mavenLocal()
 		mavenCentral()
 	}
 	dependencies {
@@ -35,7 +36,7 @@ dependencies {
 	compile('org.springframework.boot:spring-boot-starter-web')
 	compile group: 'javax.servlet', name: 'jstl', version: '1.2'
 	// https://mvnrepository.com/artifact/com.h2database/h2
-	testCompile group: 'com.h2database', name: 'h2', version: '1.4.196'
+	//testCompile group: 'com.h2database', name: 'h2', version: '1.4.196'
 	//securité
 	compile group: 'org.springframework.boot', name: 'spring-boot-starter-security', version: '1.5.10.RELEASE'
 	compile group: 'org.springframework.security', name: 'spring-security-taglibs', version: '5.0.1.RELEASE'
