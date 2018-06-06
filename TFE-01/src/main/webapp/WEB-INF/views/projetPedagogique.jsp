@@ -27,6 +27,28 @@ et des activités d'éveil.</p>
 
 <p><b>Nous développons l'expression, la communication et la créativité.</b></p>
 
+<p>Nous élaborons avec l'enfant, des projets de toute nature. Nous participons à des concours d'orthographe, de dessin, d'expression écrite...<br>
+Nous utilisons tout au long de sa scolarité; des techniques très variées (lettres, affiches, slogans...) lui permettant d'exprimer sa créativité.
+
+<p><b>Nous nous ouvrons aux autres et au monde extérieur.</b></p>
+
+<p>Nous organisons régulièrement des classes découvertes et des sorties dans l'environnement proche (quartier, ville) et nous participons à des expositions, visites
+d'usines, de musées...</p>
+
+<p><b>Nous développons la curiosité et l'esprit scientifique</b></p>
+<p>Nous abordons l'étude des sciences par de multiples manipulations et par l'expérimentation scientifique. Nous nous faisons également un devoir
+d'initier, dès son plus jeune âge, votre enfant aux valeurs écologiques en lui faisant observer et comprendre les changements de la nature.
+Nous l'éduquons aussi au respect des locaux mis à sa disposition.</p>
+
+<p><b>Nous assurons un développement corporel harmonieux.</b></p>
+
+<p>Dès l'école maternelle, nos enseignantes, sensibles au bien-être physique des élèves, proposent régulièrement des activités de
+psychomotricité dans un environnement adéquat (hall sportif, salle de gymnastique communale). A l'école primaire, nos Maîtres d'éducation physique
+poursuivent la formation physique et sportive par une pratique régulière de la gymnastique, du sport et de la natation.</p>
+
+
+</p>
+
 </div>
 
 <jsp:include page="fragments/footer.jsp" />

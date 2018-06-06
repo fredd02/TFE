@@ -12,7 +12,7 @@
 </jsp:include>
 
 <div class="container">
-<h1>Liste des classes</h1>
+<h4>Liste des classes</h4><br>
 
  <table class="table table-striped table-bordered nowrap">
  	<thead>

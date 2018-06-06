@@ -32,7 +32,7 @@
  
  </head>
  <body>
-<%--  	<c:set var="contextPath" value="${pageContext.request.contextPath}" /> --%>
+<c:set var="contextPath" value="${pageContext.request.contextPath}" /> 
 
 <s:url value="/login" var="loginUrl" />
 <s:url value="/logout" var="logoutUrl" />
@@ -40,7 +40,7 @@
 <fmt:formatDate pattern="ddMMYYYY" value="${now}" var="today"/>
 
 <div>
-	<img src="/TFE-01/resources/img/bandeau.png">
+	<img src="/TFE-01/resources/img/bandeau2.png">
 </div>
 
 <c:if test="${admin || directeur || enseignant}">
@@ -51,7 +51,7 @@
    			 </div>
  		
 			 <ul class="nav navbar-nav">
-			 	<li class="active"><a href="/TFE-01/">Home</a></li>
+			 	<li><a href="/TFE-01/">Home</a></li>
 			    <li class="dropdown">
 			      <a class="dropdown-toggle" href="#" data-toggle="dropdown">Eleves
 			      	<span class="caret"></span></a>
@@ -197,17 +197,17 @@
    			 </div>
  		
 			 <ul class="nav navbar-nav">
-			 	<li class="active"><a href="/TFE-01/">Accueil</a></li>
-			    <li><a href="/TFE-01/projetPedagogique">Projet pédagogique</a></li>
+			 	<li class="active"><a href="${contextPath}/">Accueil</a></li>
+			    <li ><a href="${contextPath}/projetPedagogique">Projet pédagogique</a></li>
 			    <li class="dropdown">
 			      <a class="dropdown-toggle" href="#" data-toggle="dropdown">Actualité
 			      	<span class="caret"></span></a>
 			      <ul class="dropdown-menu">
-			      	<li><a href="/TFE-01/enseignant/add">Inscription</a>
-			      	<li><a href="/TFE-01/enseignant/list">Liste</a>
+			      	<li><a href="${contextPath}/enseignant/add">Inscription</a>
+			      	<li><a href="${contextPath}/enseignant/list">Liste</a>
 			      </ul>
 			     </li>
-			    <li><a href="/TFE-01/contact">Contact</a></li>
+			    <li><a href="${contextPath}/contact">Contact</a></li>
 			  </ul>
 			  <ul class="nav navbar-nav navbar-right">
 				<sec:authorize access="isAuthenticated()">
