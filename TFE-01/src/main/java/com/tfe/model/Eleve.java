@@ -58,6 +58,8 @@ public class Eleve {
 	@Column(nullable=false, updatable=false)
 	private Date dateInscription;
 	
+	private Boolean actif;
+	
 //	@OneToMany(mappedBy = "eleve")
 //	private Set<Inscription> inscriptions = new HashSet<>();
 //	

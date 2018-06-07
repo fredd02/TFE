@@ -10,6 +10,7 @@ import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -62,6 +63,13 @@ public class EleveController {
 	
 	@Autowired
 	IResponsableRepository responsableDAO;
+	
+	@InitBinder
+	public void initBinder1(WebDataBinder binder) {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		sdf.setLenient(true);
+		binder.registerCustomEditor(Date.class, new CustomDateEditor(sdf, true));
+	}
 	
 	/**
 	 * methode GET pour inscrire un élève
@@ -160,6 +168,8 @@ public class EleveController {
 			Date dateNow = new Date();
 			log.info("date inscription: " + dateNow);
 			eleve.setDateInscription(dateNow);
+			
+			eleve.setActif(true);
 			Eleve eleveSaved = eleveDAO.save(eleve);
 			log.info("recuperation de la classe");
 			Classe classe = classeDAO.findOne(codeClasse);

@@ -15,7 +15,8 @@
 <h4 class="text-center">Modification de l'enseignant <c:out value="${enseignant.nom} ${enseignant.prenom}" /></h4>
 <br>
 
-<sf:form method="POST" class="form-horizontal" modelAttribute="enseignant" action="add">
+
+<sf:form method="POST" class="form-horizontal" modelAttribute="enseignant" action="update">
 
 	<sf:errors path="*" element="div" cssClass="alert alert-danger" />
 	
@@ -198,6 +199,8 @@
 				 
 		</div>
 	</s:bind>
+	
+	<sf:hidden path="password" />
 	
 	<div class="form-group">
 			<label class="col-md-4 control-label"></label>

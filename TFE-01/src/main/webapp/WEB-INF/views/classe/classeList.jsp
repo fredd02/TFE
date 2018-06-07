@@ -14,27 +14,29 @@
 <div class="container">
 <h4>Liste des classes</h4><br>
 
- <table class="table table-striped table-bordered nowrap">
+ <table class="table table-striped table-bordered nowrap table-condensed texter-center">
  	<thead>
  		<tr>
- 			<th>Code</th>
- 			<th>Nom</th>
- 			<th>Titulaire</th>
+ 			<th class="text-center">Code</th>
+ 			<th class="text-center">Nom</th>
+ 			<th class="text-center">Titulaire</th>
  			
  		</tr>
  	</thead>
  	<tbody>
  		<c:forEach items="${classesList}" var="classe">
  			<tr>
- 				<td><a href="${classe.code}"><c:out value="${classe.code}" /></a></td>
- 				<td><c:out value="${classe.nom}" /></td>
- 				<td>
+ 				<td align="center"><a href="${classe.code}"><c:out value="${classe.code}" /></a></td>
+ 				<td align="center"><c:out value="${classe.nom}" /></td>
+ 				<td align="center">
  				<c:choose>
  					<c:when test="${empty classe.titulaire}">
  						<a href="./${classe.code}/titulaire/add">choisir un titulaire</a>
  					</c:when>
  					<c:otherwise>
- 						<c:out value="${classe.titulaire.nom} ${classe.titulaire.prenom }" />
+ 					<c:out value="${classe.titulaire.nom} ${classe.titulaire.prenom }" />
+ 						<a href="./${classe.code}/titulaire/add" class="btn btn-primary btn-sm">modifier le titulaire</a>
+ 					
  					</c:otherwise>
  				
  				</c:choose>

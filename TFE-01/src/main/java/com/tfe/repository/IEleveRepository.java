@@ -42,7 +42,7 @@ public interface IEleveRepository extends JpaRepository<Eleve, Long>{
 	List<Eleve> getElevesCantineForDate(Date date);
 	
 	//recherche d'un eleve par son nom
-	List<Eleve> readByNomContainingIgnoringCase(String nom);
+	List<Eleve> readByNomContainingIgnoringCaseAndActifIsTrue(String nom);
 	
 	//recherche du numero de compte d'un eleve
 	@Query(value="SELECT res.fkcompte FROM TELEVE e JOIN RELATION rel ON e.id=rel.fkeleve JOIN TRESPONSABLE res ON rel.FKRESPONSABLE = "

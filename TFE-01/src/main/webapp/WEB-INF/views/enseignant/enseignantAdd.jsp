@@ -12,7 +12,8 @@
 </jsp:include>
 
 <div class="container">
-<div class="well well-sm text-center color1"><h4>Inscription d'un enseignant</h4></div>
+<div class="well well-sm text-center color2 "><h5><b>Inscription d'un enseignant</b></h5></div>
+<br>
 
 <sf:form method="POST" class="form-horizontal" modelAttribute="enseignant" action="add">
 
@@ -27,8 +28,9 @@
 				<div class="input-group">
 					<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
 					<sf:input path="nrn" id="nrn" class="form-control" placeholder="nrn" />
-					<sf:errors path="nrn" class="control-label" />
+					
 				</div>
+				<sf:errors path="nrn" class="control-label" />
 			</div>
 				 
 		</div>
@@ -43,8 +45,9 @@
 				<div class="input-group">
 					<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
 					<sf:input path="nom" id="nom" class="form-control" placeholder="nom" />
-					<sf:errors path="nom" class="control-label" />
+					
 				</div>
+				<sf:errors path="nom" class="control-label" />
 			</div>
 				 
 		</div>
@@ -53,14 +56,15 @@
 	<s:bind path="prenom">
 		<div class="form-group ${status.error ? 'has-error' : ''}">
 			<sf:label path="prenom" class="col-md-4 control-label">
-				prenom
+				prénom
 			</sf:label>
 			<div class="col-md-4 inputGroupContainer">
 				<div class="input-group">
 					<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-					<sf:input path="prenom" id="prenom" class="form-control" placeholder="prenom" />
-					<sf:errors path="prenom" class="control-label" />
+					<sf:input path="prenom" id="prenom" class="form-control" placeholder="prénom" />
+					
 				</div>
+				<sf:errors path="prenom" class="control-label" />
 			</div>
 				 
 		</div>
@@ -75,8 +79,9 @@
 				<div class="input-group">
 					<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
 					<sf:input path="username" id="username" class="form-control" placeholder="username" />
-					<sf:errors path="username" class="control-label" />
+					
 				</div>
+				<sf:errors path="username" class="control-label" />
 			</div>
 				 
 		</div>
@@ -91,8 +96,9 @@
 				<div class="input-group">
 					<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
 					<sf:password path="password" id="password" class="form-control" placeholder="password" />
-					<sf:errors path="password" class="control-label" />
+					
 				</div>
+				<sf:errors path="password" class="control-label" />
 			</div>
 				 
 		</div>
@@ -107,8 +113,9 @@
 				<div class="input-group">
 					<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
 					<sf:password path="passwordConfirm" id="passwordConfirm" class="form-control" placeholder="passwordConfirm" />
-					<sf:errors path="passwordConfirm" class="control-label" />
+					
 				</div>
+				<sf:errors path="passwordConfirm" class="control-label" />
 			</div>
 				 
 		</div>
@@ -122,9 +129,10 @@
 			<div class="col-md-4 inputGroupContainer">
 				<div class="input-group">
 					<span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-					<sf:input path="dateNaissance" id="dateNaissance" class="form-control" placeholder="dateNaissance" />
-					<sf:errors path="dateNaissance" class="control-label" />
+					<sf:input type="date" 	path="dateNaissance" id="dateNaissance" class="form-control" placeholder="dateNaissance" />
+					
 				</div>
+				<sf:errors path="dateNaissance" class="control-label" />
 			</div>
 				 
 		</div>
@@ -143,8 +151,9 @@
 					<option value="0">masculin</option>
 					
 					</sf:select>
-					<sf:errors path="sexe" class="control-label" />
+					
 				</div>
+				<sf:errors path="sexe" class="control-label" />
 			</div>
 				 
 		</div>
@@ -159,8 +168,9 @@
 				<div class="input-group">
 					<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
 					<sf:input path="email" id="email" class="form-control" placeholder="email" />
-					<sf:errors path="email" class="control-label" />
+					
 				</div>
+				<sf:errors path="email" class="control-label" />
 			</div>
 				 
 		</div>
@@ -174,9 +184,10 @@
 			<div class="col-md-4 inputGroupContainer">
 				<div class="input-group">
 					<span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
-					<sf:input path="telephone" id="telephone" class="form-control" placeholder="telephone" />
-					<sf:errors path="telephone" class="control-label" />
+					<sf:input path="telephone" id="telephone" class="form-control" placeholder="téléphone" />
+					
 				</div>
+				<sf:errors path="telephone" class="control-label" />
 			</div>
 				 
 		</div>
@@ -191,8 +202,9 @@
 				<div class="input-group">
 					<span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
 					<sf:input path="rue" id="rue" class="form-control" placeholder="rue" />
-					<sf:errors path="rue" class="control-label" />
+					
 				</div>
+				<sf:errors path="rue" class="control-label" />
 			</div>
 				 
 		</div>
@@ -201,14 +213,15 @@
 	<s:bind path="numero">
 		<div class="form-group ${status.error ? 'has-error' : ''}">
 			<sf:label path="numero" class="col-md-4 control-label">
-				numero
+				numéro
 			</sf:label>
 			<div class="col-md-4 inputGroupContainer">
 				<div class="input-group">
 					<span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
-					<sf:input path="numero" id="numero" class="form-control" placeholder="numero" />
-					<sf:errors path="numero" class="control-label" />
+					<sf:input path="numero" id="numero" class="form-control" placeholder="numéro" />
+					
 				</div>
+				<sf:errors path="numero" class="control-label" />
 			</div>
 				 
 		</div>
@@ -222,9 +235,10 @@
 			<div class="col-md-4 inputGroupContainer">
 				<div class="input-group">
 					<span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
-					<sf:input path="codePostal" id="codePostal" class="form-control" placeholder="codePostal" />
-					<sf:errors path="codePostal" class="control-label" />
+					<sf:input path="codePostal" id="codePostal" class="form-control" placeholder="code postal" />
+					
 				</div>
+				<sf:errors path="codePostal" class="control-label" />
 			</div>
 				 
 		</div>
@@ -239,8 +253,9 @@
 				<div class="input-group">
 					<span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
 					<sf:input path="ville" id="ville" class="form-control" placeholder="ville" />
-					<sf:errors path="ville" class="control-label" />
+					
 				</div>
+				<sf:errors path="ville" class="control-label" />
 			</div>
 				 
 		</div>

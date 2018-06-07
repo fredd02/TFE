@@ -22,5 +22,9 @@ public interface IClasseRepository extends JpaRepository<Classe, String>{
 	//classe d'un eleve
 	@Query(value="SELECT * FROM TCLASSE c JOIN INSCRIPTION i ON c.code=i.fkclasse WHERE i.FKELEVE=?1 AND i.date_sortie is null", nativeQuery=true)
 	Classe getClasseFromEleve(Long id);
+	
+	//liste des classes d'un titulaire
+	@Query(value="SELECT * FROM TCLASSE c WHERE c.titulaire=?1", nativeQuery=true)
+	List<Classe> getClassesFromTitulaire(String username);
 
 }

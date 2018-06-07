@@ -1,13 +1,21 @@
 h4 {
-	color:#006699;
+	color:#1b5768;
+}
+
+h5 {
+	color: white;
 }
 
 .color1 {
 	background-color:#ecfad4;
 }
+.color2 {
+	background-color:#1b5768;
+}
 
 .input-group-addon {
-	background-color:#ecfad4;
+	background-color:#1b5768;
+	color: white;
 }
 
 .jumbotron {
@@ -17,5 +25,10 @@ h4 {
 
 .blanc {
 	color:#FFFFFF;
+}
+
+.btn-primary {
+	background-color:#1b5768;
+	color:white;
 }
 

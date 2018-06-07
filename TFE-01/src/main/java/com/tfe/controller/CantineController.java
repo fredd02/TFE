@@ -419,7 +419,7 @@ public class CantineController {
 		
 		
 		//List<Eleve> eleves= eleveDAO.readByNomIgnoringCase(nom);
-		List<Eleve> eleves= eleveDAO.readByNomContainingIgnoringCase(nom);
+		List<Eleve> eleves= eleveDAO.readByNomContainingIgnoringCaseAndActifIsTrue(nom);
 		
 		//liste de ces eleves ayant un compte
 		List<Eleve> elevesWithCompte = new ArrayList<Eleve>();

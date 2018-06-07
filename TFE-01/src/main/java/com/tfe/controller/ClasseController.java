@@ -61,7 +61,8 @@ public class ClasseController {
 	 */
 	@RequestMapping(value="/{code}", method=RequestMethod.GET)
 	public String classeInfos(@PathVariable String code, Model model) {
-		log.info("methode pour afficher les infos de la classe");
+		log.info("methode pour afficher les infos de la classe: " + code);
+		
 		
 		Classe classe = classeDAO.findOne(code);
 		log.info("classe trouvée");
@@ -79,7 +80,8 @@ public class ClasseController {
 	public String classeTitulaireAddGet(@PathVariable String code, Model model) {
 		log.info("methode GET pour ajouter un titulaire à la classe");
 		
-		List<Enseignant> enseignants = enseignantDAO.findAll();
+		//liste des enseignants actifs
+		List<Enseignant> enseignants = enseignantDAO.findByActifTrue();
 		
 		Classe classe = classeDAO.getOne(code);
 		

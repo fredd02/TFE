@@ -13,11 +13,12 @@
 
 <div class="container">
 <h4>Ajout d'un titulaire à la classe <c:out value="${classe.nom}" /></h4>
+<br>
 
 <sf:form method="POST" class="form-inline"  action="add">
 
  <div class="form-group">
-  	<label for="sel1">Select list:</label>
+  	<label for="sel1">Liste des enseignants:</label>
   	<select class="form-control" id="sel1" name="enseignant_id">
     <c:forEach items="${enseignants}" var = "enseignant">
     	<option value="${enseignant.username}">${enseignant.nom} ${enseignant.prenom}</option>
@@ -26,7 +27,7 @@
   </select>
 </div>
 
-<button type="submit" class="btn btn-default">Submit</button> 
+<button type="submit" class="btn btn-primary">Selectionner</button> 
 
 
 </sf:form>

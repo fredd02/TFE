@@ -67,7 +67,8 @@
 			      <c:if test="${admin || directeur}">
 			      	<li><a href="/TFE-01/enseignant/add">Inscription</a>
 			      </c:if>	
-			      	<li><a href="/TFE-01/enseignant/list">Liste</a>
+			      	<li><a href="/TFE-01/enseignant/actifslist">Liste des enseignants actifs</a>
+			      	<li><a href="/TFE-01/enseignant/list">Historique des enseignants</a>
 			      </ul>
 			     </li>
 			    <li class="dropdown">

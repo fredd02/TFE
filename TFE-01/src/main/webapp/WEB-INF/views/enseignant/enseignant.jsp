@@ -49,13 +49,20 @@
 <sec:authorize access="hasAnyAuthority('ADMIN','DIRECTEUR')">
 <div class="btn-group text-center">
 	<button class="btn btn-primary" onclick="location.href='./${enseignant.username}/update'">modifier les informations</button>
-	<s:url value="/enseignant/${enseignant.username}/delete" var="deleteUrl" />
-			<button class="btn btn-danger"
-				onclick="
-				if (confirm('Suppression de l'enseignant ?')) {
-				 this.disabled=true;
-                 post('${deleteUrl}',{'${_csrf.parameterName}': '${_csrf.token}'})}                             
-                                              ">supprimer l'enseignant</button>
+ 	<s:url value="/enseignant/${enseignant.username}/unsubscribe" var="unsubscribeEnseignantUrl" /> 
+ 	<s:url value="/enseignant/${enseignant.username}/delete" var="deleteEnseignantUrl" />
+
+                                              
+            <button class="btn btn-danger" onclick="
+								if (confirm('<s:message code="enseignant.confirmation.desinscrire"/>')) {
+								 this.disabled=true; post('${unsubscribeEnseignantUrl}',{'${_csrf.parameterName}': '${_csrf.token}'})}">
+								 	désinscrire l'enseignant
+							</button> 
+							<button class="btn btn-danger" onclick="
+								if (confirm('<s:message code="enseignant.confirmation.supprimer"/>')) {
+								 this.disabled=true; post('${deleteEnseignantUrl}',{'${_csrf.parameterName}': '${_csrf.token}'})}">
+								 	supprimer l'enseignant
+							</button>                                 
 	
 </div>
 </sec:authorize>

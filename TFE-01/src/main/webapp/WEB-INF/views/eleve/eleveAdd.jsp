@@ -12,7 +12,7 @@
 </jsp:include>
 
 <div class="container">
-<div class="well well-sm text-center color1"><h4>Inscription d'un élève</h4></div>
+<div class="well well-sm text-center color2"><h5><b>Inscription d'un élève</b></h5></div>
 
 
 <sf:form method="POST" class="form-horizontal" modelAttribute="eleve" action="add">
@@ -78,7 +78,7 @@
 			<div class="col-sm-4 inputGroupContainer">
 				<div class="input-group">
 					<span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-					<sf:input path="dateNaissance" id="dateNaissance" class="form-control" placeholder="format jj/mm/aaaa" />
+					<sf:input type="date" path="dateNaissance" id="dateNaissance" class="form-control" placeholder="format jj/mm/aaaa" />
 					
 				</div>
 				<sf:errors path="dateNaissance" class="control-label" />

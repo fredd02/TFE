@@ -12,7 +12,7 @@
 </jsp:include>
 
 <div class="container">
-<h4>Historique des enseignants</h4>
+<h4>Liste des enseignants actifs</h4>
 <br>
 
  <table class="table table-striped table-bordered nowrap">
@@ -27,10 +27,11 @@
  		</tr>
  	</thead>
  	<tbody>
- 		<c:forEach items="${enseignantsList}" var="enseignant">
+ 		<c:forEach items="${enseignantsActifsList}" var="enseignant">
  			<tr>
  				<td><a href="./${enseignant.username}"><c:out value="${enseignant.nom}" /></a></td>
  				<td><c:out value="${enseignant.prenom}" /></td>
+ 				
  				<td><fmt:formatDate value="${enseignant.dateNaissance}" pattern="dd/MM/yyyy" /></td>
  				<td><c:out value="${enseignant.telephone}" /></td>
  				<td><c:choose>
