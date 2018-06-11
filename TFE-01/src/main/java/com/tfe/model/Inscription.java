@@ -13,6 +13,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 @Entity
 public class Inscription {
 	
@@ -51,10 +53,12 @@ public class Inscription {
 		@EmbeddedId
 		protected Id id = new Id();
 		
+		@DateTimeFormat(pattern="dd/MM/yyyy")
 		@Column(updatable = true)
 		@NotNull
 		protected Date dateEntree;
 		
+		@DateTimeFormat(pattern="dd/MM/yyyy")
 		@Column(updatable = true)
 		protected Date dateSortie;
 		

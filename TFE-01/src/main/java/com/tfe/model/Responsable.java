@@ -14,6 +14,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -34,10 +35,12 @@ public class Responsable extends User{
 	private String nrn;
 	
 	@NotNull
+	@Size(min=2, max=30, message ="{nom.size}")
 	@Column(length=30, nullable=false)
 	private String nom;
 	
 	@NotNull
+	@Size(min=2, max=30, message ="{prenom.size}")
 	@Column(length=30, nullable=false)
 	private String prenom;
 	

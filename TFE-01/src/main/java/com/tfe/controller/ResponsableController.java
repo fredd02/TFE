@@ -21,6 +21,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.tfe.exceptions.NotFoundException;
+import com.tfe.exceptions.NotFoundExceptionInt;
 import com.tfe.model.Eleve;
 import com.tfe.model.Inscription;
 import com.tfe.model.Relation;
@@ -201,6 +203,36 @@ public class ResponsableController {
 		
 		
 		return "responsable/responsable";
+	}
+	
+	//methode GET pour updater un responsable
+	@RequestMapping(value="/{username}/update", method=RequestMethod.GET)
+	String responsableUpdateGet(@PathVariable("username") String username, Model model) {
+		log.info("methode GET pour updater un responsable");
+		
+		if(!responsableDAO.exists(username))
+			throw new NotFoundException("responsable.invalide", username);
+		
+		Responsable responsable = responsableDAO.findOne(username);
+		model.addAttribute("responsable", responsable);
+		
+		return "responsable/responsableUpdate";
+	}
+	
+	//methode POST pour updater un responsable
+	@RequestMapping(value="/{username}/update", method=RequestMethod.POST)
+	String responsableUpdatePost(@PathVariable ("username") String username, @Valid Responsable responsable, BindingResult errors, RedirectAttributes rModel) {
+		log.info("methode POST pour updater un responsable");
+		
+		//validation
+		if(errors.hasErrors()) {
+			return "responsable/responsableUpdate";
+		} else {
+			Responsable responsableSaved = responsableDAO.save(responsable);
+			
+			return "redirect:/responsable/" + username;
+		}
+			
 	}
 
 }

@@ -12,7 +12,7 @@
 </jsp:include>
 
 <div class="container">
-<div class="well well-sm text-center color1"><h4>Modification de l'inscription de l'élève <c:out value="${eleve.nom}" /> <c:out value="${eleve.prenom}" /></h4></div>
+<div class="well well-sm text-center color2"><h5><b>Modification de l'inscription de l'élève <c:out value="${eleve.nom}" /> <c:out value="${eleve.prenom}" /></b></h5></div>
 
 
 

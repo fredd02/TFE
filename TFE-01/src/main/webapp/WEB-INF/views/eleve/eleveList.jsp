@@ -61,19 +61,33 @@
 
 </div>
 <jsp:include page="../fragments/footer.jsp" />
+
 <script>
 $(document).ready(function() {
-	$.fn.dataTable.moment( 'dd/MM/YYYY' );
+	//alert("test");
+	//pour pouvoir trier selon la date
+	//$.fn.dataTable.moment( 'dd/MM/YYYY' );
+	
     $('#eleves').DataTable( {
         "language": {
             "lengthMenu": "Afficher _MENU_ élèves par page",
-            "zeroRecords": "Aucun résultat - désolé",
+            "zeroRecords": "Nothing found - sorry",
             "info": " page _PAGE_ de _PAGES_",
             "infoEmpty": "Aucun élève",
-            "infoFiltered": "(filtré de _MAX_ élèves au total)"
+            "infoFiltered": "(filtré de _MAX_ opérations au total)",
+            "paginate":{
+            	"previous": "précédent  ",
+            	"next": "  suivant"
+            },
+    		"search" : "recherche"
+            
         }
     }
+    		
+    
     );
 } );
+
+
 </script>
 </html>

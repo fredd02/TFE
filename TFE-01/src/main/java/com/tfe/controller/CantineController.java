@@ -1,6 +1,6 @@
 package com.tfe.controller;
 
-import static org.assertj.core.api.Assertions.registerCustomDateFormat;
+//import static org.assertj.core.api.Assertions.registerCustomDateFormat;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -14,7 +14,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Locale;
+//import java.util.Locale;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -49,7 +49,7 @@ import com.tfe.repository.IEnseignantRepository;
 import com.tfe.repository.IInscriptionCantineRepository;
 import com.tfe.repository.ILigneCompteRepository;
 
-import net.minidev.json.parser.ParseException;
+//import net.minidev.json.parser.ParseException;
 
 @Controller
 @RequestMapping("cantine")
@@ -122,15 +122,16 @@ public class CantineController {
 		Date lundi;
 		calendar.setTime(new Date());
 		int today = calendar.get(calendar.DAY_OF_WEEK);
-		//verifie si on est entre le lundi et vendredi
-		if(today >=2 & today <=6) {
+		log.info("vendredi: " + today);
+		//verifie si on est entre le lundi et jeudi
+		if(today >=1 & today <6) {
 			calendar.add(Calendar.DATE, (2-today)); 
 			lundi = calendar.getTime();
 		} else {
 			if(today == 7)
 				calendar.add(Calendar.DATE, 2);
 			else
-				calendar.add(Calendar.DATE, 1);
+				calendar.add(Calendar.DATE, 3);
 			lundi = calendar.getTime();
 		}
 		calendar.add(calendar.DATE, 1);

@@ -11,8 +11,22 @@
 	<jsp:param name="titre" value="Projet TFE" />
 </jsp:include>
 
+<s:url value="/responsable/${responsable.username}/update" var ="updateResponsableURL" />
+<s:url value="/responsable/${responsable.username}/delete" var ="deleteResponsableURL" />
+
 <div class="container">
 <h4>Infos sur le responsable </h4>
+
+<div class="btn-group">
+	
+	<button class="btn btn-primary" onclick="location.href='${updateResponsableURL}'">modifier les informations</button>
+	<button class="btn btn-danger" onclick="
+								if (confirm('<s:message code="responsable.confirmation.supprimer"/>')) {
+								 this.disabled=true; post('${deleteResponsableURL}',{'${_csrf.parameterName}': '${_csrf.token}'})}">
+								 	supprimer le responsable
+							</button>
+</div>
+<br><br>
 
 <ul class="list-group">
   <li class="list-group-item"><b>Nom: </b><c:out value="${responsable.nom}" /></li>

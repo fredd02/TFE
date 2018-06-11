@@ -296,21 +296,53 @@ public class EleveController {
 	}
 	
 	/**
-	 * methode pour passer l'eleve en classe superieure
+	 * methode GET pour passer l'eleve en classe superieure
 	 */
 	@RequestMapping(value="/{id}/sup" , method=RequestMethod.GET)
-	public String eleveSup(@PathVariable Long id, Model model) {
+	public String eleveSup(@PathVariable Long id, Model model, Inscription inscription) {
 		log.info("methode pour passer l'eleve en année superieure");
 		
 		//recuperation de la classe actuelle de l'élève
 		String codeClasse = eleveDAO.classeFromEleve(id);
 		
+		List<Classe> listeClasses = classeDAO.getClassesOrderedByCode();
+		
 		Eleve eleve = eleveDAO.findOne(id);
 		model.addAttribute("eleve", eleve);
 		model.addAttribute("classe", codeClasse);
+		model.addAttribute("listeClasses", listeClasses);
+		model.addAttribute("inscription", inscription);
 		
 		return "eleve/eleveSup";
 		
+	}
+	
+	//methode POST pour passer l'eleve en classe superieure
+	@RequestMapping(value="/{id}/sup", method=RequestMethod.POST)
+	public String eleveSupPost(@PathVariable Long id, @RequestParam(value="codeClasse") String codeClasse,
+			@RequestParam(value="dateEntree") Date dateEntree) {
+		
+		log.info("methode POST pour changer inscription");
+		
+		
+		
+		//recuperation de l'inscription actuelle
+		Inscription inscriptionActuelle = inscriptionDAO.inscriptionActuelleFromEleve(id);
+		
+		inscriptionActuelle.setDateSortie(dateEntree);
+		inscriptionDAO.save(inscriptionActuelle);
+		
+		Classe classe = classeDAO.findOne(codeClasse);
+		Eleve eleve = eleveDAO.findOne(id);
+		Inscription inscription = new Inscription(eleve, classe, dateEntree);
+		
+		log.info("inscription: " + inscription.toString());
+		log.info("classe: " + inscription.getClasse().getCode());
+		inscriptionDAO.save(inscription);
+		
+		
+		
+		return "redirect:/eleve/" + id;
 	}
 	
 	

@@ -18,6 +18,7 @@
  <link rel="stylesheet" href="${styleCss}" />
  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.4/moment.min.js"></script>
  <s:url value="/resources/css/common.css" var="commonCss" />
 <link href="${commonCss}" rel="stylesheet">
 
@@ -40,7 +41,7 @@
 <fmt:formatDate pattern="ddMMYYYY" value="${now}" var="today"/>
 
 <div>
-	<img src="/TFE-01/resources/img/bandeau2.png">
+	<img src="${contextPath}/resources/img/bandeau2.png">
 </div>
 
 <c:if test="${admin || directeur || enseignant}">
@@ -51,13 +52,13 @@
    			 </div>
  		
 			 <ul class="nav navbar-nav">
-			 	<li><a href="/TFE-01/">Home</a></li>
+			 	<li><a href="${contextPath}/">Home</a></li>
 			    <li class="dropdown">
 			      <a class="dropdown-toggle" href="#" data-toggle="dropdown">Eleves
 			      	<span class="caret"></span></a>
 			      <ul class="dropdown-menu">
-			      	<li><a href="/TFE-01/eleve/add">Inscription</a>
-			      	<li><a href="/TFE-01/eleve/list">Liste</a>
+			      	<li><a href="${contextPath}/eleve/add">Inscription</a>
+			      	<li><a href="${contextPath}/eleve/list">Liste</a>
 			      </ul>
 			     </li>
 			    <li class="dropdown">
@@ -65,17 +66,17 @@
 			      	<span class="caret"></span></a>
 			      <ul class="dropdown-menu">
 			      <c:if test="${admin || directeur}">
-			      	<li><a href="/TFE-01/enseignant/add">Inscription</a>
+			      	<li><a href="${contextPath}/enseignant/add">Inscription</a>
 			      </c:if>	
-			      	<li><a href="/TFE-01/enseignant/actifslist">Liste des enseignants actifs</a>
-			      	<li><a href="/TFE-01/enseignant/list">Historique des enseignants</a>
+			      	<li><a href="${contextPath}/enseignant/actifslist">Liste des enseignants actifs</a>
+			      	<li><a href="${contextPath}/enseignant/list">Historique des enseignants</a>
 			      </ul>
 			     </li>
 			    <li class="dropdown">
 			      <a class="dropdown-toggle" href="#" data-toggle="dropdown">Classes
 			      	<span class="caret"></span></a>
 			      <ul class="dropdown-menu">
-			      	<li><a href="/TFE-01/classe/list">Liste</a>
+			      	<li><a href="${contextPath}/classe/list">Liste</a>
 			      	<li><a href="/#">#</a>
 			      </ul>
 			     </li>
@@ -83,26 +84,26 @@
 			      <a class="dropdown-toggle" href="#" data-toggle="dropdown">Comptes
 			      	<span class="caret"></span></a>
 			      <ul class="dropdown-menu">
-			      	<li><a href="/TFE-01/compte/add">Créer un compte</a>
-			      	<li><a href="/TFE-01/compte/list">Liste des comptes</a>
+			      	<li><a href="${contextPath}/compte/add">Créer un compte</a>
+			      	<li><a href="${contextPath}/compte/list">Liste des comptes</a>
 			      </ul>
 			     </li>
 			      <li class="dropdown">
 			      <a class="dropdown-toggle" href="#" data-toggle="dropdown">Cantine
 			      	<span class="caret"></span></a>
 			      <ul class="dropdown-menu">
-			      	<li><a href="/TFE-01/cantine/inscriptions/${today}">Repas du jour</a>
-			      	<li><a href="/TFE-01/compte/list"></a>
-			      	<li><a href="/TFE-01/cantine/prix">Modification du prix</a>
+			      	<li><a href="${contextPath}/cantine/inscriptions/${today}">Repas du jour</a>
+			      	<li><a href="${contextPath}/compte/list"></a>
+			      	<li><a href="${contextPath}/cantine/prix">Modification du prix</a>
 			      </ul>
 			     </li>
 			     <li class="dropdown">
 			      <a class="dropdown-toggle" href="#" data-toggle="dropdown">Communication
 			      	<span class="caret"></span></a>
 			      <ul class="dropdown-menu">
-			      	<li><a href="/TFE-01/file/upload">uploader un fichier</a>
-			      	<li><a href="/TFE-01/communication/add">nouvelle communication</a>
-			      	<li><a href="/TFE-01/communication/list">liste des communications</a>
+			      	<li><a href="${contextPath}/file/upload">uploader un fichier</a>
+			      	<li><a href="${contextPath}/communication/add">nouvelle communication</a>
+			      	<li><a href="${contextPath}/communication/list">liste des communications</a>
 			      </ul>
 			     </li>
 			  </ul>
@@ -136,7 +137,7 @@
    			 </div>
  		
 			 <ul class="nav navbar-nav">
-			 	<li class="active"><a href="/TFE-01/">Home</a></li>
+			 	<li class="active"><a href="${contextPath}/">Home</a></li>
 			    <li class="dropdown">
 			      <a class="dropdown-toggle" href="#" data-toggle="dropdown">L'école
 			      	<span class="caret"></span></a>
@@ -150,7 +151,7 @@
 			      <a class="dropdown-toggle" href="#" data-toggle="dropdown">Compte
 			      	<span class="caret"></span></a>
 			      <ul class="dropdown-menu">
-			      	<li><a href="/TFE-01/compte/responsable/${username}">consultation du compte</a>
+			      	<li><a href="${contextPath}/compte/responsable/${username}">consultation du compte</a>
 			      	
 			      </ul>
 			     </li>
@@ -159,16 +160,16 @@
 			      <a class="dropdown-toggle" href="#" data-toggle="dropdown">Cantine
 			      	<span class="caret"></span></a>
 			      <ul class="dropdown-menu">
-			      	<li><a href="/TFE-01/cantine/">Menu de la semaine</a>
-			      	<li><a href="/TFE-01/cantine/inscription/${username}">inscription pour la semaine</a>
-			      	<li><a href="/TFE-01/cantine/repas/${username}">repas facturés</a>
+			      	<li><a href="${contextPath}/cantine/">Menu de la semaine</a>
+			      	<li><a href="${contextPath}/cantine/inscription/${username}">inscription pour la semaine</a>
+			      	<li><a href="${contextPath}/cantine/repas/${username}">repas facturés</a>
 			      </ul>
 			     </li>
 			     <li class="dropdown">
 			      <a class="dropdown-toggle" href="#" data-toggle="dropdown">Communication
 			      	<span class="caret"></span></a>
 			      <ul class="dropdown-menu">
-			      	<li><a href="/TFE-01/communication/${username}/list">Courrier</a>
+			      	<li><a href="${contextPath}/communication/${username}/list">Courrier</a>
 <!-- 			      	<li><a href="#">Prendre RDV</a> -->
 			      	
 			      </ul>
