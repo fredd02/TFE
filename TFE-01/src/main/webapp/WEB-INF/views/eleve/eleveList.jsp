@@ -10,9 +10,17 @@
 <jsp:include page="../fragments/header.jsp">
 	<jsp:param name="titre" value="Projet TFE" />
 </jsp:include>
+<c:set var="contextPath" value="${pageContext.request.contextPath}" />
 
 <div class="container">
-<h4>Liste des élèves&emsp;<span class="badge badge-warning">${fn:length(elevesList)}</span></h4>
+<h4>Liste des élèves 
+<c:if test="${!empty enseignant}">
+ de <c:out value="${enseignant.prenom}"/> <c:out value="${enseignant.nom}" />
+
+</c:if>
+
+
+&emsp;<span class="badge badge-warning">${fn:length(elevesList)}</span></h4>
 
  <table id="eleves" class="table table-striped table-bordered nowrap">
  	<thead>
@@ -29,7 +37,7 @@
  	<tbody>
  		<c:forEach items="${elevesList}" var="eleve">
  			<tr>
- 				<td><a href="./${eleve.id}"><c:out value="${eleve.nom}" /></a></td>
+ 				<td><a href="${contextPath}/eleve/${eleve.id}"><c:out value="${eleve.nom}" /></a></td>
  				<td><c:out value="${eleve.prenom}" /></td>
  				<td><c:out value="${eleve.nrn}" /></td>
  				<td><fmt:formatDate value="${eleve.dateNaissance}" pattern="dd/MM/yyyy" /></td>

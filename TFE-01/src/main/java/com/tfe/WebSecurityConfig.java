@@ -37,6 +37,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
 		http
 			.authorizeRequests()
 				.antMatchers("/eleve/add","eleve/**/update","/eleve/**/sup").hasAnyAuthority("ADMIN","DIRECTEUR")
+				.antMatchers("/enseignant/add").hasAnyAuthority("ADMIN","DIRECTEUR")
 				.antMatchers("/eleve/**","/enseignant/**","/classe/**","/responsable/**").hasAnyAuthority("ADMIN","DIRECTEUR","ENSEIGNANT")
 				.antMatchers("/compte/add","/compte/**/credit").hasAnyAuthority("ADMIN","DIRECTEUR")
 				.antMatchers("/compte/responsable/**").hasAnyAuthority("PARENT")

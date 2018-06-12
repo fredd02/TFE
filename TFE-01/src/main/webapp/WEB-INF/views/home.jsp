@@ -24,50 +24,61 @@
 		</div>
 </sec:authorize>
 
-<sec:authorize access="isAuthenticated()">
-	<sec:authentication property="authorities" var="roles" scope="page" />
-	
-	<c:choose>
-		<c:when test="${fn:contains(roles, ADMIN)}">
-				<div class="jumbotron">
-					<font color="white"><h1>Bienvenue <sec:authentication property="principal.username" /></h1>
-						Bienvenue sur le site de l'école primaire d'Avernas-Le-Bauduin.<br> 
-						Vous pouvez gérer ici l'administration de l'école.
-					</font>
-				</div>
-		
-	</c:when>
-	<c:when test="${fn:contains(roles, PARENT)}">
-				<div class="jumbotron">
-					<font color="white"><h1>Bienvenue <sec:authentication property="principal.username" /></h1>
+<sec:authorize access="hasAnyAuthority('PARENT')">
+<sec:authentication property="principal.username" var="username" />
+
+	<div class="jumbotron">
+					<font color="white"><h1>Bienvenue <c:out value="${username}" /></h1>
 						Bienvenue sur le site de l'école primaire d'Avernas-Le-Bauduin.<br> 
 						Vous pouvez gérer ici la scolarité de vos enfants.
 					</font>
 				</div>
-		
-	</c:when>
-	
-</c:choose>
+
+</sec:authorize>
+
+<sec:authorize access="hasAnyAuthority('ADMIN')">
+<sec:authentication property="principal.username" var="username" />
+
+	<div class="jumbotron">
+					<font color="white"><h1>Bienvenue <c:out value="${username}" /></h1>
+						Bienvenue sur le site de l'école primaire d'Avernas-Le-Bauduin.<br> 
+						Vous pouvez gérer ici l'administration de l'école en tant qu'administrateur.
+					</font>
+				</div>
+
+</sec:authorize>
+
+<sec:authorize access="hasAnyAuthority('ENSEIGNANT')">
+<sec:authentication property="principal.username" var="username" />
+
+	<div class="jumbotron">
+					<font color="white"><h1>Bienvenue <c:out value="${username}" /></h1>
+						Bienvenue sur le site de l'école primaire d'Avernas-Le-Bauduin.<br> 
+						Vous pouvez gérer ici l'administration de l'école en tant qu'enseignant.
+					</font>
+				</div>
 
 </sec:authorize>
 
 
 
 
-<sec:authorize access="isAuthenticated()"> 
-		<h4>
-			username: <sec:authentication property="principal.username" />
-		</h4>
+
+
+<%-- <sec:authorize access="isAuthenticated()">  --%>
+<!-- 		<h4> -->
+<%-- 			username: <sec:authentication property="principal.username" /> --%>
+<!-- 		</h4> -->
 
 		
 		
-		roles:
-		<ul>
-			<c:forEach var="role" items="${roles}">
-				<li>${role}</li>
-			</c:forEach>
-		</ul>
-</sec:authorize>
+<!-- 		roles: -->
+<!-- 		<ul> -->
+<%-- 			<c:forEach var="role" items="${roles}"> --%>
+<%-- 				<li>${role}</li> --%>
+<%-- 			</c:forEach> --%>
+<!-- 		</ul> -->
+<%-- </sec:authorize> --%>
 
 
 </div>

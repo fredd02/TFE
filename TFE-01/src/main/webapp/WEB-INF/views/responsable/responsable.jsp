@@ -4,6 +4,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="s"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="sf"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%-- <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%> --%>
 <html>
@@ -15,8 +16,9 @@
 <s:url value="/responsable/${responsable.username}/delete" var ="deleteResponsableURL" />
 
 <div class="container">
-<h4>Infos sur le responsable </h4>
+<h4><b>Informations sur le responsable</b> </h4>
 
+<sec:authorize access="hasAnyAuthority('ADMIN','DIRECTEUR')">
 <div class="btn-group">
 	
 	<button class="btn btn-primary" onclick="location.href='${updateResponsableURL}'">modifier les informations</button>
@@ -26,6 +28,7 @@
 								 	supprimer le responsable
 							</button>
 </div>
+</sec:authorize>
 <br><br>
 
 <ul class="list-group">

@@ -6,6 +6,15 @@ h5 {
 	color: white;
 }
 
+.container {
+	min-height: 80vh;
+}
+
+.blue {
+	background-color:#1b5768;
+	
+}
+
 .color1 {
 	background-color:#ecfad4;
 }

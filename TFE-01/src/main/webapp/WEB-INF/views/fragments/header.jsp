@@ -57,8 +57,15 @@
 			      <a class="dropdown-toggle" href="#" data-toggle="dropdown">Eleves
 			      	<span class="caret"></span></a>
 			      <ul class="dropdown-menu">
-			      	<li><a href="${contextPath}/eleve/add">Inscription</a>
-			      	<li><a href="${contextPath}/eleve/list">Liste</a>
+			      	<li class="${(enseignant) ? 'disabled' : ''} "><a href="${contextPath}/eleve/add">Inscription</a>
+			      	<li class=""><a href="${contextPath}/eleve/list">Liste des élèves de l'établissement</a>
+			      	<c:if test="${enseignant}">
+			      		<c:set var="currentUser">
+									<sec:authentication property="principal.username" />
+								</c:set>
+			      		<li><a href="${contextPath}/eleve/${currentUser}/list">Liste de mes élèves</a></li>
+			      	
+			      	</c:if>
 			      </ul>
 			     </li>
 			    <li class="dropdown">
@@ -66,7 +73,7 @@
 			      	<span class="caret"></span></a>
 			      <ul class="dropdown-menu">
 			      <c:if test="${admin || directeur}">
-			      	<li><a href="${contextPath}/enseignant/add">Inscription</a>
+			      	<li class="${(enseignant) ? 'disabled' : ''} "><a href="${contextPath}/enseignant/add">Inscription</a>
 			      </c:if>	
 			      	<li><a href="${contextPath}/enseignant/actifslist">Liste des enseignants actifs</a>
 			      	<li><a href="${contextPath}/enseignant/list">Historique des enseignants</a>
@@ -84,7 +91,7 @@
 			      <a class="dropdown-toggle" href="#" data-toggle="dropdown">Comptes
 			      	<span class="caret"></span></a>
 			      <ul class="dropdown-menu">
-			      	<li><a href="${contextPath}/compte/add">Créer un compte</a>
+			      	<li class="${(enseignant) ? 'disabled' : ''} "><a href="${contextPath}/compte/add">Créer un compte</a>
 			      	<li><a href="${contextPath}/compte/list">Liste des comptes</a>
 			      </ul>
 			     </li>

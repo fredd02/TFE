@@ -4,6 +4,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="s"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="sf"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%-- <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%> --%>
 <html>
@@ -20,7 +21,7 @@
 <div class="container">
 <h4>Informations sur l'élève <c:out value="${eleve.nom} ${eleve.prenom}" /></h4>
 
-
+<sec:authorize access="hasAnyAuthority('ADMIN','DIRECTEUR')">
 <div class="btn-group">
 	
 	<button class="btn btn-primary" onclick="location.href='${updateEleveURL}'">modifier les informations</button>
@@ -30,6 +31,7 @@
 								 	désinscrire l'élève
 							</button>
 </div>
+</sec:authorize>
 <br><br>
 
  <ul class="list-group">
@@ -71,11 +73,13 @@
    	</li>
 </ul> 
 
+<sec:authorize access="hasAnyAuthority('ADMIN','DIRECTEUR')">
 <div class="btn-group">
 	<button class="btn btn-primary" onclick="location.href='${addResponsableURL}'">ajouter un nouveau responsable</button>
 	<button class="btn btn-primary" onclick="location.href='${searchResponsableURL}'">ajouter un responsable existant</button>
 	
 </div>
+</sec:authorize>
 
 
 

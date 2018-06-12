@@ -27,11 +27,13 @@ import com.tfe.exceptions.NotFoundException;
 import com.tfe.exceptions.NotFoundExceptionInt;
 import com.tfe.model.Classe;
 import com.tfe.model.Eleve;
+import com.tfe.model.Enseignant;
 import com.tfe.model.Inscription;
 import com.tfe.model.Relation;
 import com.tfe.model.Responsable;
 import com.tfe.repository.IClasseRepository;
 import com.tfe.repository.IEleveRepository;
+import com.tfe.repository.IEnseignantRepository;
 import com.tfe.repository.IInscriptionRepository;
 import com.tfe.repository.IRelationRepository;
 import com.tfe.repository.IResponsableRepository;
@@ -63,6 +65,9 @@ public class EleveController {
 	
 	@Autowired
 	IResponsableRepository responsableDAO;
+	
+	@Autowired
+	IEnseignantRepository enseignantDAO;
 	
 	@InitBinder
 	public void initBinder1(WebDataBinder binder) {
@@ -267,6 +272,26 @@ public class EleveController {
 		return "eleve/eleveList";
 	}
 	
+	//methode GET pour afficher la liste des eleves d'un enseignant
+	@RequestMapping(value="/{username}/list", method=RequestMethod.GET)
+	public String eleveList(@PathVariable("username") String username, Model model) {
+		log.info("methode GET pour afficher la liste des élèves d'un enseignant");
+		
+		if(! enseignantDAO.exists(username)) {
+			throw new NotFoundException("enseignant.notFound", username);
+		}
+		Enseignant enseignant = enseignantDAO.findOne(username);
+		model.addAttribute("enseignant", enseignant);
+		List<Eleve> elevesList = eleveDAO.elevesFromTitulaire(username);
+		//recuperation des inscriptions actuelles
+		List<Inscription> inscriptionsActuelles = inscriptionDAO.inscriptionsActuelles();
+		
+		model.addAttribute("inscriptionsActuelles", inscriptionsActuelles);
+		model.addAttribute("elevesList", elevesList);
+		
+		return "eleve/eleveList";
+	}
+	
 	/**
 	 * methode pour afficher les infos sur un eleve
 	 * @param nrn
@@ -277,6 +302,9 @@ public class EleveController {
 	@RequestMapping(value="/{id}", method=RequestMethod.GET)
 	public String eleveInfos(@PathVariable Long id, Model model) {
 		log.info("id: " + id);
+		if(! eleveDAO.exists(id)) {
+			throw new NotFoundExceptionInt("eleve.notFound", id);
+		}
 		
 		
 		Eleve eleve = eleveDAO.findOne(id);

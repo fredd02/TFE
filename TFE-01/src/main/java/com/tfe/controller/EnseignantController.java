@@ -177,7 +177,7 @@ public class EnseignantController {
 			
 			//vérifie si l'enseignant existe
 			if(!enseignantDAO.exists(username))
-				throw new NotFoundException("enseignant non trouvé", username);
+				throw new NotFoundException("enseignant.notFound", username);
 			try {
 				enseignantDAO.delete(username);
 			} catch (DataIntegrityViolationException e) {
