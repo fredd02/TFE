@@ -27,7 +27,7 @@
 <div class="container">
 
 <h4><a href="./${previousDay}"><span class="glyphicon glyphicon-circle-arrow-left"></span></a>
-Inscriptions à la cantine pour le <c:out value="${date}" />
+Inscriptions à la cantine pour le <c:out value="${jour }"/> <c:out value="${date}" />
 <a href="./${nextDay}"><span class="glyphicon glyphicon-circle-arrow-right"></span></a></h4>
 <c:if test="${!empty enseignant}">
 	<h5>Eleves de <c:out value="${enseignant.prenom}" /> <c:out value="${enseignant.nom}" /></h5>

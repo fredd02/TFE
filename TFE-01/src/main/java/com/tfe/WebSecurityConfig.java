@@ -42,7 +42,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
 				.antMatchers("/compte/add","/compte/**/credit").hasAnyAuthority("ADMIN","DIRECTEUR")
 				.antMatchers("/compte/responsable/**").hasAnyAuthority("PARENT")
 				.antMatchers("/compte/**","/compte/list").hasAnyAuthority("ADMIN","DIRECTEUR","ENSEIGNANT")
-				.antMatchers("/cantine/inscription/**","cantine/repas/**").hasAnyAuthority("PARENT")
+				.antMatchers("/cantine/inscription/**","/cantine/repas/**").hasAnyAuthority("PARENT")
 				.antMatchers("/cantine/inscriptions/**","/cantine/selectEleve/**","cantine/desinscrire/**").hasAnyAuthority("ADMIN","DIRECTEUR","ENSEIGNANT")
 				.antMatchers("/**").access("permitAll")
 				.and()

@@ -35,6 +35,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.tfe.exceptions.NotFoundException;
 import com.tfe.model.Classe;
 import com.tfe.model.Compte;
 import com.tfe.model.Eleve;
@@ -48,6 +49,7 @@ import com.tfe.repository.IEleveRepository;
 import com.tfe.repository.IEnseignantRepository;
 import com.tfe.repository.IInscriptionCantineRepository;
 import com.tfe.repository.ILigneCompteRepository;
+import com.tfe.repository.IResponsableRepository;
 
 //import net.minidev.json.parser.ParseException;
 
@@ -75,6 +77,9 @@ public class CantineController {
 	
 	@Autowired
 	ILigneCompteRepository ligneCompteDAO;
+	
+	@Autowired
+	IResponsableRepository responsableDAO;
 	
 	@RequestMapping(value="/")
 	public String cantine() {
@@ -284,6 +289,10 @@ public class CantineController {
 	@RequestMapping(value="/repas/{username}", method=RequestMethod.GET)
 	public String getRepasFromResponsable(@PathVariable String username, Model model) {
 		
+		if(! responsableDAO.exists(username)) {
+			throw new NotFoundException("responsable.notFound", username);
+		}
+		
 		List<InscriptionCantine> inscriptionsFacturees = inscriptionCantineDAO.inscriptionsFactureesFromResponsable(username);
 		log.info("nb d'inscriptions trouvées: " + inscriptionsFacturees.size());
 		model.addAttribute("inscriptionsFacturees", inscriptionsFacturees);
@@ -301,10 +310,51 @@ public class CantineController {
 		Collection<? extends GrantedAuthority>	 authorities = authentication.getAuthorities();
 		log.info(authorities.toString());
 		
+		//recuperation du jour de la semaine
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(date);
+		int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
+		log.info("jour: " + calendar.get(Calendar.DAY_OF_WEEK));
+		String jour;
+		Date nextDay;
+		Date previousDay;
+		switch(dayOfWeek) {
+		case 1: jour = "dimanche";
+				nextDay = DateUtils.addDays(date, 1);
+				previousDay = DateUtils.addDays(date, -2);
+		break;
+		case 2: jour = "lundi";
+				nextDay = DateUtils.addDays(date, 1);
+				previousDay = DateUtils.addDays(date, -3);
+		break;
+		case 3: jour = "mardi";
+				nextDay = DateUtils.addDays(date, 2);
+				previousDay = DateUtils.addDays(date, -1);
+		break;
+		case 4: jour = "mercredi";
+				nextDay = DateUtils.addDays(date, 1);
+				previousDay = DateUtils.addDays(date, -1);
+		break;
+		case 5: jour = "jeudi";
+				nextDay = DateUtils.addDays(date, 1);
+				previousDay = DateUtils.addDays(date, -2);
+		break;
+		case 6: jour = "vendredi";
+				nextDay = DateUtils.addDays(date, 3);
+				previousDay = DateUtils.addDays(date, -1);
+		break;
+		default: jour="samedi";
+				nextDay = DateUtils.addDays(date, 2);
+				previousDay = DateUtils.addDays(date, -1);
+		break;
+		}
+		model.addAttribute("jour", jour);
+		
 		log.info("date" + date);
-		Date nextDay = DateUtils.addDays(date, 1);
+		
+		
 		log.info("nexDay:" + nextDay);
-		Date previousDay = DateUtils.addDays(date, -1);
+		
 		
 		Date now = new Date();
 		
