@@ -9,7 +9,7 @@
 <%-- <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%> --%>
 <html>
 <jsp:include page="../fragments/header.jsp">
-	<jsp:param name="titre" value="Projet TFE" />
+	<jsp:param name="titre" value="alb-school" />
 </jsp:include>
 
 <s:url value="/responsable/add/${eleve.id}" var ="addResponsableURL" />

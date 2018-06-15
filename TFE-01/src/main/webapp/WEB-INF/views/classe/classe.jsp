@@ -8,7 +8,7 @@
  <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <html>
 <jsp:include page="../fragments/header.jsp">
-	<jsp:param name="titre" value="Projet TFE" />
+	<jsp:param name="titre" value="alb-school" />
 </jsp:include>
 
 <c:set var="now" value="<%=new java.util.Date()%>" />

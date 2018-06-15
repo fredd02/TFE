@@ -9,7 +9,7 @@
  <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <html>
 <jsp:include page="../fragments/header.jsp">
-	<jsp:param name="titre" value="Projet TFE" />
+	<jsp:param name="titre" value="alb-school" />
 </jsp:include>
 
 <fmt:formatDate pattern="dd/MM/yyyy" value="${date}" var="dateFmt"/>
