@@ -49,7 +49,7 @@
 $(document).ready(function() {
 	//alert("test");
 	//pour pouvoir trier selon la date
-	$.fn.dataTable.moment( 'DD/MM/YYYY' );
+	$.fn.dataTable.moment('DD/MM/YYYY');
 	
     $('#inscriptions').DataTable( {
         "language": {
@@ -64,10 +64,7 @@ $(document).ready(function() {
             },
     		"search" : "recherche"
             
-        },
-        "columnDefs": [
-        	{"orderable": false, "targets": 0}
-        ]
+        }
     }
     		
     

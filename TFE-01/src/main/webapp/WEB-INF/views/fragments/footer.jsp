@@ -10,19 +10,17 @@
 
 
 <s:url value="/resources/js/post.js" var="postJs" />
-
 <s:url value="/resources/js/datetime-moment.js" var="datetime-momentJs" />
 <s:url value="/resources/js/dataTables.bootstrap.min.js" var="datatablesBootstrapJs" />
 <s:url value="/resources/js/jquery.dataTables.min.js" var="datatablesJQueryJs" />
 
 
 <script src="${postJs}"></script>
-<script src="${momentJs}"></script>
-<script src="${datetime-momentJs}"></script>
 
-<script src="${datatablesJQueryJs}"></script>
+<%-- <script src="/alb-school/resources/js/datetime-moment.js"></script> --%>
 
-<script src="${datatablesBootstrapJs}"></script>
+<%-- <script src="${datatablesJQueryJs}"></script> --%>
+ <script src="${datatablesBootstrapJs}"></script> 
  
 
 <script>

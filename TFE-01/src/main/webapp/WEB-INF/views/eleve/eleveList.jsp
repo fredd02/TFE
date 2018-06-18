@@ -74,7 +74,7 @@
 $(document).ready(function() {
 	//alert("test");
 	//pour pouvoir trier selon la date
-	//$.fn.dataTable.moment( 'dd/MM/YYYY' );
+	$.fn.dataTable.moment('DD/MM/YYYY');
 	
     $('#eleves').DataTable( {
         "language": {
