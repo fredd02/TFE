@@ -50,8 +50,7 @@
 							<fmt:formatDate pattern='dd/MM/YYYY'  value='${inscription.date}' var="inscriptionDate"/>
     						<c:if test="${(inscription.eleve.id == eleve.id) && ( inscriptionDate == lundi)}"><c:out value="checked='checked'" /></c:if>
     					</c:forEach>
-    					<c:if test="${lundiPast}">
-    					<c:out value="disabled='true'" /></c:if>
+    					 <c:if test="${lundiPast}"><c:out value="disabled='true'" /></c:if> 
 					 	value="${eleve.id}_${lundi}">
     					
     				</td>

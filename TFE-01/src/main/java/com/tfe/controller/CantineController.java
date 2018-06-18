@@ -20,6 +20,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.time.DateUtils;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
+import org.assertj.core.util.DateUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +36,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.tfe.exceptions.NoAccessException;
 import com.tfe.exceptions.NotFoundException;
 import com.tfe.model.Classe;
 import com.tfe.model.Compte;
@@ -117,7 +119,11 @@ public class CantineController {
 	 * 		nom logique de la vue jsp
 	 */
 	@RequestMapping(value="/inscription/{username}", method=RequestMethod.GET)
-	public String inscriptionCantineGet(@PathVariable String username, Model model) {
+	public String inscriptionCantineGet(@PathVariable String username,Authentication authentication, Model model) {
+		
+		if(authentication == null || !(authentication.getName().equals(username))) {
+			throw new NoAccessException("droits");
+		}
 		
 		//recuperation des eleves du responsable
 		List<Eleve> eleves = eleveDAO.getElevesFromResponsable(username);	
@@ -196,6 +202,11 @@ public class CantineController {
 			@RequestParam(value="vendredi[]", required=false) String[] vendredi, 
 			@RequestParam(value="lundi_SA") String lundi_SA, @RequestParam(value="vendredi_SA") String vendredi_SA,RedirectAttributes model) {
 		
+		log.info("methode POST pour inscrire à la cantine");
+		if(lundi != null) {
+			log.info("inscriptions lundi: " + lundi.length);
+			
+		}
 		//regroupement des inscriptions dans une liste
 		List<String> inscriptions = new ArrayList<String>();
 		if(lundi != null)
@@ -243,6 +254,9 @@ public class CantineController {
 		}
 		
 		//supression des inscriptions décochées
+		Date nextDay = new Date();
+		nextDay = DateUtils.addDays(nextDay, 1);
+		log.info("demain: " + nextDay.toString());
 		Date lundi_SAD;
 		Date vendredi_SAD;
 		String idEleve;
@@ -252,7 +266,7 @@ public class CantineController {
 			lundi_SAD = dateFormat.parse(lundi_SA);
 			vendredi_SAD = dateFormat.parse(vendredi_SA);
 			
-			List<InscriptionCantine> inscriptionsBD = inscriptionCantineDAO.inscriptionFromResponsableBeetwen2Dates(username, lundi_SAD, vendredi_SAD);
+			List<InscriptionCantine> inscriptionsBD = inscriptionCantineDAO.inscriptionFromResponsableBeetwen2Dates(username, nextDay, vendredi_SAD);
 			for(InscriptionCantine inscriptionBD : inscriptionsBD) {
 				existe=false;
 				for(String inscription : inscriptions) {
