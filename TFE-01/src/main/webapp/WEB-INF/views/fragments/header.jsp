@@ -105,7 +105,21 @@
 			      	<span class="caret"></span></a>
 			      <ul class="dropdown-menu">
 			      	<li class="${(enseignant) ? 'disabled' : ''} "><a href="${contextPath}/compte/add">Créer un compte</a>
-			      	<li><a href="${contextPath}/compte/list">Liste des comptes</a>
+			      	<c:choose>
+			      		<c:when test="${enseignant}">
+			      			<c:set var="currentUser">
+									<sec:authentication property="principal.username" />
+								</c:set>
+			      			<li><a href="${contextPath}/compte/${currentUser}/list">Liste des comptes de mes élèves</a>
+			      		
+			      		</c:when>
+			      		<c:otherwise>
+			      			<li><a href="${contextPath}/compte/list">Liste des comptes</a>
+			      		
+			      		</c:otherwise>
+			      	
+			      	</c:choose>
+			      	
 			      </ul>
 			     </li>
 			      <li class="dropdown">
@@ -163,7 +177,7 @@
 			      	<span class="caret"></span></a>
 			      <ul class="dropdown-menu">
 			      	<li><a href="#">Présentation</a>
-			      	<li><a href="#">Projet pédagogique</a>
+			      	<li><a href="${contextPath}/projetPedagogique">Projet pédagogique</a>
 			      	<li><a href="#">Actualité</a>
 			      </ul>
 			     </li>
@@ -180,7 +194,7 @@
 			      <a class="dropdown-toggle" href="#" data-toggle="dropdown">Cantine
 			      	<span class="caret"></span></a>
 			      <ul class="dropdown-menu">
-			      	<li><a href="${contextPath}/cantine/">Menu de la semaine</a>
+			      	<%-- <li><a href="${contextPath}/cantine/">Menu de la semaine</a> --%>
 			      	<li><a href="${contextPath}/cantine/inscription/${username}">inscription pour la semaine</a>
 			      	<li><a href="${contextPath}/cantine/repas/${username}">repas facturés</a>
 			      </ul>

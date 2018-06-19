@@ -70,6 +70,7 @@ $(document).ready(function() {
 	$.fn.dataTable.moment('DD/MM/YYYY');
 	
     $('#operations').DataTable( {
+    	"order":[[0, "desc"]],
         "language": {
             "lengthMenu": "Afficher _MENU_ opérations par page",
             "zeroRecords": "Aucun résultat - désolé",

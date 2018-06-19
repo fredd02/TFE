@@ -2,7 +2,9 @@ package com.tfe.controller;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -23,9 +25,11 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.tfe.exceptions.NotFoundExceptionInt;
 import com.tfe.model.Compte;
+import com.tfe.model.Eleve;
 import com.tfe.model.LigneCompte;
 import com.tfe.model.Responsable;
 import com.tfe.repository.ICompteRepository;
+import com.tfe.repository.IEleveRepository;
 import com.tfe.repository.ILigneCompteRepository;
 import com.tfe.repository.IResponsableRepository;
 
@@ -44,6 +48,9 @@ public class CompteController {
 	
 	@Autowired
 	ILigneCompteRepository ligneCompteDAO;
+	
+	@Autowired
+	IEleveRepository eleveDAO;
 
 	
 	//methode GET pour créer un compte
@@ -175,11 +182,29 @@ public class CompteController {
 	}
 	
 	
-	//methode pour voir la liste des comptes
+	//methode pour voir la liste de tous les comptes
 	@RequestMapping(value="/list", method=RequestMethod.GET)
 	public String comptesList(Model model) {
 		List<Compte> comptesList = compteDAO.findAll();
 		model.addAttribute("comptes", comptesList);
+		
+		return "compte/comptesList";
+	}
+	
+	//methode pour voir la liste des comptes relatifs à un enseignant
+	@RequestMapping(value="/{username}/list", method=RequestMethod.GET)
+	public String comptesEnseignantList(@PathVariable String username,Model model) {
+		log.info("methode pour voir la liste des comptes d'un enseignant");
+		
+		List<Eleve> eleves = eleveDAO.elevesFromTitulaire(username);
+		Set<Compte> comptes = new HashSet<Compte>();
+		Compte compte;
+		for(Eleve eleve : eleves) {
+			compte = compteDAO.getCompteFromEleve(eleve.getId());
+			if(compte != null)
+			comptes.add(compteDAO.getCompteFromEleve(eleve.getId()));
+		}
+		model.addAttribute("comptes", comptes);
 		
 		return "compte/comptesList";
 	}

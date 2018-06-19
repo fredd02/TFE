@@ -52,6 +52,7 @@ $(document).ready(function() {
 	$.fn.dataTable.moment('DD/MM/YYYY');
 	
     $('#inscriptions').DataTable( {
+    	"order":[[0, "desc"]],
         "language": {
             "lengthMenu": "Afficher _MENU_ facturations par page",
             "zeroRecords": "aucun résultat - désolé",
@@ -62,7 +63,8 @@ $(document).ready(function() {
             	"previous": "précédent  ",
             	"next": "  suivant"
             },
-    		"search" : "recherche"
+    		"search" : "recherche",
+    		
             
         }
     }

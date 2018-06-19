@@ -301,7 +301,12 @@ public class CantineController {
 	
 	//methode GET pour afficher la liste des repas facturés pour un responsable
 	@RequestMapping(value="/repas/{username}", method=RequestMethod.GET)
-	public String getRepasFromResponsable(@PathVariable String username, Model model) {
+	public String getRepasFromResponsable(@PathVariable String username, Model model, Authentication authentication) {
+		
+		//verification si le username correspond 
+				if(!authentication.getName().equals(username)) {
+					return "accessDenied";
+				}
 		
 		if(! responsableDAO.exists(username)) {
 			throw new NotFoundException("responsable.notFound", username);
