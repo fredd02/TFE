@@ -13,6 +13,8 @@
 </jsp:include>
 
 <div class="container">
+
+<h2><c:out value="${pasDeCompte}"/></h2><br><br>
 <h4>Informations sur le compte</h4>
 
  <ul class="list-group">
@@ -23,7 +25,8 @@
   			<li><c:out value="${titulaire.nom}" /> <c:out value="${titulaire.prenom}" /></li>
   		</c:forEach>
   		</ul></li>
-  <li class="list-group-item"><b>Solde: </b><c:out value="${compte.solde}" /></li>
+  <li class="list-group-item"><b>Solde: </b><fmt:formatNumber value = "${compte.solde}" 
+         type = "number" maxFractionDigits="2" minFractionDigits="2"/></li>
   <sec:authorize access="hasAnyAuthority('ADMIN','DIRECTEUR')">
   	<li class="list-group-item"><a href="${compte.id}/credit">créditer le compte</a></li>
   </sec:authorize>
@@ -64,15 +67,20 @@
 <script>
 $(document).ready(function() {
 	//pour pouvoir trier selon la date
-	$.fn.dataTable.moment( 'dd/MM/YYYY' );
+	$.fn.dataTable.moment('DD/MM/YYYY');
 	
     $('#operations').DataTable( {
         "language": {
             "lengthMenu": "Afficher _MENU_ opérations par page",
-            "zeroRecords": "Nothing found - sorry",
+            "zeroRecords": "Aucun résultat - désolé",
             "info": " page _PAGE_ de _PAGES_",
             "infoEmpty": "Aucune opération",
-            "infoFiltered": "(filtré de _MAX_ opérations au total)"
+            "infoFiltered": "(filtré de _MAX_ opérations au total)",
+            "paginate":{
+            	"previous": "précédent  ",
+            	"next": "  suivant"
+            },
+    		"search" : "recherche"
         }
     }
     		

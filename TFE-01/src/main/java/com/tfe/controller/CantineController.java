@@ -20,7 +20,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.time.DateUtils;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
-import org.assertj.core.util.DateUtil;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -590,8 +590,10 @@ public class CantineController {
 	
 	//methode GET pour modifier le prix
 	@RequestMapping(value="/prix", method=RequestMethod.GET)
-	public String getPrixCantine(Model model) {
+	public String getPrixCantine( Model model) {
 		log.info("methode GET pour modifier le prix");
+		
+		
 		
 		Double prixMaternelles = classeDAO.findOne("M0").getPrixCantine();
 		Double prixPrimaires = classeDAO.findOne("P1").getPrixCantine();

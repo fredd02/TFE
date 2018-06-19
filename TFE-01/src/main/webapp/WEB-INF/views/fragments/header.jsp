@@ -96,8 +96,8 @@
 			      <a class="dropdown-toggle" href="#" data-toggle="dropdown">Classes
 			      	<span class="caret"></span></a>
 			      <ul class="dropdown-menu">
-			      	<li><a href="${contextPath}/classe/list">Liste</a>
-			      	<li><a href="/#">#</a>
+			      	<li><a href="${contextPath}/classe/list">Liste des classes</a>
+			      	<!-- <li><a href="/#">#</a> -->
 			      </ul>
 			     </li>
 			     <li class="dropdown">
@@ -114,7 +114,7 @@
 			      <ul class="dropdown-menu">
 			      	<li><a href="${contextPath}/cantine/inscriptions/${today}">Repas du jour</a>
 			      	<li><a href="${contextPath}/compte/list"></a>
-			      	<li><a href="${contextPath}/cantine/prix">Modification du prix</a>
+			      	<li class="${(enseignant) ? 'disabled' : ''} "><a href="${contextPath}/cantine/prix">Modification du prix</a>
 			      </ul>
 			     </li>
 			     <li class="dropdown">

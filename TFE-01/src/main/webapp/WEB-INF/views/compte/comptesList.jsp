@@ -21,7 +21,8 @@
 
  <ul class="list-group">
  	<c:forEach items="${comptes}" var="compte" >
- 		<li class="list-group-item"><b>Compte: </b> <a href="./${compte.id}"><c:out value="${compte.nom}" /></a> <b>Solde: </b><c:out value="${compte.solde}" /></li>
+ 		<li class="list-group-item"><b>Compte: </b> <a href="./${compte.id}"><c:out value="${compte.nom}" /></a> <b>Solde: </b><fmt:formatNumber value = "${compte.solde}" 
+         type = "number" maxFractionDigits="2" minFractionDigits="2"/></li>
  	
  	</c:forEach>
   

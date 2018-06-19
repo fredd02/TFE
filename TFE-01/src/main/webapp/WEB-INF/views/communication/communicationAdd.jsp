@@ -78,12 +78,17 @@
 		<div class="form-group">
 			<c:forEach items="${classes}" var="classe">
 				<div class="checkbox-inline">
-  					<label><input type="checkbox" value="${classe.code}" name="classeCode">${classe.code}</label>
+  					<label><input type="checkbox" value="${classe.code}" name="classeCode" class="individual">${classe.code}</label>
 				</div>			
 			
 			</c:forEach>
+			<div class="checkbox-inline">
+				<label><input type="checkbox" class="selectAll">Toutes les classes</label>
+			</div>
 		
 		</div>
+		
+		<br><br>
 		
 		<div class="form-group">
 			<label class="col-sm-4 control-label"></label>
@@ -100,4 +105,16 @@
 
 </div>
 <jsp:include page="../fragments/footer.jsp" />
+<script>
+$(document).ready(function(){
+	$('.selectAll').click(function () {  
+		
+		$(".individual").prop("checked",$(this).prop("checked"));    
+	});
+	
+});
+
+
+
+</script>
 </html>

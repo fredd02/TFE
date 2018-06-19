@@ -79,7 +79,7 @@ $(document).ready(function() {
     $('#eleves').DataTable( {
         "language": {
             "lengthMenu": "Afficher _MENU_ élèves par page",
-            "zeroRecords": "Nothing found - sorry",
+            "zeroRecords": "aucun résultat - désolé",
             "info": " page _PAGE_ de _PAGES_",
             "infoEmpty": "Aucun élève",
             "infoFiltered": "(filtré de _MAX_ opérations au total)",

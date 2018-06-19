@@ -19,7 +19,7 @@
 
 
 <div class="container">
-<h4>Informations sur l'élève <c:out value="${eleve.nom} ${eleve.prenom}" /></h4>
+<h4>Informations sur l'élève <b><c:out value="${eleve.nom} ${eleve.prenom}" /></b></h4>
 
 <sec:authorize access="hasAnyAuthority('ADMIN','DIRECTEUR')">
 <div class="btn-group">
@@ -35,11 +35,11 @@
 <br><br>
 
  <ul class="list-group">
-  <li class="list-group-item">Nom: <c:out value="${eleve.nom}" /></li>
-  <li class="list-group-item">Prenom <c:out value="${eleve.prenom}" /></li>
-  <li class="list-group-item">NRN: <c:out value="${eleve.nrn}" /></li>
-  <li class="list-group-item">Date de naissance: <fmt:formatDate pattern="dd/MM/yyyy" value="${eleve.dateNaissance}"/></li>
-  <li class="list-group-item">Sexe: 
+  <li class="list-group-item"><b>Nom:</b> <c:out value="${eleve.nom}" /></li>
+  <li class="list-group-item"><b>Prénom:</b> <c:out value="${eleve.prenom}" /></li>
+  <li class="list-group-item"><b>NRN:</b> <c:out value="${eleve.nrn}" /></li>
+  <li class="list-group-item"><b>Date de naissance:</b> <fmt:formatDate pattern="dd/MM/yyyy" value="${eleve.dateNaissance}"/></li>
+  <li class="list-group-item"><b>Sexe:</b> 
    		<c:choose>
    			<c:when test="${eleve.sexe == 0}" >
    				masculin
@@ -51,7 +51,7 @@
    		
    		</c:choose>
    	</li >
-   	<li class="list-group-item">Inscriptions
+   	<li class="list-group-item"><b>Inscriptions</b>
    		<ul>
    			<c:forEach items="${inscriptions}" var="inscription">
    				<li><fmt:formatDate pattern="dd/MM/yyyy" value="${inscription.dateEntree}"/> - 
@@ -63,7 +63,7 @@
    		</ul>
    	</li>
    	
-   	<li class="list-group-item">Responsables
+   	<li class="list-group-item"><b>Responsables</b>
    		<ul>
    			<c:forEach items = "${relations}" var = "relation">
    				<li><a href="../responsable/${relation.responsable.username}"><c:out value="${relation.responsable.nom}" /> <c:out value="${relation.responsable.prenom}" /></a>

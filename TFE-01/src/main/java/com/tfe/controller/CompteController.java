@@ -134,8 +134,8 @@ public class CompteController {
 				Double montantDble = Double.parseDouble(montant);
 				LigneCompte ligneCredit = new LigneCompte(compteSaved,now,"CREDIT",montantDble);
 				ligneCompteDAO.save(ligneCredit);
-				rModel.addFlashAttribute("compte", compteSaved);
-				rModel.addFlashAttribute("titulaires", titulaires);
+				//rModel.addFlashAttribute("compte", compteSaved);
+				//rModel.addFlashAttribute("titulaires", titulaires);
 				return "redirect:/compte/" + compteSaved.getId();
 				
 			}
@@ -163,6 +163,8 @@ public class CompteController {
 			List<Responsable> titulaires = responsableDAO.getTitulairesFromCompte(id);
 			model.addAttribute("titulaires", titulaires);
 		}
+		
+		log.info("model: " + model.toString());
 		
 		//recuperation des 10 dernieres lignes
 		List<LigneCompte> lignes = ligneCompteDAO.get10LastLignesFromCompte(id);
@@ -194,15 +196,24 @@ public class CompteController {
 		//recuperation de l'id du compte
 		Long id = compteDAO.getCompteIdFromResponsable(username);
 		
-		Compte compte = compteDAO.findOne(id);
-		model.addAttribute("compte", compte);
+		if(id != null) {
+			Compte compte = compteDAO.findOne(id);
+			model.addAttribute("compte", compte);
 		
-		List<Responsable> titulaires = responsableDAO.getTitulairesFromCompte(id);
-		model.addAttribute("titulaires", titulaires);
+			List<Responsable> titulaires = responsableDAO.getTitulairesFromCompte(id);
+			model.addAttribute("titulaires", titulaires);
 		
-		//recuperation des 10 dernieres lignes
-				List<LigneCompte> lignes = ligneCompteDAO.get10LastLignesFromCompte(id);
+			//recuperation des 30 dernieres lignes
+				List<LigneCompte> lignes = ligneCompteDAO.get30LastLignesFromCompte(id);
 				model.addAttribute("last10Lignes", lignes);
+			
+			
+		} else {
+			
+			model.addAttribute("pasDeCompte", "Vous n'avez pas de compte.");
+		}
+		
+		
 		
 		return "compte/compte";
 		

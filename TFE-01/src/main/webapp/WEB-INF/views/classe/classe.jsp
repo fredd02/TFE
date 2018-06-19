@@ -26,7 +26,7 @@
 
 </ul>
 
-<button class="btn btn-primary" onclick="location.href='${classe.code}/schedule/add'">emploi du temps</button>
+<%-- <button class="btn btn-primary" onclick="location.href='${classe.code}/schedule/add'">emploi du temps</button> --%>
 
 
 </div>

@@ -48,6 +48,18 @@
 
 </sec:authorize>
 
+<sec:authorize access="hasAnyAuthority('DIRECTEUR')">
+<sec:authentication property="principal.username" var="username" />
+
+	<div class="jumbotron">
+					<font color="white"><h1>Bienvenue <c:out value="${username}" /></h1>
+						Bienvenue sur le site de l'école primaire d'Avernas-Le-Bauduin.<br> 
+						Vous pouvez gérer ici l'administration de l'école en tant que directeur.
+					</font>
+				</div>
+
+</sec:authorize>
+
 <sec:authorize access="hasAnyAuthority('ENSEIGNANT')">
 <sec:authentication property="principal.username" var="username" />
 
