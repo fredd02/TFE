@@ -481,7 +481,7 @@ public class CantineController {
 	//methode POST pour rechercher l'eleve dans la DB
 	@RequestMapping(value="selectEleve/{dateString}", method=RequestMethod.POST)
 	public String selectEleveCantine(@RequestParam(value="nom") String nom, 
-			@PathVariable String dateString,Model model) {
+			@PathVariable String dateString,Model model, Authentication authentication) {
 		log.info("methode POST pour rechercher eleve dans la DB");
 		
 		log.info("date: " + dateString);
@@ -490,6 +490,26 @@ public class CantineController {
 		
 		//List<Eleve> eleves= eleveDAO.readByNomIgnoringCase(nom);
 		List<Eleve> eleves= eleveDAO.readByNomContainingIgnoringCaseAndActifIsTrue(nom);
+		log.info("nb eleves trouves: " + eleves.size());
+		
+		//si role ENSEIGNANT, recuperation des eleves de l'enseignant
+		Collection<? extends GrantedAuthority>	 authorities = authentication.getAuthorities();
+				for(GrantedAuthority authority : authorities) {
+					log.info(authority.getAuthority().toString());
+					if(authority.getAuthority().equals("ENSEIGNANT")) {
+						List<Eleve> elevesFromEnseignant = eleveDAO.elevesFromTitulaire(authentication.getName());
+						List<Eleve> elevesNew = new ArrayList<Eleve>();
+						for(Eleve eleve : eleves) {
+							if(elevesFromEnseignant.contains(eleve)) {
+								elevesNew.add(eleve);
+							}
+						}
+						eleves.clear();
+						eleves.addAll(elevesNew);
+					
+					}
+						
+					}
 		
 		//liste de ces eleves ayant un compte
 		List<Eleve> elevesWithCompte = new ArrayList<Eleve>();
