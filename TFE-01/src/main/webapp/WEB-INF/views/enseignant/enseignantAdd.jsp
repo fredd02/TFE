@@ -19,6 +19,9 @@
 
 	<sf:errors path="*" element="div" cssClass="alert alert-danger" />
 	
+	<fieldset>
+		<legend>Informations personnelles</legend>
+	
 	<s:bind path="nrn">
 		<div class="form-group ${status.error ? 'has-error' : ''}">
 			<sf:label path="nrn" class="col-md-4 control-label">
@@ -65,57 +68,6 @@
 					
 				</div>
 				<sf:errors path="prenom" class="control-label" />
-			</div>
-				 
-		</div>
-	</s:bind>
-	
-	<s:bind path="username">
-		<div class="form-group ${status.error ? 'has-error' : ''}">
-			<sf:label path="username" class="col-md-4 control-label">
-				username
-			</sf:label>
-			<div class="col-md-4 inputGroupContainer">
-				<div class="input-group">
-					<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-					<sf:input path="username" id="username" class="form-control" placeholder="username" />
-					
-				</div>
-				<sf:errors path="username" class="control-label" />
-			</div>
-				 
-		</div>
-	</s:bind>
-	
-	<s:bind path="password">
-		<div class="form-group ${status.error ? 'has-error' : ''}">
-			<sf:label path="password" class="col-md-4 control-label">
-				mot de passe
-			</sf:label>
-			<div class="col-md-4 inputGroupContainer">
-				<div class="input-group">
-					<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-					<sf:password path="password" id="password" class="form-control" placeholder="password" />
-					
-				</div>
-				<sf:errors path="password" class="control-label" />
-			</div>
-				 
-		</div>
-	</s:bind>
-	
-	<s:bind path="passwordConfirm">
-		<div class="form-group ${status.error ? 'has-error' : ''}">
-			<sf:label path="passwordConfirm" class="col-md-4 control-label">
-				confirmer le mot de passe
-			</sf:label>
-			<div class="col-md-4 inputGroupContainer">
-				<div class="input-group">
-					<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-					<sf:password path="passwordConfirm" id="passwordConfirm" class="form-control" placeholder="passwordConfirm" />
-					
-				</div>
-				<sf:errors path="passwordConfirm" class="control-label" />
 			</div>
 				 
 		</div>
@@ -193,6 +145,69 @@
 		</div>
 	</s:bind>
 	
+	</fieldset>
+	
+	<fieldset>
+		<legend>Informations de connexion</legend>
+	
+	<s:bind path="username">
+		<div class="form-group ${status.error ? 'has-error' : ''}">
+			<sf:label path="username" class="col-md-4 control-label">
+				username
+			</sf:label>
+			<div class="col-md-4 inputGroupContainer">
+				<div class="input-group">
+					<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+					<sf:input path="username" id="username" class="form-control" placeholder="username" />
+					
+				</div>
+				<sf:errors path="username" class="control-label" />
+			</div>
+				 
+		</div>
+	</s:bind>
+	
+	<s:bind path="password">
+		<div class="form-group ${status.error ? 'has-error' : ''}">
+			<sf:label path="password" class="col-md-4 control-label">
+				mot de passe
+			</sf:label>
+			<div class="col-md-4 inputGroupContainer">
+				<div class="input-group">
+					<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+					<sf:password path="password" id="password" class="form-control" placeholder="password" />
+					
+				</div>
+				<sf:errors path="password" class="control-label" />
+			</div>
+				 
+		</div>
+	</s:bind>
+	
+	<s:bind path="passwordConfirm">
+		<div class="form-group ${status.error ? 'has-error' : ''}">
+			<sf:label path="passwordConfirm" class="col-md-4 control-label">
+				confirmer le mot de passe
+			</sf:label>
+			<div class="col-md-4 inputGroupContainer">
+				<div class="input-group">
+					<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+					<sf:password path="passwordConfirm" id="passwordConfirm" class="form-control" placeholder="passwordConfirm" />
+					
+				</div>
+				<sf:errors path="passwordConfirm" class="control-label" />
+			</div>
+				 
+		</div>
+	</s:bind>
+	
+	</fieldset>
+	
+	<fieldset>
+		<legend >Adresse</legend>
+	
+	
+	
 	<s:bind path="rue">
 		<div class="form-group ${status.error ? 'has-error' : ''}">
 			<sf:label path="rue" class="col-md-4 control-label">
@@ -260,6 +275,8 @@
 				 
 		</div>
 	</s:bind>
+	
+	</fieldset>
 	
 	<div class="form-group">
 			<label class="col-md-4 control-label"></label>
