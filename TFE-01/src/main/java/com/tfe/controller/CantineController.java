@@ -121,6 +121,7 @@ public class CantineController {
 	@RequestMapping(value="/inscription/{username}", method=RequestMethod.GET)
 	public String inscriptionCantineGet(@PathVariable String username,Authentication authentication, Model model) {
 		
+		//verifie si utilisateur authentifié est le bon
 		if(authentication == null || !(authentication.getName().equals(username))) {
 			throw new NoAccessException("droits");
 		}

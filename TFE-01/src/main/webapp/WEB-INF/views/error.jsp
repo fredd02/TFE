@@ -10,13 +10,21 @@
 <body>
 
 	<div class="container">
-
-		<h4>Erreur</h4>
-
+		<div class="jumbotron">
+		<span class="glyphicon glyphicon-alert blanc" style="font-size:30px;"></span>
+		<h5><b>Erreur</b></h5>
+		
 		<c:set var="message">
 			<c:out value="${exception.message}"/>
 		</c:set>
-		<h3><s:message code="${message}"/></h3>
+		<h5><s:message code="${message}"/></h5>
+		
+		
+		
+		
+		</div>
+
+		
 
 	</div>
 
