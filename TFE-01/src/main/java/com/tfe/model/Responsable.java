@@ -31,7 +31,7 @@ public class Responsable extends User{
 //	private Long id;
 	
 	
-	@Pattern(regexp = "[0-9]{2}.[0-9]{2}.[0-9]{2}-[0-9]{3}.[0-9]{2}")
+	@Pattern(regexp = "[0-9]{2}.[0-9]{2}.[0-9]{2}-[0-9]{3}.[0-9]{2}",message="le nrn n'est pas valide")
 	private String nrn;
 	
 	@NotNull
@@ -44,7 +44,7 @@ public class Responsable extends User{
 	@Column(length=30, nullable=false)
 	private String prenom;
 	
-	@NotNull
+	@NotNull(message="la date de naissance doit être renseignée")
 	@Column(nullable=false)
 	private Date dateNaissance;
 	

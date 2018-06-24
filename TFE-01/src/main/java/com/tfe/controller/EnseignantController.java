@@ -87,7 +87,7 @@ public class EnseignantController {
 	public String enseignantAddPost(@Valid Enseignant enseignant, BindingResult errors, Model model,  RedirectAttributes rModel) {
 		log.info("methode POST pour inscrire un enseignant");
 		
-		//userValidator.validate(enseignant, errors);
+		userValidator.validate(enseignant, errors);
 		
 		if(errors.hasErrors()) {
 			return "enseignant/enseignantAdd";

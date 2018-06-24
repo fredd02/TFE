@@ -88,8 +88,9 @@
 				<div class="input-group">
 					<span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
 					<sf:input type="date" path="dateNaissance" id="dateNaissance" class="form-control" placeholder="date de naissance" />
-					<sf:errors path="dateNaissance" class="control-label" />
+					
 				</div>
+				<sf:errors path="dateNaissance" class="control-label" />
 			</div>
 				 
 		</div>
@@ -125,8 +126,9 @@
 				<div class="input-group">
 					<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
 					<sf:input path="profession" id="profession" class="form-control" placeholder="profession" />
-					<sf:errors path="profession" class="control-label" />
+					
 				</div>
+				<sf:errors path="profession" class="control-label" />
 			</div>
 				 
 		</div>
@@ -141,8 +143,9 @@
 				<div class="input-group">
 					<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
 					<sf:input path="email" id="email" class="form-control" placeholder="email" />
-					<sf:errors path="email" class="control-label" />
+					
 				</div>
+				<sf:errors path="email" class="control-label" />
 			</div>
 				 
 		</div>
@@ -157,8 +160,9 @@
 				<div class="input-group">
 					<span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
 					<sf:input path="telephone" id="telephone" class="form-control" placeholder="telephone" />
-					<sf:errors path="telephone" class="control-label" />
+					
 				</div>
+				<sf:errors path="telephone" class="control-label" />
 			</div>
 				 
 		</div>
@@ -214,8 +218,9 @@
 				<div class="input-group">
 					<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
 					<sf:password path="passwordConfirm" id="passwordConfirm" class="form-control" placeholder="passwordConfirm" />
-					<sf:errors path="passwordConfirm" class="control-label" />
+					
 				</div>
+				<sf:errors path="passwordConfirm" class="control-label" />
 			</div>
 				 
 		</div>

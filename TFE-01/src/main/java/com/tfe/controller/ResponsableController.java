@@ -92,7 +92,7 @@ public class ResponsableController {
 				@RequestParam("lienParent") String lienParent, RedirectAttributes rModel) {
 		log.info("methode POST pour ajouter un responsable");
 		
-		//userValidator.validate(responsable, errors);
+		userValidator.validate(responsable, errors);
 		
 		if(errors.hasErrors()) {
 			return "responsable/responsableAdd";
