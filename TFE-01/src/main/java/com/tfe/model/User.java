@@ -48,7 +48,7 @@ public class User implements UserDetails{
 	@Id
 	@Column(length=50,nullable=false)
 	@Getter
-	@NotEmpty(message="le username doit être renseigné")
+	//@NotEmpty(message="le username doit être renseigné")
 	protected String username;
 	
 	@NotEmpty(message="le password doit être renseigné")
